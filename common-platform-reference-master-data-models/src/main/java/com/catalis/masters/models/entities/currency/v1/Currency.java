@@ -1,0 +1,39 @@
+package com.catalis.masters.models.entities.currency.v1;
+
+import com.catalis.masters.interfaces.enums.commons.v1.StatusEnum;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.Table;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.ToString;
+
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+@Table("currencies")
+public class Currency {
+
+    @Id
+    @Column("id")
+    private Long id;
+
+    @Column("iso_code")
+    private String isoCode;
+
+    @Column("currency_name")
+    private String currencyName;
+
+    @Column("symbol")
+    private String symbol;
+
+    @Column("decimal_precision")
+    private String decimalPrecision;
+
+    @Column("status")
+    private StatusEnum status;
+}
