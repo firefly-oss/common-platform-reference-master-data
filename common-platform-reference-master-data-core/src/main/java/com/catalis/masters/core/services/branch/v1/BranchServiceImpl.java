@@ -53,7 +53,7 @@ public class BranchServiceImpl implements BranchService {
                 .switchIfEmpty(Mono.error(new RuntimeException("Branch not found")))
                 .flatMap(existingBranch -> {
                     Branch updatedEntity = mapper.toEntity(branchDto);
-                    updatedEntity.setId(existingBranch.getId());
+                    updatedEntity.setBranchId(existingBranch.getBranchId());
                     return repository.save(updatedEntity);
                 })
                 .map(mapper::toDTO);

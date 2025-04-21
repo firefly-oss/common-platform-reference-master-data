@@ -50,7 +50,7 @@ public class BankInstitutionCodeServiceImpl implements BankInstitutionCodeServic
         return repository.findById(id)
                 .flatMap(existingEntity -> {
                     BankInstitutionCode updatedEntity = mapper.toEntity(dto);
-                    updatedEntity.setId(existingEntity.getId());
+                    updatedEntity.setInstitutionId(existingEntity.getInstitutionId());
                     return repository.save(updatedEntity);
                 })
                 .map(mapper::toDTO);

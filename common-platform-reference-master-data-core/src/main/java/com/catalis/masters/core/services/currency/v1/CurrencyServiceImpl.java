@@ -50,7 +50,7 @@ public class CurrencyServiceImpl implements CurrencyService {
         return repository.findById(currencyId)
                 .flatMap(existingCurrency -> {
                     Currency updatedCurrency = mapper.toEntity(currencyDto);
-                    updatedCurrency.setId(currencyId); // Ensure ID matches the existing record
+                    updatedCurrency.setCurrencyId(currencyId); // Ensure ID matches the existing record
                     return repository.save(updatedCurrency);
                 })
                 .map(mapper::toDTO);

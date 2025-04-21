@@ -1,0 +1,66 @@
+package com.catalis.masters.core.services.activity.v1;
+
+import com.catalis.common.core.queries.PaginationRequest;
+import com.catalis.common.core.queries.PaginationResponse;
+import com.catalis.masters.interfaces.dtos.activity.v1.ActivityCodeDTO;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
+public interface ActivityCodeService {
+    /**
+     * Retrieves a paginated list of activity codes based on the provided pagination request.
+     *
+     * @param paginationRequest the pagination request containing page number, size, and sorting options
+     * @return a Mono emitting a PaginationResponse containing a list of ActivityCodeDTO objects
+     */
+    Mono<PaginationResponse<ActivityCodeDTO>> listActivityCodes(PaginationRequest paginationRequest);
+    
+    /**
+     * Retrieves all activity codes for a specific country.
+     *
+     * @param countryId the unique identifier of the country to retrieve activity codes for
+     * @return a Flux emitting ActivityCodeDTO objects for the specified country
+     */
+    Flux<ActivityCodeDTO> getActivityCodesByCountry(Long countryId);
+    
+    /**
+     * Retrieves all child activity codes for a specific parent activity code.
+     *
+     * @param parentCodeId the unique identifier of the parent activity code
+     * @return a Flux emitting ActivityCodeDTO objects that are children of the specified parent
+     */
+    Flux<ActivityCodeDTO> getChildActivityCodes(Long parentCodeId);
+    
+    /**
+     * Creates a new activity code based on the provided ActivityCodeDTO.
+     *
+     * @param activityCodeDto the activity code data transfer object containing details of the activity code to be created
+     * @return a Mono emitting the created ActivityCodeDTO object
+     */
+    Mono<ActivityCodeDTO> createActivityCode(ActivityCodeDTO activityCodeDto);
+    
+    /**
+     * Retrieves the details of an activity code by its unique identifier.
+     *
+     * @param activityCodeId the unique identifier of the activity code to retrieve
+     * @return a Mono emitting the ActivityCodeDTO containing details about the specified activity code, or an empty Mono if not found
+     */
+    Mono<ActivityCodeDTO> getActivityCode(Long activityCodeId);
+    
+    /**
+     * Updates the details of an existing activity code by its unique identifier.
+     *
+     * @param activityCodeId the unique identifier of the activity code to be updated
+     * @param activityCodeDto the data transfer object containing the updated activity code details
+     * @return a Mono emitting the updated ActivityCodeDTO object if the update is successful
+     */
+    Mono<ActivityCodeDTO> updateActivityCode(Long activityCodeId, ActivityCodeDTO activityCodeDto);
+    
+    /**
+     * Deletes an activity code identified by its unique identifier.
+     *
+     * @param activityCodeId the unique identifier of the activity code to delete
+     * @return a Mono signaling completion of the delete operation
+     */
+    Mono<Void> deleteActivityCode(Long activityCodeId);
+}

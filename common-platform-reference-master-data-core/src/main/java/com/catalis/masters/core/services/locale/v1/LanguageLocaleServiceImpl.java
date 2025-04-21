@@ -35,7 +35,7 @@ public class LanguageLocaleServiceImpl implements LanguageLocaleService {
     @Override
     public Mono<LanguageLocaleDTO> createLanguageLocale(LanguageLocaleDTO dto) {
         LanguageLocale entity = mapper.toEntity(dto);
-        entity.setId(null); // Ensure the ID is null for a new entity
+        entity.setLocaleId(null); // Ensure the ID is null for a new entity
         return repository.save(entity)
                 .map(mapper::toDTO);
     }
@@ -53,7 +53,7 @@ public class LanguageLocaleServiceImpl implements LanguageLocaleService {
                 .switchIfEmpty(Mono.error(new RuntimeException("LanguageLocale not found with ID: " + id)))
                 .flatMap(existingEntity -> {
                     LanguageLocale updatedEntity = mapper.toEntity(dto);
-                    updatedEntity.setId(id); // Ensure the ID is preserved
+                    updatedEntity.setLocaleId(id); // Ensure the ID is preserved
                     return repository.save(updatedEntity);
                 })
                 .map(mapper::toDTO);

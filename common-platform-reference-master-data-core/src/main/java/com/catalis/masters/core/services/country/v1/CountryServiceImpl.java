@@ -51,7 +51,7 @@ public class CountryServiceImpl implements CountryService {
         return repository.findById(countryId)
                 .flatMap(foundCountry -> {
                     Country updatedCountry = mapper.toEntity(countryDto);
-                    updatedCountry.setId(foundCountry.getId());
+                    updatedCountry.setCountryId(foundCountry.getCountryId());
                     return repository.save(updatedCountry);
                 })
                 .map(mapper::toDTO);

@@ -50,7 +50,7 @@ public class HolidayServiceImpl implements HolidayService {
         return repository.findById(holidayId)
                 .flatMap(existingHoliday -> {
                     Holiday updatedHoliday = mapper.toEntity(holidayDto);
-                    updatedHoliday.setId(existingHoliday.getId());
+                    updatedHoliday.setHolidayId(existingHoliday.getHolidayId());
                     return repository.save(updatedHoliday);
                 })
                 .map(mapper::toDTO);
