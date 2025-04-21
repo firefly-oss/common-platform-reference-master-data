@@ -1,6 +1,6 @@
 package com.catalis.masters.interfaces.dtos.bank.v1;
 
-import com.catalis.common.core.filters.FilterableId;
+import com.catalis.core.utils.annotations.FilterableId;
 import com.catalis.masters.interfaces.enums.commons.v1.StatusEnum;
 import lombok.Data;
 import lombok.NoArgsConstructor;

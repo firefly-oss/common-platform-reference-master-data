@@ -1,6 +1,6 @@
 package com.catalis.masters.interfaces.dtos.holiday.v1;
 
-import com.catalis.common.core.filters.FilterableId;
+import com.catalis.core.utils.annotations.FilterableId;
 import com.catalis.masters.interfaces.enums.commons.v1.StatusEnum;
 import com.catalis.masters.interfaces.enums.holidays.v1.HolidayTypeEnum;
 import lombok.Data;
