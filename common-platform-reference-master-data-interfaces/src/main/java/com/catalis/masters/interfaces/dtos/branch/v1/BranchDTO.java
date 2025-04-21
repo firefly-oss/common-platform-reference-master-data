@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -14,16 +15,25 @@ import lombok.Builder;
 @NoArgsConstructor
 public class BranchDTO {
 
-    private Long id;
+    private Long branchId;
     private String branchCode;
     private String branchName;
     private String address;
+    private String postalCode;
     private String city;
-    private String province;
+
+    @FilterableId
+    private Long divisionId;
 
     @FilterableId
     private Long countryId;
 
     private String phoneNumber;
+    private String email;
+    private Long branchTypeLkpId;
+    private Long branchManagerId;
+    private String openingHours;
     private StatusEnum status;
+    private LocalDateTime dateCreated;
+    private LocalDateTime dateUpdated;
 }

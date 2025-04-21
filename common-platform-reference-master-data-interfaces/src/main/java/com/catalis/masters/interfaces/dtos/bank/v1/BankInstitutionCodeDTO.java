@@ -7,20 +7,26 @@ import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 
+import java.time.LocalDateTime;
+
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class BankInstitutionCodeDTO {
 
-    private Long id;
+    private Long institutionId;
     private String bankName;
     private String swiftCode;
     private String routingNumber;
+    private String ibanPrefix;
 
     @FilterableId
     private Long countryId;
 
+    private Long institutionTypeLkpId;
     private StatusEnum status;
     private String svgIcon;
+    private LocalDateTime dateCreated;
+    private LocalDateTime dateUpdated;
 }

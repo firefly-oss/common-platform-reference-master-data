@@ -6,16 +6,21 @@ import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 
+import java.time.LocalDateTime;
+
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class CurrencyDTO {
 
-    private Long id;
+    private Long currencyId;
     private String isoCode;
     private String currencyName;
     private String symbol;
-    private String decimalPrecision;
+    private Integer decimalPrecision;
+    private Boolean isMajor;
     private StatusEnum status;
+    private LocalDateTime dateCreated;
+    private LocalDateTime dateUpdated;
 }
