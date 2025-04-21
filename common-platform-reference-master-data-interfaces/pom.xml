@@ -22,14 +22,7 @@
         <!-- Common Libraries -->
         <dependency>
             <groupId>com.catalis</groupId>
-            <artifactId>lib-common-core</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <!-- Common Libraries -->
-        <dependency>
-            <groupId>com.catalis</groupId>
-            <artifactId>lib-common-r2dbc</artifactId>
+            <artifactId>lib-utils</artifactId>
             <version>${project.version}</version>
         </dependency>
 
