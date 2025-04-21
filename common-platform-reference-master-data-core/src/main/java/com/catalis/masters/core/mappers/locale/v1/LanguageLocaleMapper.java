@@ -3,6 +3,7 @@ package com.catalis.masters.core.mappers.locale.v1;
 import com.catalis.masters.interfaces.dtos.locale.v1.LanguageLocaleDTO;
 import com.catalis.masters.models.entities.locale.v1.LanguageLocale;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface LanguageLocaleMapper {

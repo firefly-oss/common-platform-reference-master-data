@@ -3,6 +3,7 @@ package com.catalis.masters.core.mappers.bank.v1;
 import com.catalis.masters.interfaces.dtos.bank.v1.BankInstitutionCodeDTO;
 import com.catalis.masters.models.entities.bank.v1.BankInstitutionCode;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface BankInstitutionCodeMapper {
