@@ -10,6 +10,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.ToString;
 
+import java.time.LocalDateTime;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -19,11 +21,14 @@ import lombok.ToString;
 public class LanguageLocale {
 
     @Id
-    @Column("id")
-    private Long id;
+    @Column("locale_id")
+    private Long localeId;
 
     @Column("language_code")
     private String languageCode;
+
+    @Column("country_code")
+    private String countryCode;
 
     @Column("locale_code")
     private String localeCode;
@@ -31,9 +36,24 @@ public class LanguageLocale {
     @Column("language_name")
     private String languageName;
 
+    @Column("native_name")
+    private String nativeName;
+
     @Column("region_name")
     private String regionName;
 
+    @Column("rtl")
+    private Boolean rtl;
+
+    @Column("sort_order")
+    private Integer sortOrder;
+
     @Column("status")
     private StatusEnum status;
+
+    @Column("date_created")
+    private LocalDateTime dateCreated;
+
+    @Column("date_updated")
+    private LocalDateTime dateUpdated;
 }

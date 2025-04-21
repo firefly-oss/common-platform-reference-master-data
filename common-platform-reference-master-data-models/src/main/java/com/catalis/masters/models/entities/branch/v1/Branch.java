@@ -10,6 +10,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.ToString;
 
+import java.time.LocalDateTime;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -19,8 +21,8 @@ import lombok.ToString;
 public class Branch {
 
     @Id
-    @Column("id")
-    private Long id;
+    @Column("branch_id")
+    private Long branchId;
 
     @Column("branch_code")
     private String branchCode;
@@ -31,11 +33,14 @@ public class Branch {
     @Column("address")
     private String address;
 
+    @Column("postal_code")
+    private String postalCode;
+
     @Column("city")
     private String city;
 
-    @Column("province")
-    private String province;
+    @Column("division_id")
+    private Long divisionId;
 
     @Column("country_id")
     private Long countryId;
@@ -43,6 +48,24 @@ public class Branch {
     @Column("phone_number")
     private String phoneNumber;
 
+    @Column("email")
+    private String email;
+
+    @Column("branch_type_lkp_id")
+    private Long branchTypeLkpId;
+
+    @Column("branch_manager_id")
+    private Long branchManagerId;
+
+    @Column("opening_hours")
+    private String openingHours;
+
     @Column("status")
     private StatusEnum status;
+
+    @Column("date_created")
+    private LocalDateTime dateCreated;
+
+    @Column("date_updated")
+    private LocalDateTime dateUpdated;
 }

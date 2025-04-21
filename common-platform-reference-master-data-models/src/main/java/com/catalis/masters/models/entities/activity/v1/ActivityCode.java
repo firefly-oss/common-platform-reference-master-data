@@ -1,4 +1,4 @@
-package com.catalis.masters.models.entities.bank.v1;
+package com.catalis.masters.models.entities.activity.v1;
 
 import com.catalis.masters.interfaces.enums.commons.v1.StatusEnum;
 import org.springframework.data.annotation.Id;
@@ -17,36 +17,36 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@Table("bank_institution_codes")
-public class BankInstitutionCode {
+@Table("activity_code")
+public class ActivityCode {
 
     @Id
-    @Column("institution_id")
-    private Long institutionId;
-
-    @Column("bank_name")
-    private String bankName;
-
-    @Column("swift_code")
-    private String swiftCode;
-
-    @Column("routing_number")
-    private String routingNumber;
-
-    @Column("iban_prefix")
-    private String ibanPrefix;
+    @Column("activity_code_id")
+    private Long activityCodeId;
 
     @Column("country_id")
     private Long countryId;  // References countries(country_id)
 
-    @Column("institution_type_lkp_id")
-    private Long institutionTypeLkpId;
+    @Column("code")
+    private String code;
+
+    @Column("classification_sys")
+    private String classificationSys;
+
+    @Column("description")
+    private String description;
+
+    @Column("parent_code_id")
+    private Long parentCodeId;  // Self-referencing to activity_code(activity_code_id)
+
+    @Column("high_risk")
+    private Boolean highRisk;
+
+    @Column("risk_factors")
+    private String riskFactors;
 
     @Column("status")
     private StatusEnum status;
-
-    @Column("svg_icon")
-    private String svgIcon;
 
     @Column("date_created")
     private LocalDateTime dateCreated;

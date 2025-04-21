@@ -1,7 +1,6 @@
 package com.catalis.masters.models.entities.country.v1;
 
 import com.catalis.masters.interfaces.enums.commons.v1.StatusEnum;
-import com.catalis.masters.interfaces.enums.country.v1.RegionEnum;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
@@ -10,6 +9,8 @@ import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.ToString;
+
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -20,8 +21,8 @@ import lombok.ToString;
 public class Country {
 
     @Id
-    @Column("id")
-    private Long id;
+    @Column("country_id")
+    private Long countryId;
 
     @Column("iso_code")
     private String isoCode;
@@ -29,12 +30,18 @@ public class Country {
     @Column("country_name")
     private String countryName;
 
-    @Column("region")
-    private RegionEnum region;
+    @Column("region_lkp_id")
+    private Long regionLkpId;
 
     @Column("status")
     private StatusEnum status;
 
     @Column("svg_flag")
     private String svgFlag;
+
+    @Column("date_created")
+    private LocalDateTime dateCreated;
+
+    @Column("date_updated")
+    private LocalDateTime dateUpdated;
 }

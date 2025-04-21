@@ -10,6 +10,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.ToString;
 
+import java.time.LocalDateTime;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -19,8 +21,8 @@ import lombok.ToString;
 public class Currency {
 
     @Id
-    @Column("id")
-    private Long id;
+    @Column("currency_id")
+    private Long currencyId;
 
     @Column("iso_code")
     private String isoCode;
@@ -32,8 +34,17 @@ public class Currency {
     private String symbol;
 
     @Column("decimal_precision")
-    private String decimalPrecision;
+    private Integer decimalPrecision;
+
+    @Column("is_major")
+    private Boolean isMajor;
 
     @Column("status")
     private StatusEnum status;
+
+    @Column("date_created")
+    private LocalDateTime dateCreated;
+
+    @Column("date_updated")
+    private LocalDateTime dateUpdated;
 }

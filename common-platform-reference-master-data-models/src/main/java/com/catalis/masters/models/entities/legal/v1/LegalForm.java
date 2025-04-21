@@ -1,4 +1,4 @@
-package com.catalis.masters.models.entities.bank.v1;
+package com.catalis.masters.models.entities.legal.v1;
 
 import com.catalis.masters.interfaces.enums.commons.v1.StatusEnum;
 import org.springframework.data.annotation.Id;
@@ -17,36 +17,33 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@Table("bank_institution_codes")
-public class BankInstitutionCode {
+@Table("legal_form")
+public class LegalForm {
 
     @Id
-    @Column("institution_id")
-    private Long institutionId;
-
-    @Column("bank_name")
-    private String bankName;
-
-    @Column("swift_code")
-    private String swiftCode;
-
-    @Column("routing_number")
-    private String routingNumber;
-
-    @Column("iban_prefix")
-    private String ibanPrefix;
+    @Column("legal_form_id")
+    private Long legalFormId;
 
     @Column("country_id")
     private Long countryId;  // References countries(country_id)
 
-    @Column("institution_type_lkp_id")
-    private Long institutionTypeLkpId;
+    @Column("code")
+    private String code;
+
+    @Column("name")
+    private String name;
+
+    @Column("description")
+    private String description;
+
+    @Column("is_corporate")
+    private Boolean isCorporate;
+
+    @Column("entity_type")
+    private String entityType;  // Enum values: 'FOR_PROFIT', 'NON_PROFIT', 'GOVERNMENT', 'OTHER'
 
     @Column("status")
     private StatusEnum status;
-
-    @Column("svg_icon")
-    private String svgIcon;
 
     @Column("date_created")
     private LocalDateTime dateCreated;
