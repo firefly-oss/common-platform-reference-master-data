@@ -579,37 +579,1501 @@ Response: HTTP 204 No Content
 ### Administrative Divisions API
 Endpoints for managing administrative divisions (states, provinces, etc.).
 
-For detailed API documentation on this and other endpoints, access the Swagger UI at `/swagger-ui.html` when the application is running.
+#### List Administrative Divisions
+```
+GET /api/v1/divisions
+```
+
+Example response:
+```json
+{
+  "content": [
+    {
+      "divisionId": 1,
+      "countryId": 1,
+      "code": "CA",
+      "name": "California",
+      "level": "STATE",
+      "parentDivisionId": null,
+      "status": "ACTIVE",
+      "postalCodePattern": "9[0-6]\\d{3}",
+      "timeZone": "America/Los_Angeles"
+    },
+    {
+      "divisionId": 2,
+      "countryId": 1,
+      "code": "NY",
+      "name": "New York",
+      "level": "STATE",
+      "parentDivisionId": null,
+      "status": "ACTIVE",
+      "postalCodePattern": "1[0-4]\\d{3}",
+      "timeZone": "America/New_York"
+    }
+  ],
+  "pageable": {
+    "sort": {
+      "sorted": true,
+      "unsorted": false,
+      "empty": false
+    },
+    "pageNumber": 0,
+    "pageSize": 10,
+    "offset": 0,
+    "paged": true,
+    "unpaged": false
+  },
+  "totalElements": 50,
+  "totalPages": 5,
+  "last": false,
+  "first": true,
+  "sort": {
+    "sorted": true,
+    "unsorted": false,
+    "empty": false
+  },
+  "numberOfElements": 10,
+  "size": 10,
+  "number": 0,
+  "empty": false
+}
+```
+
+#### Get Administrative Division by ID
+```
+GET /api/v1/divisions/{divisionId}
+```
+
+Example response:
+```json
+{
+  "divisionId": 1,
+  "countryId": 1,
+  "code": "CA",
+  "name": "California",
+  "level": "STATE",
+  "parentDivisionId": null,
+  "status": "ACTIVE",
+  "postalCodePattern": "9[0-6]\\d{3}",
+  "timeZone": "America/Los_Angeles"
+}
+```
+
+#### Create Administrative Division
+```
+POST /api/v1/divisions
+```
+
+Example request body:
+```json
+{
+  "countryId": 1,
+  "code": "OR",
+  "name": "Oregon",
+  "level": "STATE",
+  "parentDivisionId": null,
+  "status": "ACTIVE",
+  "postalCodePattern": "97[0-9]{3}",
+  "timeZone": "America/Los_Angeles"
+}
+```
+
+Example response:
+```json
+{
+  "divisionId": 3,
+  "countryId": 1,
+  "code": "OR",
+  "name": "Oregon",
+  "level": "STATE",
+  "parentDivisionId": null,
+  "status": "ACTIVE",
+  "postalCodePattern": "97[0-9]{3}",
+  "timeZone": "America/Los_Angeles"
+}
+```
+
+#### Update Administrative Division
+```
+PUT /api/v1/divisions/{divisionId}
+```
+
+Example request body:
+```json
+{
+  "countryId": 1,
+  "code": "OR",
+  "name": "Oregon State",
+  "level": "STATE",
+  "parentDivisionId": null,
+  "status": "ACTIVE",
+  "postalCodePattern": "97[0-9]{3}",
+  "timeZone": "America/Los_Angeles"
+}
+```
+
+Example response:
+```json
+{
+  "divisionId": 3,
+  "countryId": 1,
+  "code": "OR",
+  "name": "Oregon State",
+  "level": "STATE",
+  "parentDivisionId": null,
+  "status": "ACTIVE",
+  "postalCodePattern": "97[0-9]{3}",
+  "timeZone": "America/Los_Angeles"
+}
+```
+
+#### Delete Administrative Division
+```
+DELETE /api/v1/divisions/{divisionId}
+```
+
+Response: HTTP 204 No Content
 
 ### Branches API
 Endpoints for managing branch information for financial institutions.
 
-For detailed API documentation on this and other endpoints, access the Swagger UI at `/swagger-ui.html` when the application is running.
+#### List Branches
+```
+GET /api/v1/branches
+```
+
+Example response:
+```json
+{
+  "content": [
+    {
+      "branchId": 1,
+      "branchCode": "NYC-001",
+      "branchName": "Manhattan Main Branch",
+      "address": "123 Wall Street",
+      "postalCode": "10005",
+      "city": "New York",
+      "divisionId": 2,
+      "countryId": 1,
+      "phoneNumber": "+1-212-555-1234",
+      "email": "manhattan@bank.com",
+      "branchTypeLkpId": 1,
+      "branchManagerId": 101,
+      "openingHours": "Mon-Fri: 9:00-17:00",
+      "status": "ACTIVE",
+      "dateCreated": "2023-01-01T00:00:00",
+      "dateUpdated": "2023-01-01T00:00:00"
+    },
+    {
+      "branchId": 2,
+      "branchCode": "SF-001",
+      "branchName": "San Francisco Downtown",
+      "address": "456 Market Street",
+      "postalCode": "94105",
+      "city": "San Francisco",
+      "divisionId": 1,
+      "countryId": 1,
+      "phoneNumber": "+1-415-555-6789",
+      "email": "sf@bank.com",
+      "branchTypeLkpId": 1,
+      "branchManagerId": 102,
+      "openingHours": "Mon-Fri: 9:00-17:00, Sat: 10:00-14:00",
+      "status": "ACTIVE",
+      "dateCreated": "2023-01-01T00:00:00",
+      "dateUpdated": "2023-01-01T00:00:00"
+    }
+  ],
+  "pageable": {
+    "sort": {
+      "sorted": true,
+      "unsorted": false,
+      "empty": false
+    },
+    "pageNumber": 0,
+    "pageSize": 10,
+    "offset": 0,
+    "paged": true,
+    "unpaged": false
+  },
+  "totalElements": 45,
+  "totalPages": 5,
+  "last": false,
+  "first": true,
+  "sort": {
+    "sorted": true,
+    "unsorted": false,
+    "empty": false
+  },
+  "numberOfElements": 10,
+  "size": 10,
+  "number": 0,
+  "empty": false
+}
+```
+
+#### Get Branch by ID
+```
+GET /api/v1/branches/{branchId}
+```
+
+Example response:
+```json
+{
+  "branchId": 1,
+  "branchCode": "NYC-001",
+  "branchName": "Manhattan Main Branch",
+  "address": "123 Wall Street",
+  "postalCode": "10005",
+  "city": "New York",
+  "divisionId": 2,
+  "countryId": 1,
+  "phoneNumber": "+1-212-555-1234",
+  "email": "manhattan@bank.com",
+  "branchTypeLkpId": 1,
+  "branchManagerId": 101,
+  "openingHours": "Mon-Fri: 9:00-17:00",
+  "status": "ACTIVE",
+  "dateCreated": "2023-01-01T00:00:00",
+  "dateUpdated": "2023-01-01T00:00:00"
+}
+```
+
+#### Create Branch
+```
+POST /api/v1/branches
+```
+
+Example request body:
+```json
+{
+  "branchCode": "CHI-001",
+  "branchName": "Chicago Downtown",
+  "address": "789 Michigan Avenue",
+  "postalCode": "60601",
+  "city": "Chicago",
+  "divisionId": 4,
+  "countryId": 1,
+  "phoneNumber": "+1-312-555-9876",
+  "email": "chicago@bank.com",
+  "branchTypeLkpId": 1,
+  "branchManagerId": 103,
+  "openingHours": "Mon-Fri: 9:00-17:00",
+  "status": "ACTIVE"
+}
+```
+
+Example response:
+```json
+{
+  "branchId": 3,
+  "branchCode": "CHI-001",
+  "branchName": "Chicago Downtown",
+  "address": "789 Michigan Avenue",
+  "postalCode": "60601",
+  "city": "Chicago",
+  "divisionId": 4,
+  "countryId": 1,
+  "phoneNumber": "+1-312-555-9876",
+  "email": "chicago@bank.com",
+  "branchTypeLkpId": 1,
+  "branchManagerId": 103,
+  "openingHours": "Mon-Fri: 9:00-17:00",
+  "status": "ACTIVE",
+  "dateCreated": "2023-06-15T10:30:00",
+  "dateUpdated": "2023-06-15T10:30:00"
+}
+```
+
+#### Update Branch
+```
+PUT /api/v1/branches/{branchId}
+```
+
+Example request body:
+```json
+{
+  "branchCode": "CHI-001",
+  "branchName": "Chicago Main Branch",
+  "address": "789 Michigan Avenue",
+  "postalCode": "60601",
+  "city": "Chicago",
+  "divisionId": 4,
+  "countryId": 1,
+  "phoneNumber": "+1-312-555-9876",
+  "email": "chicago.main@bank.com",
+  "branchTypeLkpId": 1,
+  "branchManagerId": 103,
+  "openingHours": "Mon-Fri: 9:00-17:00, Sat: 10:00-14:00",
+  "status": "ACTIVE"
+}
+```
+
+Example response:
+```json
+{
+  "branchId": 3,
+  "branchCode": "CHI-001",
+  "branchName": "Chicago Main Branch",
+  "address": "789 Michigan Avenue",
+  "postalCode": "60601",
+  "city": "Chicago",
+  "divisionId": 4,
+  "countryId": 1,
+  "phoneNumber": "+1-312-555-9876",
+  "email": "chicago.main@bank.com",
+  "branchTypeLkpId": 1,
+  "branchManagerId": 103,
+  "openingHours": "Mon-Fri: 9:00-17:00, Sat: 10:00-14:00",
+  "status": "ACTIVE",
+  "dateCreated": "2023-06-15T10:30:00",
+  "dateUpdated": "2023-06-15T11:45:00"
+}
+```
+
+#### Delete Branch
+```
+DELETE /api/v1/branches/{branchId}
+```
+
+Response: HTTP 204 No Content
 
 ### Bank Institution Codes API
 Endpoints for managing banking codes and identifiers.
 
-For detailed API documentation on this and other endpoints, access the Swagger UI at `/swagger-ui.html` when the application is running.
+#### List Bank Institution Codes
+```
+GET /api/v1/bank-institution-codes
+```
+
+Example response:
+```json
+{
+  "content": [
+    {
+      "institutionId": 1,
+      "bankName": "Chase Bank",
+      "swiftCode": "CHASUS33",
+      "routingNumber": "021000021",
+      "ibanPrefix": "US",
+      "countryId": 1,
+      "institutionTypeLkpId": 1,
+      "status": "ACTIVE",
+      "svgIcon": "data:image/svg+xml;base64,...",
+      "dateCreated": "2023-01-01T00:00:00",
+      "dateUpdated": "2023-01-01T00:00:00"
+    },
+    {
+      "institutionId": 2,
+      "bankName": "Bank of America",
+      "swiftCode": "BOFAUS3N",
+      "routingNumber": "026009593",
+      "ibanPrefix": "US",
+      "countryId": 1,
+      "institutionTypeLkpId": 1,
+      "status": "ACTIVE",
+      "svgIcon": "data:image/svg+xml;base64,...",
+      "dateCreated": "2023-01-01T00:00:00",
+      "dateUpdated": "2023-01-01T00:00:00"
+    }
+  ],
+  "pageable": {
+    "sort": {
+      "sorted": true,
+      "unsorted": false,
+      "empty": false
+    },
+    "pageNumber": 0,
+    "pageSize": 10,
+    "offset": 0,
+    "paged": true,
+    "unpaged": false
+  },
+  "totalElements": 120,
+  "totalPages": 12,
+  "last": false,
+  "first": true,
+  "sort": {
+    "sorted": true,
+    "unsorted": false,
+    "empty": false
+  },
+  "numberOfElements": 10,
+  "size": 10,
+  "number": 0,
+  "empty": false
+}
+```
+
+#### Get Bank Institution Code by ID
+```
+GET /api/v1/bank-institution-codes/{id}
+```
+
+Example response:
+```json
+{
+  "institutionId": 1,
+  "bankName": "Chase Bank",
+  "swiftCode": "CHASUS33",
+  "routingNumber": "021000021",
+  "ibanPrefix": "US",
+  "countryId": 1,
+  "institutionTypeLkpId": 1,
+  "status": "ACTIVE",
+  "svgIcon": "data:image/svg+xml;base64,...",
+  "dateCreated": "2023-01-01T00:00:00",
+  "dateUpdated": "2023-01-01T00:00:00"
+}
+```
+
+#### Create Bank Institution Code
+```
+POST /api/v1/bank-institution-codes
+```
+
+Example request body:
+```json
+{
+  "bankName": "Wells Fargo",
+  "swiftCode": "WFBIUS6S",
+  "routingNumber": "121000248",
+  "ibanPrefix": "US",
+  "countryId": 1,
+  "institutionTypeLkpId": 1,
+  "status": "ACTIVE",
+  "svgIcon": "data:image/svg+xml;base64,..."
+}
+```
+
+Example response:
+```json
+{
+  "institutionId": 3,
+  "bankName": "Wells Fargo",
+  "swiftCode": "WFBIUS6S",
+  "routingNumber": "121000248",
+  "ibanPrefix": "US",
+  "countryId": 1,
+  "institutionTypeLkpId": 1,
+  "status": "ACTIVE",
+  "svgIcon": "data:image/svg+xml;base64,...",
+  "dateCreated": "2023-06-15T10:30:00",
+  "dateUpdated": "2023-06-15T10:30:00"
+}
+```
+
+#### Update Bank Institution Code
+```
+PUT /api/v1/bank-institution-codes/{id}
+```
+
+Example request body:
+```json
+{
+  "bankName": "Wells Fargo Bank",
+  "swiftCode": "WFBIUS6S",
+  "routingNumber": "121000248",
+  "ibanPrefix": "US",
+  "countryId": 1,
+  "institutionTypeLkpId": 1,
+  "status": "ACTIVE",
+  "svgIcon": "data:image/svg+xml;base64,..."
+}
+```
+
+Example response:
+```json
+{
+  "institutionId": 3,
+  "bankName": "Wells Fargo Bank",
+  "swiftCode": "WFBIUS6S",
+  "routingNumber": "121000248",
+  "ibanPrefix": "US",
+  "countryId": 1,
+  "institutionTypeLkpId": 1,
+  "status": "ACTIVE",
+  "svgIcon": "data:image/svg+xml;base64,...",
+  "dateCreated": "2023-06-15T10:30:00",
+  "dateUpdated": "2023-06-15T11:45:00"
+}
+```
+
+#### Delete Bank Institution Code
+```
+DELETE /api/v1/bank-institution-codes/{id}
+```
+
+Response: HTTP 204 No Content
 
 ### Holidays API
 Endpoints for managing holiday information for different countries and regions.
 
-For detailed API documentation on this and other endpoints, access the Swagger UI at `/swagger-ui.html` when the application is running.
+#### List Holidays
+```
+GET /api/v1/holidays
+```
+
+Example response:
+```json
+{
+  "content": [
+    {
+      "holidayId": 1,
+      "countryId": 1,
+      "divisionId": null,
+      "holidayName": "New Year's Day",
+      "localName": "New Year's Day",
+      "holidayDate": "2023-01-01",
+      "recurrenceRule": "FREQ=YEARLY;BYMONTH=1;BYMONTHDAY=1",
+      "holidayTypeLkpId": 1,
+      "businessClosed": true,
+      "bankClosed": true,
+      "status": "ACTIVE",
+      "dateCreated": "2022-12-01T00:00:00",
+      "dateUpdated": "2022-12-01T00:00:00"
+    },
+    {
+      "holidayId": 2,
+      "countryId": 1,
+      "divisionId": null,
+      "holidayName": "Independence Day",
+      "localName": "Fourth of July",
+      "holidayDate": "2023-07-04",
+      "recurrenceRule": "FREQ=YEARLY;BYMONTH=7;BYMONTHDAY=4",
+      "holidayTypeLkpId": 1,
+      "businessClosed": true,
+      "bankClosed": true,
+      "status": "ACTIVE",
+      "dateCreated": "2022-12-01T00:00:00",
+      "dateUpdated": "2022-12-01T00:00:00"
+    }
+  ],
+  "pageable": {
+    "sort": {
+      "sorted": true,
+      "unsorted": false,
+      "empty": false
+    },
+    "pageNumber": 0,
+    "pageSize": 10,
+    "offset": 0,
+    "paged": true,
+    "unpaged": false
+  },
+  "totalElements": 25,
+  "totalPages": 3,
+  "last": false,
+  "first": true,
+  "sort": {
+    "sorted": true,
+    "unsorted": false,
+    "empty": false
+  },
+  "numberOfElements": 10,
+  "size": 10,
+  "number": 0,
+  "empty": false
+}
+```
+
+#### Get Holiday by ID
+```
+GET /api/v1/holidays/{holidayId}
+```
+
+Example response:
+```json
+{
+  "holidayId": 1,
+  "countryId": 1,
+  "divisionId": null,
+  "holidayName": "New Year's Day",
+  "localName": "New Year's Day",
+  "holidayDate": "2023-01-01",
+  "recurrenceRule": "FREQ=YEARLY;BYMONTH=1;BYMONTHDAY=1",
+  "holidayTypeLkpId": 1,
+  "businessClosed": true,
+  "bankClosed": true,
+  "status": "ACTIVE",
+  "dateCreated": "2022-12-01T00:00:00",
+  "dateUpdated": "2022-12-01T00:00:00"
+}
+```
+
+#### Create Holiday
+```
+POST /api/v1/holidays
+```
+
+Example request body:
+```json
+{
+  "countryId": 1,
+  "divisionId": 2,
+  "holidayName": "Thanksgiving Day",
+  "localName": "Thanksgiving",
+  "holidayDate": "2023-11-23",
+  "recurrenceRule": "FREQ=YEARLY;BYMONTH=11;BYDAY=4TH",
+  "holidayTypeLkpId": 1,
+  "businessClosed": true,
+  "bankClosed": true,
+  "status": "ACTIVE"
+}
+```
+
+Example response:
+```json
+{
+  "holidayId": 3,
+  "countryId": 1,
+  "divisionId": 2,
+  "holidayName": "Thanksgiving Day",
+  "localName": "Thanksgiving",
+  "holidayDate": "2023-11-23",
+  "recurrenceRule": "FREQ=YEARLY;BYMONTH=11;BYDAY=4TH",
+  "holidayTypeLkpId": 1,
+  "businessClosed": true,
+  "bankClosed": true,
+  "status": "ACTIVE",
+  "dateCreated": "2023-06-15T10:30:00",
+  "dateUpdated": "2023-06-15T10:30:00"
+}
+```
+
+#### Update Holiday
+```
+PUT /api/v1/holidays/{holidayId}
+```
+
+Example request body:
+```json
+{
+  "countryId": 1,
+  "divisionId": 2,
+  "holidayName": "Thanksgiving Day",
+  "localName": "Thanksgiving Holiday",
+  "holidayDate": "2023-11-23",
+  "recurrenceRule": "FREQ=YEARLY;BYMONTH=11;BYDAY=4TH",
+  "holidayTypeLkpId": 1,
+  "businessClosed": true,
+  "bankClosed": true,
+  "status": "ACTIVE"
+}
+```
+
+Example response:
+```json
+{
+  "holidayId": 3,
+  "countryId": 1,
+  "divisionId": 2,
+  "holidayName": "Thanksgiving Day",
+  "localName": "Thanksgiving Holiday",
+  "holidayDate": "2023-11-23",
+  "recurrenceRule": "FREQ=YEARLY;BYMONTH=11;BYDAY=4TH",
+  "holidayTypeLkpId": 1,
+  "businessClosed": true,
+  "bankClosed": true,
+  "status": "ACTIVE",
+  "dateCreated": "2023-06-15T10:30:00",
+  "dateUpdated": "2023-06-15T11:45:00"
+}
+```
+
+#### Delete Holiday
+```
+DELETE /api/v1/holidays/{holidayId}
+```
+
+Response: HTTP 204 No Content
 
 ### Language Locales API
 Endpoints for managing language and locale information.
 
-For detailed API documentation on this and other endpoints, access the Swagger UI at `/swagger-ui.html` when the application is running.
+#### List Language Locales
+```
+GET /api/v1/language-locales
+```
+
+Example response:
+```json
+{
+  "content": [
+    {
+      "localeId": 1,
+      "languageCode": "en",
+      "countryCode": "US",
+      "localeCode": "en_US",
+      "languageName": "English",
+      "nativeName": "English",
+      "regionName": "United States",
+      "rtl": false,
+      "sortOrder": 1,
+      "status": "ACTIVE",
+      "dateCreated": "2023-01-01T00:00:00",
+      "dateUpdated": "2023-01-01T00:00:00"
+    },
+    {
+      "localeId": 2,
+      "languageCode": "es",
+      "countryCode": "ES",
+      "localeCode": "es_ES",
+      "languageName": "Spanish",
+      "nativeName": "Español",
+      "regionName": "Spain",
+      "rtl": false,
+      "sortOrder": 2,
+      "status": "ACTIVE",
+      "dateCreated": "2023-01-01T00:00:00",
+      "dateUpdated": "2023-01-01T00:00:00"
+    }
+  ],
+  "pageable": {
+    "sort": {
+      "sorted": true,
+      "unsorted": false,
+      "empty": false
+    },
+    "pageNumber": 0,
+    "pageSize": 10,
+    "offset": 0,
+    "paged": true,
+    "unpaged": false
+  },
+  "totalElements": 80,
+  "totalPages": 8,
+  "last": false,
+  "first": true,
+  "sort": {
+    "sorted": true,
+    "unsorted": false,
+    "empty": false
+  },
+  "numberOfElements": 10,
+  "size": 10,
+  "number": 0,
+  "empty": false
+}
+```
+
+#### Get Language Locale by ID
+```
+GET /api/v1/language-locales/{id}
+```
+
+Example response:
+```json
+{
+  "localeId": 1,
+  "languageCode": "en",
+  "countryCode": "US",
+  "localeCode": "en_US",
+  "languageName": "English",
+  "nativeName": "English",
+  "regionName": "United States",
+  "rtl": false,
+  "sortOrder": 1,
+  "status": "ACTIVE",
+  "dateCreated": "2023-01-01T00:00:00",
+  "dateUpdated": "2023-01-01T00:00:00"
+}
+```
+
+#### Create Language Locale
+```
+POST /api/v1/language-locales
+```
+
+Example request body:
+```json
+{
+  "languageCode": "fr",
+  "countryCode": "FR",
+  "localeCode": "fr_FR",
+  "languageName": "French",
+  "nativeName": "Français",
+  "regionName": "France",
+  "rtl": false,
+  "sortOrder": 3,
+  "status": "ACTIVE"
+}
+```
+
+Example response:
+```json
+{
+  "localeId": 3,
+  "languageCode": "fr",
+  "countryCode": "FR",
+  "localeCode": "fr_FR",
+  "languageName": "French",
+  "nativeName": "Français",
+  "regionName": "France",
+  "rtl": false,
+  "sortOrder": 3,
+  "status": "ACTIVE",
+  "dateCreated": "2023-06-15T10:30:00",
+  "dateUpdated": "2023-06-15T10:30:00"
+}
+```
+
+#### Update Language Locale
+```
+PUT /api/v1/language-locales/{id}
+```
+
+Example request body:
+```json
+{
+  "languageCode": "fr",
+  "countryCode": "FR",
+  "localeCode": "fr_FR",
+  "languageName": "French",
+  "nativeName": "Français",
+  "regionName": "French Republic",
+  "rtl": false,
+  "sortOrder": 3,
+  "status": "ACTIVE"
+}
+```
+
+Example response:
+```json
+{
+  "localeId": 3,
+  "languageCode": "fr",
+  "countryCode": "FR",
+  "localeCode": "fr_FR",
+  "languageName": "French",
+  "nativeName": "Français",
+  "regionName": "French Republic",
+  "rtl": false,
+  "sortOrder": 3,
+  "status": "ACTIVE",
+  "dateCreated": "2023-06-15T10:30:00",
+  "dateUpdated": "2023-06-15T11:45:00"
+}
+```
+
+#### Delete Language Locale
+```
+DELETE /api/v1/language-locales/{id}
+```
+
+Response: HTTP 204 No Content
 
 ### Lookup Domains and Items API
 Endpoints for managing generic lookup values for reference data.
 
-For detailed API documentation on this and other endpoints, access the Swagger UI at `/swagger-ui.html` when the application is running.
+#### Lookup Domains
+
+##### List Lookup Domains
+```
+GET /api/v1/lookup/domains
+```
+
+Example response:
+```json
+{
+  "content": [
+    {
+      "domainId": 1,
+      "domainCode": "BRANCH_TYPE",
+      "domainName": "Branch Types",
+      "domainDesc": "Types of bank branches",
+      "parentDomainId": null,
+      "multiselectAllowed": false,
+      "hierarchyAllowed": false,
+      "tenantOverridable": true,
+      "extraJson": null,
+      "tenantId": null,
+      "status": "ACTIVE"
+    },
+    {
+      "domainId": 2,
+      "domainCode": "HOLIDAY_TYPE",
+      "domainName": "Holiday Types",
+      "domainDesc": "Types of holidays",
+      "parentDomainId": null,
+      "multiselectAllowed": false,
+      "hierarchyAllowed": false,
+      "tenantOverridable": true,
+      "extraJson": null,
+      "tenantId": null,
+      "status": "ACTIVE"
+    }
+  ],
+  "pageable": {
+    "sort": {
+      "sorted": true,
+      "unsorted": false,
+      "empty": false
+    },
+    "pageNumber": 0,
+    "pageSize": 10,
+    "offset": 0,
+    "paged": true,
+    "unpaged": false
+  },
+  "totalElements": 15,
+  "totalPages": 2,
+  "last": false,
+  "first": true,
+  "sort": {
+    "sorted": true,
+    "unsorted": false,
+    "empty": false
+  },
+  "numberOfElements": 10,
+  "size": 10,
+  "number": 0,
+  "empty": false
+}
+```
+
+##### Get Lookup Domain by ID
+```
+GET /api/v1/lookup/domains/{domainId}
+```
+
+Example response:
+```json
+{
+  "domainId": 1,
+  "domainCode": "BRANCH_TYPE",
+  "domainName": "Branch Types",
+  "domainDesc": "Types of bank branches",
+  "parentDomainId": null,
+  "multiselectAllowed": false,
+  "hierarchyAllowed": false,
+  "tenantOverridable": true,
+  "extraJson": null,
+  "tenantId": null,
+  "status": "ACTIVE"
+}
+```
+
+##### Create Lookup Domain
+```
+POST /api/v1/lookup/domains
+```
+
+Example request body:
+```json
+{
+  "domainCode": "INSTITUTION_TYPE",
+  "domainName": "Institution Types",
+  "domainDesc": "Types of financial institutions",
+  "parentDomainId": null,
+  "multiselectAllowed": false,
+  "hierarchyAllowed": false,
+  "tenantOverridable": true,
+  "status": "ACTIVE"
+}
+```
+
+Example response:
+```json
+{
+  "domainId": 3,
+  "domainCode": "INSTITUTION_TYPE",
+  "domainName": "Institution Types",
+  "domainDesc": "Types of financial institutions",
+  "parentDomainId": null,
+  "multiselectAllowed": false,
+  "hierarchyAllowed": false,
+  "tenantOverridable": true,
+  "extraJson": null,
+  "tenantId": null,
+  "status": "ACTIVE"
+}
+```
+
+##### Update Lookup Domain
+```
+PUT /api/v1/lookup/domains/{domainId}
+```
+
+Example request body:
+```json
+{
+  "domainCode": "INSTITUTION_TYPE",
+  "domainName": "Financial Institution Types",
+  "domainDesc": "Types of financial institutions",
+  "parentDomainId": null,
+  "multiselectAllowed": false,
+  "hierarchyAllowed": false,
+  "tenantOverridable": true,
+  "status": "ACTIVE"
+}
+```
+
+Example response:
+```json
+{
+  "domainId": 3,
+  "domainCode": "INSTITUTION_TYPE",
+  "domainName": "Financial Institution Types",
+  "domainDesc": "Types of financial institutions",
+  "parentDomainId": null,
+  "multiselectAllowed": false,
+  "hierarchyAllowed": false,
+  "tenantOverridable": true,
+  "extraJson": null,
+  "tenantId": null,
+  "status": "ACTIVE"
+}
+```
+
+##### Delete Lookup Domain
+```
+DELETE /api/v1/lookup/domains/{domainId}
+```
+
+Response: HTTP 204 No Content
+
+#### Lookup Items
+
+##### List Lookup Items
+```
+GET /api/v1/lookup/items
+```
+
+Example response:
+```json
+{
+  "content": [
+    {
+      "itemId": 1,
+      "domainId": 1,
+      "itemCode": "MAIN",
+      "itemLabelDefault": "Main Branch",
+      "itemDesc": "Main bank branch with full services",
+      "parentItemId": null,
+      "sortOrder": 1,
+      "effectiveFrom": "2023-01-01",
+      "effectiveTo": null,
+      "isCurrent": true,
+      "extraJson": null,
+      "tenantId": null,
+      "status": "ACTIVE"
+    },
+    {
+      "itemId": 2,
+      "domainId": 1,
+      "itemCode": "SATELLITE",
+      "itemLabelDefault": "Satellite Branch",
+      "itemDesc": "Smaller branch with limited services",
+      "parentItemId": null,
+      "sortOrder": 2,
+      "effectiveFrom": "2023-01-01",
+      "effectiveTo": null,
+      "isCurrent": true,
+      "extraJson": null,
+      "tenantId": null,
+      "status": "ACTIVE"
+    }
+  ],
+  "pageable": {
+    "sort": {
+      "sorted": true,
+      "unsorted": false,
+      "empty": false
+    },
+    "pageNumber": 0,
+    "pageSize": 10,
+    "offset": 0,
+    "paged": true,
+    "unpaged": false
+  },
+  "totalElements": 30,
+  "totalPages": 3,
+  "last": false,
+  "first": true,
+  "sort": {
+    "sorted": true,
+    "unsorted": false,
+    "empty": false
+  },
+  "numberOfElements": 10,
+  "size": 10,
+  "number": 0,
+  "empty": false
+}
+```
+
+##### Get Lookup Items by Domain
+```
+GET /api/v1/lookup/items/domain/{domainId}
+```
+
+Example response:
+```json
+[
+  {
+    "itemId": 1,
+    "domainId": 1,
+    "itemCode": "MAIN",
+    "itemLabelDefault": "Main Branch",
+    "itemDesc": "Main bank branch with full services",
+    "parentItemId": null,
+    "sortOrder": 1,
+    "effectiveFrom": "2023-01-01",
+    "effectiveTo": null,
+    "isCurrent": true,
+    "extraJson": null,
+    "tenantId": null,
+    "status": "ACTIVE"
+  },
+  {
+    "itemId": 2,
+    "domainId": 1,
+    "itemCode": "SATELLITE",
+    "itemLabelDefault": "Satellite Branch",
+    "itemDesc": "Smaller branch with limited services",
+    "parentItemId": null,
+    "sortOrder": 2,
+    "effectiveFrom": "2023-01-01",
+    "effectiveTo": null,
+    "isCurrent": true,
+    "extraJson": null,
+    "tenantId": null,
+    "status": "ACTIVE"
+  }
+]
+```
+
+##### Get Lookup Item by ID
+```
+GET /api/v1/lookup/items/{itemId}
+```
+
+Example response:
+```json
+{
+  "itemId": 1,
+  "domainId": 1,
+  "itemCode": "MAIN",
+  "itemLabelDefault": "Main Branch",
+  "itemDesc": "Main bank branch with full services",
+  "parentItemId": null,
+  "sortOrder": 1,
+  "effectiveFrom": "2023-01-01",
+  "effectiveTo": null,
+  "isCurrent": true,
+  "extraJson": null,
+  "tenantId": null,
+  "status": "ACTIVE"
+}
+```
+
+##### Create Lookup Item
+```
+POST /api/v1/lookup/items
+```
+
+Example request body:
+```json
+{
+  "domainId": 1,
+  "itemCode": "ATM",
+  "itemLabelDefault": "ATM Location",
+  "itemDesc": "ATM-only location",
+  "parentItemId": null,
+  "sortOrder": 3,
+  "effectiveFrom": "2023-01-01",
+  "isCurrent": true,
+  "status": "ACTIVE"
+}
+```
+
+Example response:
+```json
+{
+  "itemId": 3,
+  "domainId": 1,
+  "itemCode": "ATM",
+  "itemLabelDefault": "ATM Location",
+  "itemDesc": "ATM-only location",
+  "parentItemId": null,
+  "sortOrder": 3,
+  "effectiveFrom": "2023-01-01",
+  "effectiveTo": null,
+  "isCurrent": true,
+  "extraJson": null,
+  "tenantId": null,
+  "status": "ACTIVE"
+}
+```
+
+##### Update Lookup Item
+```
+PUT /api/v1/lookup/items/{itemId}
+```
+
+Example request body:
+```json
+{
+  "domainId": 1,
+  "itemCode": "ATM",
+  "itemLabelDefault": "ATM Only",
+  "itemDesc": "ATM-only location without staff",
+  "parentItemId": null,
+  "sortOrder": 3,
+  "effectiveFrom": "2023-01-01",
+  "isCurrent": true,
+  "status": "ACTIVE"
+}
+```
+
+Example response:
+```json
+{
+  "itemId": 3,
+  "domainId": 1,
+  "itemCode": "ATM",
+  "itemLabelDefault": "ATM Only",
+  "itemDesc": "ATM-only location without staff",
+  "parentItemId": null,
+  "sortOrder": 3,
+  "effectiveFrom": "2023-01-01",
+  "effectiveTo": null,
+  "isCurrent": true,
+  "extraJson": null,
+  "tenantId": null,
+  "status": "ACTIVE"
+}
+```
+
+##### Delete Lookup Item
+```
+DELETE /api/v1/lookup/items/{itemId}
+```
+
+Response: HTTP 204 No Content
 
 ### Activity Codes API
 Endpoints for managing business activity classification codes.
 
-For detailed API documentation on this and other endpoints, access the Swagger UI at `/swagger-ui.html` when the application is running.
+#### List Activity Codes
+```
+GET /api/v1/activity-codes
+```
+
+Example response:
+```json
+{
+  "content": [
+    {
+      "activityCodeId": 1,
+      "countryId": 1,
+      "code": "A01",
+      "classificationSys": "NAICS",
+      "description": "Crop Production",
+      "parentCodeId": null,
+      "highRisk": false,
+      "riskFactors": null,
+      "status": "ACTIVE"
+    },
+    {
+      "activityCodeId": 2,
+      "countryId": 1,
+      "code": "A02",
+      "classificationSys": "NAICS",
+      "description": "Animal Production and Aquaculture",
+      "parentCodeId": null,
+      "highRisk": false,
+      "riskFactors": null,
+      "status": "ACTIVE"
+    }
+  ],
+  "pageable": {
+    "sort": {
+      "sorted": true,
+      "unsorted": false,
+      "empty": false
+    },
+    "pageNumber": 0,
+    "pageSize": 10,
+    "offset": 0,
+    "paged": true,
+    "unpaged": false
+  },
+  "totalElements": 200,
+  "totalPages": 20,
+  "last": false,
+  "first": true,
+  "sort": {
+    "sorted": true,
+    "unsorted": false,
+    "empty": false
+  },
+  "numberOfElements": 10,
+  "size": 10,
+  "number": 0,
+  "empty": false
+}
+```
+
+#### Get Activity Codes by Country
+```
+GET /api/v1/activity-codes/country/{countryId}
+```
+
+Example response:
+```json
+[
+  {
+    "activityCodeId": 1,
+    "countryId": 1,
+    "code": "A01",
+    "classificationSys": "NAICS",
+    "description": "Crop Production",
+    "parentCodeId": null,
+    "highRisk": false,
+    "riskFactors": null,
+    "status": "ACTIVE"
+  },
+  {
+    "activityCodeId": 2,
+    "countryId": 1,
+    "code": "A02",
+    "classificationSys": "NAICS",
+    "description": "Animal Production and Aquaculture",
+    "parentCodeId": null,
+    "highRisk": false,
+    "riskFactors": null,
+    "status": "ACTIVE"
+  }
+]
+```
+
+#### Get Child Activity Codes
+```
+GET /api/v1/activity-codes/parent/{parentCodeId}
+```
+
+Example response:
+```json
+[
+  {
+    "activityCodeId": 3,
+    "countryId": 1,
+    "code": "A01.1",
+    "classificationSys": "NAICS",
+    "description": "Grain and Seed Production",
+    "parentCodeId": 1,
+    "highRisk": false,
+    "riskFactors": null,
+    "status": "ACTIVE"
+  },
+  {
+    "activityCodeId": 4,
+    "countryId": 1,
+    "code": "A01.2",
+    "classificationSys": "NAICS",
+    "description": "Vegetable and Melon Farming",
+    "parentCodeId": 1,
+    "highRisk": false,
+    "riskFactors": null,
+    "status": "ACTIVE"
+  }
+]
+```
+
+#### Get Activity Code by ID
+```
+GET /api/v1/activity-codes/{activityCodeId}
+```
+
+Example response:
+```json
+{
+  "activityCodeId": 1,
+  "countryId": 1,
+  "code": "A01",
+  "classificationSys": "NAICS",
+  "description": "Crop Production",
+  "parentCodeId": null,
+  "highRisk": false,
+  "riskFactors": null,
+  "status": "ACTIVE"
+}
+```
+
+#### Create Activity Code
+```
+POST /api/v1/activity-codes
+```
+
+Example request body:
+```json
+{
+  "countryId": 1,
+  "code": "A03",
+  "classificationSys": "NAICS",
+  "description": "Forestry and Logging",
+  "parentCodeId": null,
+  "highRisk": false,
+  "status": "ACTIVE"
+}
+```
+
+Example response:
+```json
+{
+  "activityCodeId": 5,
+  "countryId": 1,
+  "code": "A03",
+  "classificationSys": "NAICS",
+  "description": "Forestry and Logging",
+  "parentCodeId": null,
+  "highRisk": false,
+  "riskFactors": null,
+  "status": "ACTIVE"
+}
+```
+
+#### Update Activity Code
+```
+PUT /api/v1/activity-codes/{activityCodeId}
+```
+
+Example request body:
+```json
+{
+  "countryId": 1,
+  "code": "A03",
+  "classificationSys": "NAICS",
+  "description": "Forestry and Logging Operations",
+  "parentCodeId": null,
+  "highRisk": true,
+  "riskFactors": "Environmental impact, safety concerns",
+  "status": "ACTIVE"
+}
+```
+
+Example response:
+```json
+{
+  "activityCodeId": 5,
+  "countryId": 1,
+  "code": "A03",
+  "classificationSys": "NAICS",
+  "description": "Forestry and Logging Operations",
+  "parentCodeId": null,
+  "highRisk": true,
+  "riskFactors": "Environmental impact, safety concerns",
+  "status": "ACTIVE"
+}
+```
+
+#### Delete Activity Code
+```
+DELETE /api/v1/activity-codes/{activityCodeId}
+```
+
+Response: HTTP 204 No Content
 
 ## Setup and Installation
 
