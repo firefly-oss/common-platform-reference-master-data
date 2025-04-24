@@ -16,6 +16,7 @@
   - [Lookup Domains and Items API](#lookup-domains-and-items-api)
   - [Legal Forms API](#legal-forms-api)
   - [Activity Codes API](#activity-codes-api)
+  - [Consent Catalog API](#consent-catalog-api)
 - [Setup and Installation](#setup-and-installation)
   - [Prerequisites](#prerequisites)
   - [Building the Application](#building-the-application)
@@ -73,6 +74,7 @@ The microservice manages the following types of reference data:
 8. **Lookup Domains and Items**: Generic lookup values for reference data
 9. **Legal Forms**: Legal entity types and forms
 10. **Activity Codes**: Business activity classification codes
+11. **Consent Catalog**: Catalog of consent types that can be given by users
 
 ## API Reference
 All API endpoints follow a versioned structure (e.g., `/api/v1/...`). The API supports standard HTTP methods (GET, POST, PUT, DELETE) for CRUD operations.
@@ -2071,6 +2073,209 @@ Example response:
 #### Delete Activity Code
 ```
 DELETE /api/v1/activity-codes/{activityCodeId}
+```
+
+Response: HTTP 204 No Content
+
+### Consent Catalog API
+Endpoints for managing consent catalog entries that define the types of consents that can be given by users.
+
+#### List Consent Catalog
+```
+GET /api/v1/consent-catalog
+```
+
+Example response:
+```json
+{
+  "content": [
+    {
+      "consentId": 1,
+      "consentType": "GDPR",
+      "consentDescription": "General Data Protection Regulation consent for processing personal data",
+      "expiryPeriodDays": 365,
+      "consentVersion": "1.0",
+      "consentSource": "WEB",
+      "status": "ACTIVE",
+      "dateCreated": "2023-01-01T00:00:00",
+      "dateUpdated": "2023-01-01T00:00:00"
+    },
+    {
+      "consentId": 2,
+      "consentType": "MARKETING",
+      "consentDescription": "Consent for receiving marketing communications",
+      "expiryPeriodDays": 180,
+      "consentVersion": "1.0",
+      "consentSource": "MOBILE",
+      "status": "ACTIVE",
+      "dateCreated": "2023-01-01T00:00:00",
+      "dateUpdated": "2023-01-01T00:00:00"
+    }
+  ],
+  "pageable": {
+    "sort": {
+      "sorted": true,
+      "unsorted": false,
+      "empty": false
+    },
+    "pageNumber": 0,
+    "pageSize": 10,
+    "offset": 0,
+    "paged": true,
+    "unpaged": false
+  },
+  "totalElements": 5,
+  "totalPages": 1,
+  "last": true,
+  "first": true,
+  "sort": {
+    "sorted": true,
+    "unsorted": false,
+    "empty": false
+  },
+  "numberOfElements": 2,
+  "size": 10,
+  "number": 0,
+  "empty": false
+}
+```
+
+#### List Consent Catalog by Type
+```
+GET /api/v1/consent-catalog/type/{consentType}
+```
+
+Example response:
+```json
+{
+  "content": [
+    {
+      "consentId": 1,
+      "consentType": "GDPR",
+      "consentDescription": "General Data Protection Regulation consent for processing personal data",
+      "expiryPeriodDays": 365,
+      "consentVersion": "1.0",
+      "consentSource": "WEB",
+      "status": "ACTIVE",
+      "dateCreated": "2023-01-01T00:00:00",
+      "dateUpdated": "2023-01-01T00:00:00"
+    }
+  ],
+  "pageable": {
+    "sort": {
+      "sorted": true,
+      "unsorted": false,
+      "empty": false
+    },
+    "pageNumber": 0,
+    "pageSize": 10,
+    "offset": 0,
+    "paged": true,
+    "unpaged": false
+  },
+  "totalElements": 1,
+  "totalPages": 1,
+  "last": true,
+  "first": true,
+  "sort": {
+    "sorted": true,
+    "unsorted": false,
+    "empty": false
+  },
+  "numberOfElements": 1,
+  "size": 10,
+  "number": 0,
+  "empty": false
+}
+```
+
+#### Get Consent Catalog by ID
+```
+GET /api/v1/consent-catalog/{id}
+```
+
+Example response:
+```json
+{
+  "consentId": 1,
+  "consentType": "GDPR",
+  "consentDescription": "General Data Protection Regulation consent for processing personal data",
+  "expiryPeriodDays": 365,
+  "consentVersion": "1.0",
+  "consentSource": "WEB",
+  "status": "ACTIVE",
+  "dateCreated": "2023-01-01T00:00:00",
+  "dateUpdated": "2023-01-01T00:00:00"
+}
+```
+
+#### Create Consent Catalog
+```
+POST /api/v1/consent-catalog
+```
+
+Example request body:
+```json
+{
+  "consentType": "COOKIES",
+  "consentDescription": "Consent for using cookies on the website",
+  "expiryPeriodDays": 90,
+  "consentVersion": "1.0",
+  "consentSource": "WEB",
+  "status": "ACTIVE"
+}
+```
+
+Example response:
+```json
+{
+  "consentId": 3,
+  "consentType": "COOKIES",
+  "consentDescription": "Consent for using cookies on the website",
+  "expiryPeriodDays": 90,
+  "consentVersion": "1.0",
+  "consentSource": "WEB",
+  "status": "ACTIVE",
+  "dateCreated": "2023-06-15T10:30:00",
+  "dateUpdated": "2023-06-15T10:30:00"
+}
+```
+
+#### Update Consent Catalog
+```
+PUT /api/v1/consent-catalog/{id}
+```
+
+Example request body:
+```json
+{
+  "consentType": "COOKIES",
+  "consentDescription": "Consent for using cookies and similar technologies on the website",
+  "expiryPeriodDays": 180,
+  "consentVersion": "1.1",
+  "consentSource": "WEB",
+  "status": "ACTIVE"
+}
+```
+
+Example response:
+```json
+{
+  "consentId": 3,
+  "consentType": "COOKIES",
+  "consentDescription": "Consent for using cookies and similar technologies on the website",
+  "expiryPeriodDays": 180,
+  "consentVersion": "1.1",
+  "consentSource": "WEB",
+  "status": "ACTIVE",
+  "dateCreated": "2023-06-15T10:30:00",
+  "dateUpdated": "2023-06-15T11:45:00"
+}
+```
+
+#### Delete Consent Catalog
+```
+DELETE /api/v1/consent-catalog/{id}
 ```
 
 Response: HTTP 204 No Content
