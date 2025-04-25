@@ -17,6 +17,8 @@
   - [Legal Forms API](#legal-forms-api)
   - [Activity Codes API](#activity-codes-api)
   - [Consent Catalog API](#consent-catalog-api)
+  - [Title Master API](#title-master-api)
+  - [Relationship Type Master API](#relationship-type-master-api)
 - [Setup and Installation](#setup-and-installation)
   - [Prerequisites](#prerequisites)
   - [Building the Application](#building-the-application)
@@ -75,6 +77,8 @@ The microservice manages the following types of reference data:
 9. **Legal Forms**: Legal entity types and forms
 10. **Activity Codes**: Business activity classification codes
 11. **Consent Catalog**: Catalog of consent types that can be given by users
+12. **Title Master**: Title prefixes (Mr., Mrs., Dr., etc.) used in addressing individuals
+13. **Relationship Type Master**: Types of relationships between entities (Beneficiary, CEO, etc.)
 
 ## API Reference
 All API endpoints follow a versioned structure (e.g., `/api/v1/...`). The API supports standard HTTP methods (GET, POST, PUT, DELETE) for CRUD operations.
@@ -2276,6 +2280,279 @@ Example response:
 #### Delete Consent Catalog
 ```
 DELETE /api/v1/consent-catalog/{id}
+```
+
+Response: HTTP 204 No Content
+
+### Title Master API
+Endpoints for managing title information (Mr., Mrs., Dr., etc.).
+
+#### List Titles
+```
+GET /api/v1/titles
+```
+
+Example response:
+```json
+{
+  "content": [
+    {
+      "titleId": 1,
+      "prefix": "MR",
+      "description": "Mr.",
+      "isActive": true,
+      "status": "ACTIVE",
+      "dateCreated": "2023-01-01T00:00:00",
+      "dateUpdated": "2023-01-01T00:00:00"
+    },
+    {
+      "titleId": 2,
+      "prefix": "MRS",
+      "description": "Mrs.",
+      "isActive": true,
+      "status": "ACTIVE",
+      "dateCreated": "2023-01-01T00:00:00",
+      "dateUpdated": "2023-01-01T00:00:00"
+    }
+  ],
+  "pageable": {
+    "sort": {
+      "sorted": true,
+      "unsorted": false,
+      "empty": false
+    },
+    "pageNumber": 0,
+    "pageSize": 10,
+    "offset": 0,
+    "paged": true,
+    "unpaged": false
+  },
+  "totalElements": 10,
+  "totalPages": 1,
+  "last": true,
+  "first": true,
+  "sort": {
+    "sorted": true,
+    "unsorted": false,
+    "empty": false
+  },
+  "numberOfElements": 10,
+  "size": 10,
+  "number": 0,
+  "empty": false
+}
+```
+
+#### Get Title by ID
+```
+GET /api/v1/titles/{titleId}
+```
+
+Example response:
+```json
+{
+  "titleId": 1,
+  "prefix": "MR",
+  "description": "Mr.",
+  "isActive": true,
+  "status": "ACTIVE",
+  "dateCreated": "2023-01-01T00:00:00",
+  "dateUpdated": "2023-01-01T00:00:00"
+}
+```
+
+#### Create Title
+```
+POST /api/v1/titles
+```
+
+Example request body:
+```json
+{
+  "prefix": "DR",
+  "description": "Doctor",
+  "isActive": true,
+  "status": "ACTIVE"
+}
+```
+
+Example response:
+```json
+{
+  "titleId": 3,
+  "prefix": "DR",
+  "description": "Doctor",
+  "isActive": true,
+  "status": "ACTIVE",
+  "dateCreated": "2023-06-15T10:30:00",
+  "dateUpdated": "2023-06-15T10:30:00"
+}
+```
+
+#### Update Title
+```
+PUT /api/v1/titles/{titleId}
+```
+
+Example request body:
+```json
+{
+  "prefix": "DR",
+  "description": "Doctor (Medical)",
+  "isActive": true,
+  "status": "ACTIVE"
+}
+```
+
+Example response:
+```json
+{
+  "titleId": 3,
+  "prefix": "DR",
+  "description": "Doctor (Medical)",
+  "isActive": true,
+  "status": "ACTIVE",
+  "dateCreated": "2023-06-15T10:30:00",
+  "dateUpdated": "2023-06-15T11:45:00"
+}
+```
+
+#### Delete Title
+```
+DELETE /api/v1/titles/{titleId}
+```
+
+Response: HTTP 204 No Content
+
+### Relationship Type Master API
+Endpoints for managing relationship type information (Beneficiary, CEO, etc.).
+
+#### List Relationship Types
+```
+GET /api/v1/relationship-types
+```
+
+Example response:
+```json
+{
+  "content": [
+    {
+      "relationshipTypeId": 1,
+      "code": "BENEFICIARY",
+      "description": "Beneficiary",
+      "status": "ACTIVE",
+      "dateCreated": "2023-01-01T00:00:00",
+      "dateUpdated": "2023-01-01T00:00:00"
+    },
+    {
+      "relationshipTypeId": 2,
+      "code": "CEO",
+      "description": "Chief Executive Officer",
+      "status": "ACTIVE",
+      "dateCreated": "2023-01-01T00:00:00",
+      "dateUpdated": "2023-01-01T00:00:00"
+    }
+  ],
+  "pageable": {
+    "sort": {
+      "sorted": true,
+      "unsorted": false,
+      "empty": false
+    },
+    "pageNumber": 0,
+    "pageSize": 10,
+    "offset": 0,
+    "paged": true,
+    "unpaged": false
+  },
+  "totalElements": 15,
+  "totalPages": 2,
+  "last": false,
+  "first": true,
+  "sort": {
+    "sorted": true,
+    "unsorted": false,
+    "empty": false
+  },
+  "numberOfElements": 10,
+  "size": 10,
+  "number": 0,
+  "empty": false
+}
+```
+
+#### Get Relationship Type by ID
+```
+GET /api/v1/relationship-types/{relationshipTypeId}
+```
+
+Example response:
+```json
+{
+  "relationshipTypeId": 1,
+  "code": "BENEFICIARY",
+  "description": "Beneficiary",
+  "status": "ACTIVE",
+  "dateCreated": "2023-01-01T00:00:00",
+  "dateUpdated": "2023-01-01T00:00:00"
+}
+```
+
+#### Create Relationship Type
+```
+POST /api/v1/relationship-types
+```
+
+Example request body:
+```json
+{
+  "code": "CFO",
+  "description": "Chief Financial Officer",
+  "status": "ACTIVE"
+}
+```
+
+Example response:
+```json
+{
+  "relationshipTypeId": 3,
+  "code": "CFO",
+  "description": "Chief Financial Officer",
+  "status": "ACTIVE",
+  "dateCreated": "2023-06-15T10:30:00",
+  "dateUpdated": "2023-06-15T10:30:00"
+}
+```
+
+#### Update Relationship Type
+```
+PUT /api/v1/relationship-types/{relationshipTypeId}
+```
+
+Example request body:
+```json
+{
+  "code": "CFO",
+  "description": "Chief Financial Officer (Finance)",
+  "status": "ACTIVE"
+}
+```
+
+Example response:
+```json
+{
+  "relationshipTypeId": 3,
+  "code": "CFO",
+  "description": "Chief Financial Officer (Finance)",
+  "status": "ACTIVE",
+  "dateCreated": "2023-06-15T10:30:00",
+  "dateUpdated": "2023-06-15T11:45:00"
+}
+```
+
+#### Delete Relationship Type
+```
+DELETE /api/v1/relationship-types/{relationshipTypeId}
 ```
 
 Response: HTTP 204 No Content
