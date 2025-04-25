@@ -71,7 +71,6 @@ public class ActivityCodeServiceImpl implements ActivityCodeService {
 
     @Override
     public Mono<Void> deleteActivityCode(Long activityCodeId) {
-        return repository.findById(activityCodeId)
-                .flatMap(repository::delete);
+        return repository.deleteById(activityCodeId);
     }
 }

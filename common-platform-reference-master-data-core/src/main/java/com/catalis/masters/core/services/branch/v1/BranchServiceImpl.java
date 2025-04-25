@@ -43,14 +43,12 @@ public class BranchServiceImpl implements BranchService {
     @Override
     public Mono<BranchDTO> getBranch(Long branchId) {
         return repository.findById(branchId)
-                .map(mapper::toDTO)
-                .switchIfEmpty(Mono.error(new RuntimeException("Branch not found")));
+                .map(mapper::toDTO);
     }
 
     @Override
     public Mono<BranchDTO> updateBranch(Long branchId, BranchDTO branchDto) {
         return repository.findById(branchId)
-                .switchIfEmpty(Mono.error(new RuntimeException("Branch not found")))
                 .flatMap(existingBranch -> {
                     Branch updatedEntity = mapper.toEntity(branchDto);
                     updatedEntity.setBranchId(existingBranch.getBranchId());
@@ -62,7 +60,6 @@ public class BranchServiceImpl implements BranchService {
     @Override
     public Mono<Void> deleteBranch(Long branchId) {
         return repository.findById(branchId)
-                .switchIfEmpty(Mono.error(new RuntimeException("Branch not found")))
                 .flatMap(repository::delete);
     }
 }

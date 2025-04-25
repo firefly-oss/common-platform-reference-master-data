@@ -43,14 +43,12 @@ public class LanguageLocaleServiceImpl implements LanguageLocaleService {
     @Override
     public Mono<LanguageLocaleDTO> getLanguageLocale(Long id) {
         return repository.findById(id)
-                .map(mapper::toDTO)
-                .switchIfEmpty(Mono.error(new RuntimeException("LanguageLocale not found with ID: " + id)));
+                .map(mapper::toDTO);
     }
 
     @Override
     public Mono<LanguageLocaleDTO> updateLanguageLocale(Long id, LanguageLocaleDTO dto) {
         return repository.findById(id)
-                .switchIfEmpty(Mono.error(new RuntimeException("LanguageLocale not found with ID: " + id)))
                 .flatMap(existingEntity -> {
                     LanguageLocale updatedEntity = mapper.toEntity(dto);
                     updatedEntity.setLocaleId(id); // Ensure the ID is preserved
@@ -62,7 +60,6 @@ public class LanguageLocaleServiceImpl implements LanguageLocaleService {
     @Override
     public Mono<Void> deleteLanguageLocale(Long id) {
         return repository.findById(id)
-                .switchIfEmpty(Mono.error(new RuntimeException("LanguageLocale not found with ID: " + id)))
                 .flatMap(repository::delete);
     }
 }
