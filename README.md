@@ -19,6 +19,10 @@
   - [Consent Catalog API](#consent-catalog-api)
   - [Title Master API](#title-master-api)
   - [Relationship Type Master API](#relationship-type-master-api)
+  - [Notification Message Catalog API](#notification-message-catalog-api)
+  - [Message Type Catalog API](#message-type-catalog-api)
+  - [Document Template Catalog API](#document-template-catalog-api)
+  - [Document Template Type Catalog API](#document-template-type-catalog-api)
 - [Setup and Installation](#setup-and-installation)
   - [Prerequisites](#prerequisites)
   - [Building the Application](#building-the-application)
@@ -79,6 +83,8 @@ The microservice manages the following types of reference data:
 11. **Consent Catalog**: Catalog of consent types that can be given by users
 12. **Title Master**: Title prefixes (Mr., Mrs., Dr., etc.) used in addressing individuals
 13. **Relationship Type Master**: Types of relationships between entities (Beneficiary, CEO, etc.)
+14. **Notification Message Catalog**: Catalog of notification messages that can be sent to users based on events, with support for localization, template variables, and HTML templates
+15. **Document Template Catalog**: Catalog of document templates that can be used for generating documents in various formats, with support for localization and template variables
 
 ## API Reference
 All API endpoints follow a versioned structure (e.g., `/api/v1/...`). The API supports standard HTTP methods (GET, POST, PUT, DELETE) for CRUD operations.
@@ -2553,6 +2559,945 @@ Example response:
 #### Delete Relationship Type
 ```
 DELETE /api/v1/relationship-types/{relationshipTypeId}
+```
+
+Response: HTTP 204 No Content
+
+### Document Template Catalog API
+Endpoints for managing document templates that can be used for generating documents in various formats.
+
+#### List Document Templates
+```
+GET /api/v1/document-templates
+```
+
+Example response:
+```json
+{
+  "content": [
+    {
+      "templateId": 1,
+      "templateCode": "INVOICE_TEMPLATE",
+      "typeId": 1,
+      "templateType": {
+        "typeId": 1,
+        "typeCode": "PDF",
+        "typeName": "PDF Template",
+        "description": "Document templates for PDF generation",
+        "status": "ACTIVE",
+        "dateCreated": "2023-01-01T00:00:00",
+        "dateUpdated": "2023-01-01T00:00:00"
+      },
+      "category": "FINANCIAL",
+      "description": "Standard invoice template",
+      "templateName": "Standard Invoice",
+      "templateContent": "<html><body><h1>INVOICE</h1><p>Customer: ${customerName}</p><p>Amount: ${amount}</p></body></html>",
+      "templateVariables": {
+        "customerName": "string",
+        "invoiceNumber": "string",
+        "amount": "number",
+        "items": "array"
+      },
+      "version": "1.0",
+      "status": "ACTIVE",
+      "dateCreated": "2023-06-15T10:30:00",
+      "dateUpdated": "2023-06-15T10:30:00"
+    }
+  ],
+  "pageable": {
+    "sort": {
+      "sorted": true,
+      "unsorted": false,
+      "empty": false
+    },
+    "pageNumber": 0,
+    "pageSize": 10,
+    "offset": 0,
+    "paged": true,
+    "unpaged": false
+  },
+  "totalElements": 5,
+  "totalPages": 1,
+  "last": true,
+  "first": true,
+  "sort": {
+    "sorted": true,
+    "unsorted": false,
+    "empty": false
+  },
+  "numberOfElements": 1,
+  "size": 10,
+  "number": 0,
+  "empty": false
+}
+```
+
+#### List Document Templates by Category
+```
+GET /api/v1/document-templates/category/{category}
+```
+
+Example response:
+```json
+{
+  "content": [
+    {
+      "templateId": 1,
+      "templateCode": "INVOICE_TEMPLATE",
+      "typeId": 1,
+      "templateType": {
+        "typeId": 1,
+        "typeCode": "PDF",
+        "typeName": "PDF Template",
+        "description": "Document templates for PDF generation",
+        "status": "ACTIVE",
+        "dateCreated": "2023-01-01T00:00:00",
+        "dateUpdated": "2023-01-01T00:00:00"
+      },
+      "category": "FINANCIAL",
+      "description": "Standard invoice template",
+      "templateName": "Standard Invoice",
+      "templateContent": "<html><body><h1>INVOICE</h1><p>Customer: ${customerName}</p><p>Amount: ${amount}</p></body></html>",
+      "templateVariables": {
+        "customerName": "string",
+        "invoiceNumber": "string",
+        "amount": "number",
+        "items": "array"
+      },
+      "version": "1.0",
+      "status": "ACTIVE",
+      "dateCreated": "2023-06-15T10:30:00",
+      "dateUpdated": "2023-06-15T10:30:00"
+    }
+  ],
+  "pageable": {
+    "sort": {
+      "sorted": true,
+      "unsorted": false,
+      "empty": false
+    },
+    "pageNumber": 0,
+    "pageSize": 10,
+    "offset": 0,
+    "paged": true,
+    "unpaged": false
+  },
+  "totalElements": 1,
+  "totalPages": 1,
+  "last": true,
+  "first": true,
+  "sort": {
+    "sorted": true,
+    "unsorted": false,
+    "empty": false
+  },
+  "numberOfElements": 1,
+  "size": 10,
+  "number": 0,
+  "empty": false
+}
+```
+
+#### List Document Templates by Type
+```
+GET /api/v1/document-templates/type/{typeId}
+```
+
+Example response:
+```json
+{
+  "content": [
+    {
+      "templateId": 1,
+      "templateCode": "INVOICE_TEMPLATE",
+      "typeId": 1,
+      "templateType": {
+        "typeId": 1,
+        "typeCode": "PDF",
+        "typeName": "PDF Template",
+        "description": "Document templates for PDF generation",
+        "status": "ACTIVE",
+        "dateCreated": "2023-01-01T00:00:00",
+        "dateUpdated": "2023-01-01T00:00:00"
+      },
+      "category": "FINANCIAL",
+      "description": "Standard invoice template",
+      "templateName": "Standard Invoice",
+      "templateContent": "<html><body><h1>INVOICE</h1><p>Customer: ${customerName}</p><p>Amount: ${amount}</p></body></html>",
+      "templateVariables": {
+        "customerName": "string",
+        "invoiceNumber": "string",
+        "amount": "number",
+        "items": "array"
+      },
+      "version": "1.0",
+      "status": "ACTIVE",
+      "dateCreated": "2023-06-15T10:30:00",
+      "dateUpdated": "2023-06-15T10:30:00"
+    }
+  ],
+  "pageable": {
+    "sort": {
+      "sorted": true,
+      "unsorted": false,
+      "empty": false
+    },
+    "pageNumber": 0,
+    "pageSize": 10,
+    "offset": 0,
+    "paged": true,
+    "unpaged": false
+  },
+  "totalElements": 1,
+  "totalPages": 1,
+  "last": true,
+  "first": true,
+  "sort": {
+    "sorted": true,
+    "unsorted": false,
+    "empty": false
+  },
+  "numberOfElements": 1,
+  "size": 10,
+  "number": 0,
+  "empty": false
+}
+```
+
+#### Get Document Template by ID
+```
+GET /api/v1/document-templates/{templateId}
+```
+
+Example response:
+```json
+{
+  "templateId": 1,
+  "templateCode": "INVOICE_TEMPLATE",
+  "typeId": 1,
+  "templateType": {
+    "typeId": 1,
+    "typeCode": "PDF",
+    "typeName": "PDF Template",
+    "description": "Document templates for PDF generation",
+    "status": "ACTIVE",
+    "dateCreated": "2023-01-01T00:00:00",
+    "dateUpdated": "2023-01-01T00:00:00"
+  },
+  "category": "FINANCIAL",
+  "description": "Standard invoice template",
+  "templateName": "Standard Invoice",
+  "templateContent": "<html><body><h1>INVOICE</h1><p>Customer: ${customerName}</p><p>Amount: ${amount}</p></body></html>",
+  "templateVariables": {
+    "customerName": "string",
+    "invoiceNumber": "string",
+    "amount": "number",
+    "items": "array"
+  },
+  "version": "1.0",
+  "status": "ACTIVE",
+  "dateCreated": "2023-06-15T10:30:00",
+  "dateUpdated": "2023-06-15T10:30:00"
+}
+```
+
+#### Get Document Template by Code
+```
+GET /api/v1/document-templates/code/{templateCode}
+```
+
+Example response:
+```json
+{
+  "templateId": 1,
+  "templateCode": "INVOICE_TEMPLATE",
+  "typeId": 1,
+  "templateType": {
+    "typeId": 1,
+    "typeCode": "PDF",
+    "typeName": "PDF Template",
+    "description": "Document templates for PDF generation",
+    "status": "ACTIVE",
+    "dateCreated": "2023-01-01T00:00:00",
+    "dateUpdated": "2023-01-01T00:00:00"
+  },
+  "category": "FINANCIAL",
+  "description": "Standard invoice template",
+  "templateName": "Standard Invoice",
+  "templateContent": "<html><body><h1>INVOICE</h1><p>Customer: ${customerName}</p><p>Amount: ${amount}</p></body></html>",
+  "templateVariables": {
+    "customerName": "string",
+    "invoiceNumber": "string",
+    "amount": "number",
+    "items": "array"
+  },
+  "version": "1.0",
+  "status": "ACTIVE",
+  "dateCreated": "2023-06-15T10:30:00",
+  "dateUpdated": "2023-06-15T10:30:00"
+}
+```
+
+#### Create Document Template
+```
+POST /api/v1/document-templates
+```
+
+Example request body:
+```json
+{
+  "templateCode": "RECEIPT_TEMPLATE",
+  "typeId": 1,
+  "category": "FINANCIAL",
+  "description": "Standard receipt template",
+  "templateName": "Standard Receipt",
+  "templateContent": "<html><body><h1>RECEIPT</h1><p>Customer: ${customerName}</p><p>Amount: ${amount}</p></body></html>",
+  "templateVariables": {
+    "customerName": "string",
+    "receiptNumber": "string",
+    "amount": "number",
+    "items": "array"
+  },
+  "version": "1.0",
+  "status": "ACTIVE"
+}
+```
+
+Example response:
+```json
+{
+  "templateId": 2,
+  "templateCode": "RECEIPT_TEMPLATE",
+  "typeId": 1,
+  "templateType": {
+    "typeId": 1,
+    "typeCode": "PDF",
+    "typeName": "PDF Template",
+    "description": "Document templates for PDF generation",
+    "status": "ACTIVE",
+    "dateCreated": "2023-01-01T00:00:00",
+    "dateUpdated": "2023-01-01T00:00:00"
+  },
+  "category": "FINANCIAL",
+  "description": "Standard receipt template",
+  "templateName": "Standard Receipt",
+  "templateContent": "<html><body><h1>RECEIPT</h1><p>Customer: ${customerName}</p><p>Amount: ${amount}</p></body></html>",
+  "templateVariables": {
+    "customerName": "string",
+    "receiptNumber": "string",
+    "amount": "number",
+    "items": "array"
+  },
+  "version": "1.0",
+  "status": "ACTIVE",
+  "dateCreated": "2023-06-15T10:30:00",
+  "dateUpdated": "2023-06-15T10:30:00"
+}
+```
+
+#### Update Document Template
+```
+PUT /api/v1/document-templates/{templateId}
+```
+
+Example request body:
+```json
+{
+  "templateCode": "RECEIPT_TEMPLATE",
+  "typeId": 1,
+  "category": "FINANCIAL",
+  "description": "Standard receipt template with tax information",
+  "templateName": "Standard Receipt",
+  "templateContent": "<html><body><h1>RECEIPT</h1><p>Customer: ${customerName}</p><p>Amount: ${amount}</p><p>Tax: ${tax}</p></body></html>",
+  "templateVariables": {
+    "customerName": "string",
+    "receiptNumber": "string",
+    "amount": "number",
+    "tax": "number",
+    "items": "array"
+  },
+  "version": "1.1",
+  "status": "ACTIVE"
+}
+```
+
+Example response:
+```json
+{
+  "templateId": 2,
+  "templateCode": "RECEIPT_TEMPLATE",
+  "typeId": 1,
+  "templateType": {
+    "typeId": 1,
+    "typeCode": "PDF",
+    "typeName": "PDF Template",
+    "description": "Document templates for PDF generation",
+    "status": "ACTIVE",
+    "dateCreated": "2023-01-01T00:00:00",
+    "dateUpdated": "2023-01-01T00:00:00"
+  },
+  "category": "FINANCIAL",
+  "description": "Standard receipt template with tax information",
+  "templateName": "Standard Receipt",
+  "templateContent": "<html><body><h1>RECEIPT</h1><p>Customer: ${customerName}</p><p>Amount: ${amount}</p><p>Tax: ${tax}</p></body></html>",
+  "templateVariables": {
+    "customerName": "string",
+    "receiptNumber": "string",
+    "amount": "number",
+    "tax": "number",
+    "items": "array"
+  },
+  "version": "1.1",
+  "status": "ACTIVE",
+  "dateCreated": "2023-06-15T10:30:00",
+  "dateUpdated": "2023-06-15T11:45:00"
+}
+```
+
+#### Delete Document Template
+```
+DELETE /api/v1/document-templates/{templateId}
+```
+
+Response: HTTP 204 No Content
+
+### Document Template Type Catalog API
+Endpoints for managing document template types (PDF, DOCX, HTML, etc.).
+
+#### List Document Template Types
+```
+GET /api/v1/document-template-types
+```
+
+Example response:
+```json
+{
+  "content": [
+    {
+      "typeId": 1,
+      "typeCode": "PDF",
+      "typeName": "PDF Template",
+      "description": "Document templates for PDF generation",
+      "status": "ACTIVE",
+      "dateCreated": "2023-01-01T00:00:00",
+      "dateUpdated": "2023-01-01T00:00:00"
+    },
+    {
+      "typeId": 2,
+      "typeCode": "DOCX",
+      "typeName": "Word Template",
+      "description": "Document templates for Microsoft Word documents",
+      "status": "ACTIVE",
+      "dateCreated": "2023-01-01T00:00:00",
+      "dateUpdated": "2023-01-01T00:00:00"
+    }
+  ],
+  "pageable": {
+    "sort": {
+      "sorted": true,
+      "unsorted": false,
+      "empty": false
+    },
+    "pageNumber": 0,
+    "pageSize": 10,
+    "offset": 0,
+    "paged": true,
+    "unpaged": false
+  },
+  "totalElements": 4,
+  "totalPages": 1,
+  "last": true,
+  "first": true,
+  "sort": {
+    "sorted": true,
+    "unsorted": false,
+    "empty": false
+  },
+  "numberOfElements": 4,
+  "size": 10,
+  "number": 0,
+  "empty": false
+}
+```
+
+#### Get Document Template Type by ID
+```
+GET /api/v1/document-template-types/{typeId}
+```
+
+Example response:
+```json
+{
+  "typeId": 1,
+  "typeCode": "PDF",
+  "typeName": "PDF Template",
+  "description": "Document templates for PDF generation",
+  "status": "ACTIVE",
+  "dateCreated": "2023-01-01T00:00:00",
+  "dateUpdated": "2023-01-01T00:00:00"
+}
+```
+
+#### Get Document Template Type by Code
+```
+GET /api/v1/document-template-types/code/{typeCode}
+```
+
+Example response:
+```json
+{
+  "typeId": 1,
+  "typeCode": "PDF",
+  "typeName": "PDF Template",
+  "description": "Document templates for PDF generation",
+  "status": "ACTIVE",
+  "dateCreated": "2023-01-01T00:00:00",
+  "dateUpdated": "2023-01-01T00:00:00"
+}
+```
+
+#### Create Document Template Type
+```
+POST /api/v1/document-template-types
+```
+
+Example request body:
+```json
+{
+  "typeCode": "CSV",
+  "typeName": "CSV Template",
+  "description": "Document templates for CSV files",
+  "status": "ACTIVE"
+}
+```
+
+Example response:
+```json
+{
+  "typeId": 5,
+  "typeCode": "CSV",
+  "typeName": "CSV Template",
+  "description": "Document templates for CSV files",
+  "status": "ACTIVE",
+  "dateCreated": "2023-06-15T10:30:00",
+  "dateUpdated": "2023-06-15T10:30:00"
+}
+```
+
+#### Update Document Template Type
+```
+PUT /api/v1/document-template-types/{typeId}
+```
+
+Example request body:
+```json
+{
+  "typeCode": "CSV",
+  "typeName": "CSV Template",
+  "description": "Document templates for CSV and TSV files",
+  "status": "ACTIVE"
+}
+```
+
+Example response:
+```json
+{
+  "typeId": 5,
+  "typeCode": "CSV",
+  "typeName": "CSV Template",
+  "description": "Document templates for CSV and TSV files",
+  "status": "ACTIVE",
+  "dateCreated": "2023-06-15T10:30:00",
+  "dateUpdated": "2023-06-15T11:45:00"
+}
+```
+
+#### Delete Document Template Type
+```
+DELETE /api/v1/document-template-types/{typeId}
+```
+
+Response: HTTP 204 No Content
+
+### Notification Message Catalog API
+Endpoints for managing notification message catalog entries that define the types of notification messages that can be sent to users based on events, with support for localization and HTML templates.
+
+#### List Notification Messages
+```
+GET /api/v1/notification-messages
+```
+
+Example response:
+```json
+{
+  "content": [
+    {
+      "messageId": 1,
+      "messageCode": "LOW_BALANCE",
+      "typeId": 1,
+      "messageType": {
+        "typeId": 1,
+        "typeCode": "EMAIL",
+        "typeName": "Email Message",
+        "description": "Notification messages sent via email",
+        "status": "ACTIVE",
+        "dateCreated": "2023-06-15T10:30:00",
+        "dateUpdated": "2023-06-15T10:30:00"
+      },
+      "eventType": "ACCOUNT_BALANCE",
+      "description": "Notification for low account balance",
+      "defaultSubject": "Low Balance Alert",
+      "defaultMessage": "Your account balance is below {threshold}",
+      "parameters": {
+        "threshold": "number"
+      },
+      "status": "ACTIVE",
+      "dateCreated": "2023-06-15T10:30:00",
+      "dateUpdated": "2023-06-15T10:30:00"
+    }
+  ],
+  "pageable": {
+    "pageNumber": 0,
+    "pageSize": 10,
+    "sort": {
+      "sorted": true,
+      "unsorted": false,
+      "empty": false
+    },
+    "offset": 0,
+    "paged": true,
+    "unpaged": false
+  },
+  "totalElements": 1,
+  "totalPages": 1,
+  "last": true,
+  "size": 10,
+  "number": 0,
+  "sort": {
+    "sorted": true,
+    "unsorted": false,
+    "empty": false
+  },
+  "numberOfElements": 1,
+  "first": true,
+  "empty": false
+}
+```
+
+#### Get Notification Message by ID
+```
+GET /api/v1/notification-messages/{messageId}
+```
+
+Example response:
+```json
+{
+  "messageId": 1,
+  "messageCode": "LOW_BALANCE",
+  "messageType": "EMAIL",
+  "eventType": "ACCOUNT_BALANCE",
+  "description": "Notification for low account balance",
+  "defaultSubject": "Low Balance Alert",
+  "defaultMessage": "Your account balance is below {threshold}",
+  "parameters": {
+    "threshold": "number"
+  },
+  "status": "ACTIVE",
+  "dateCreated": "2023-06-15T10:30:00",
+  "dateUpdated": "2023-06-15T10:30:00"
+}
+```
+
+#### Create Notification Message
+```
+POST /api/v1/notification-messages
+```
+
+Example request body:
+```json
+{
+  "messageCode": "ACCOUNT_LOCKED",
+  "messageType": "SMS",
+  "eventType": "SECURITY",
+  "description": "Notification for account locked due to multiple failed login attempts",
+  "defaultSubject": "Account Security Alert",
+  "defaultMessage": "Your account has been locked due to {attempts} failed login attempts. Please contact support.",
+  "parameters": {
+    "attempts": "number"
+  },
+  "status": "ACTIVE"
+}
+```
+
+Example response:
+```json
+{
+  "messageId": 2,
+  "messageCode": "ACCOUNT_LOCKED",
+  "messageType": "SMS",
+  "eventType": "SECURITY",
+  "description": "Notification for account locked due to multiple failed login attempts",
+  "defaultSubject": "Account Security Alert",
+  "defaultMessage": "Your account has been locked due to {attempts} failed login attempts. Please contact support.",
+  "parameters": {
+    "attempts": "number"
+  },
+  "status": "ACTIVE",
+  "dateCreated": "2023-06-15T11:30:00",
+  "dateUpdated": "2023-06-15T11:30:00"
+}
+```
+
+#### Update Notification Message
+```
+PUT /api/v1/notification-messages/{messageId}
+```
+
+Example request body:
+```json
+{
+  "messageCode": "ACCOUNT_LOCKED",
+  "typeId": 2,
+  "messageType": {
+    "typeId": 2,
+    "typeCode": "SMS",
+    "typeName": "SMS Message",
+    "description": "Notification messages sent via SMS",
+    "status": "ACTIVE"
+  },
+  "eventType": "SECURITY",
+  "description": "Notification for account locked due to security concerns",
+  "defaultSubject": "Account Security Alert",
+  "defaultMessage": "Your account has been locked due to {reason}. Please contact support at {supportPhone}.",
+  "parameters": {
+    "reason": "string",
+    "supportPhone": "string"
+  },
+  "status": "ACTIVE"
+}
+```
+
+Example response:
+```json
+{
+  "messageId": 2,
+  "messageCode": "ACCOUNT_LOCKED",
+  "typeId": 2,
+  "messageType": {
+    "typeId": 2,
+    "typeCode": "SMS",
+    "typeName": "SMS Message",
+    "description": "Notification messages sent via SMS",
+    "status": "ACTIVE",
+    "dateCreated": "2023-06-15T11:30:00",
+    "dateUpdated": "2023-06-15T11:30:00"
+  },
+  "eventType": "SECURITY",
+  "description": "Notification for account locked due to security concerns",
+  "defaultSubject": "Account Security Alert",
+  "defaultMessage": "Your account has been locked due to {reason}. Please contact support at {supportPhone}.",
+  "parameters": {
+    "reason": "string",
+    "supportPhone": "string"
+  },
+  "status": "ACTIVE",
+  "dateCreated": "2023-06-15T11:30:00",
+  "dateUpdated": "2023-06-15T12:45:00"
+}
+```
+
+#### Delete Notification Message
+```
+DELETE /api/v1/notification-messages/{messageId}
+```
+
+Response: HTTP 204 No Content
+
+#### Notification Message Templates API
+
+Endpoints for managing HTML templates for notification messages.
+
+```
+GET /api/v1/notification-templates/message/{messageId}
+```
+
+Example response:
+```json
+[
+  {
+    "templateId": 1,
+    "messageId": 1,
+    "templateName": "low_balance_email",
+    "templateContent": "<html><body><h1>Low Balance Alert</h1><p>Your account balance is below ${threshold}.</p></body></html>",
+    "templateType": "HTML",
+    "version": "1.0",
+    "status": "ACTIVE",
+    "dateCreated": "2023-06-15T10:30:00",
+    "dateUpdated": "2023-06-15T10:30:00"
+  }
+]
+```
+
+#### Notification Message Localizations API
+
+Endpoints for managing localized versions of notification messages.
+
+```
+GET /api/v1/notification-localizations/message/{messageId}
+```
+
+Example response:
+```json
+[
+  {
+    "localizationId": 1,
+    "messageId": 1,
+    "localeId": 2,
+    "subject": "Alerta de Saldo Bajo",
+    "message": "Su saldo de cuenta está por debajo de {threshold}.",
+    "status": "ACTIVE",
+    "dateCreated": "2023-06-15T10:30:00",
+    "dateUpdated": "2023-06-15T10:30:00"
+  }
+]
+```
+
+### Message Type Catalog API
+Endpoints for managing message type catalog entries that define the types of notification messages that can be sent (Email, SMS, Push, etc.).
+
+#### List Message Types
+```
+GET /api/v1/message-types
+```
+
+Example response:
+```json
+{
+  "content": [
+    {
+      "typeId": 1,
+      "typeCode": "EMAIL",
+      "typeName": "Email Message",
+      "description": "Notification messages sent via email",
+      "status": "ACTIVE",
+      "dateCreated": "2023-06-15T10:30:00",
+      "dateUpdated": "2023-06-15T10:30:00"
+    },
+    {
+      "typeId": 2,
+      "typeCode": "SMS",
+      "typeName": "SMS Message",
+      "description": "Notification messages sent via SMS",
+      "status": "ACTIVE",
+      "dateCreated": "2023-06-15T10:30:00",
+      "dateUpdated": "2023-06-15T10:30:00"
+    }
+  ],
+  "pageable": {
+    "pageNumber": 0,
+    "pageSize": 10,
+    "sort": {
+      "sorted": true,
+      "unsorted": false,
+      "empty": false
+    },
+    "offset": 0,
+    "paged": true,
+    "unpaged": false
+  },
+  "totalElements": 2,
+  "totalPages": 1,
+  "last": true,
+  "size": 10,
+  "number": 0,
+  "sort": {
+    "sorted": true,
+    "unsorted": false,
+    "empty": false
+  },
+  "numberOfElements": 2,
+  "first": true,
+  "empty": false
+}
+```
+
+#### Get Message Type by ID
+```
+GET /api/v1/message-types/{typeId}
+```
+
+Example response:
+```json
+{
+  "typeId": 1,
+  "typeCode": "EMAIL",
+  "typeName": "Email Message",
+  "description": "Notification messages sent via email",
+  "status": "ACTIVE",
+  "dateCreated": "2023-06-15T10:30:00",
+  "dateUpdated": "2023-06-15T10:30:00"
+}
+```
+
+#### Create Message Type
+```
+POST /api/v1/message-types
+```
+
+Example request body:
+```json
+{
+  "typeCode": "PUSH",
+  "typeName": "Push Notification",
+  "description": "Notification messages sent as mobile push notifications",
+  "status": "ACTIVE"
+}
+```
+
+Example response:
+```json
+{
+  "typeId": 3,
+  "typeCode": "PUSH",
+  "typeName": "Push Notification",
+  "description": "Notification messages sent as mobile push notifications",
+  "status": "ACTIVE",
+  "dateCreated": "2023-06-15T11:30:00",
+  "dateUpdated": "2023-06-15T11:30:00"
+}
+```
+
+#### Update Message Type
+```
+PUT /api/v1/message-types/{typeId}
+```
+
+Example request body:
+```json
+{
+  "typeCode": "PUSH",
+  "typeName": "Mobile Push Notification",
+  "description": "Notification messages sent as mobile push notifications",
+  "status": "ACTIVE"
+}
+```
+
+Example response:
+```json
+{
+  "typeId": 3,
+  "typeCode": "PUSH",
+  "typeName": "Mobile Push Notification",
+  "description": "Notification messages sent as mobile push notifications",
+  "status": "ACTIVE",
+  "dateCreated": "2023-06-15T11:30:00",
+  "dateUpdated": "2023-06-15T12:45:00"
+}
+```
+
+#### Delete Message Type
+```
+DELETE /api/v1/message-types/{typeId}
 ```
 
 Response: HTTP 204 No Content

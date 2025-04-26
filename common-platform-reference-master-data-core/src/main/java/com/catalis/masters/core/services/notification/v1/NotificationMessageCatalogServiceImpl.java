@@ -1,0 +1,111 @@
+package com.catalis.masters.core.services.notification.v1;
+
+
+import com.catalis.common.core.queries.PaginationRequest;
+import com.catalis.common.core.queries.PaginationResponse;
+import com.catalis.common.core.queries.PaginationUtils;
+import com.catalis.masters.core.mappers.notification.v1.NotificationMessageCatalogMapper;
+import com.catalis.masters.interfaces.dtos.notification.v1.NotificationMessageCatalogDTO;
+import com.catalis.masters.models.entities.notification.v1.NotificationMessageCatalog;
+import com.catalis.masters.models.repositories.notification.v1.NotificationMessageCatalogRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import reactor.core.publisher.Mono;
+
+import java.time.LocalDateTime;
+
+/**
+ * Implementation of the NotificationMessageCatalogService interface.
+ */
+@Service
+@Transactional
+public class NotificationMessageCatalogServiceImpl implements NotificationMessageCatalogService {
+
+    @Autowired
+    private NotificationMessageCatalogRepository repository;
+
+    @Autowired
+    private NotificationMessageCatalogMapper mapper;
+
+    @Override
+    public Mono<PaginationResponse<NotificationMessageCatalogDTO>> listNotificationMessages(PaginationRequest paginationRequest) {
+        return PaginationUtils.paginateQuery(
+                paginationRequest,
+                mapper::toDTO,
+                pageable -> repository.findAllBy(pageable),
+                () -> repository.count()
+        );
+    }
+
+    @Override
+    public Mono<PaginationResponse<NotificationMessageCatalogDTO>> listNotificationMessagesByEventType(String eventType, PaginationRequest paginationRequest) {
+        return PaginationUtils.paginateQuery(
+                paginationRequest,
+                mapper::toDTO,
+                pageable -> repository.findByEventType(eventType, pageable),
+                () -> repository.countByEventType(eventType)
+        );
+    }
+
+    @Override
+    public Mono<PaginationResponse<NotificationMessageCatalogDTO>> listNotificationMessagesByTypeId(Long typeId, PaginationRequest paginationRequest) {
+        return PaginationUtils.paginateQuery(
+                paginationRequest,
+                mapper::toDTO,
+                pageable -> repository.findByTypeId(typeId, pageable),
+                () -> repository.countByTypeId(typeId)
+        );
+    }
+
+    @Override
+    public Mono<NotificationMessageCatalogDTO> createNotificationMessage(NotificationMessageCatalogDTO notificationMessageDTO) {
+        // Set audit fields
+        LocalDateTime now = LocalDateTime.now();
+        notificationMessageDTO.setDateCreated(now);
+        notificationMessageDTO.setDateUpdated(now);
+
+        return Mono.just(notificationMessageDTO)
+                .map(mapper::toEntity)
+                .flatMap(repository::save)
+                .map(mapper::toDTO)
+                .onErrorResume(e -> Mono.error(new RuntimeException("Error creating notification message: " + e.getMessage(), e)));
+    }
+
+    @Override
+    public Mono<NotificationMessageCatalogDTO> getNotificationMessage(Long messageId) {
+        return repository.findById(messageId)
+                .map(mapper::toDTO)
+                .switchIfEmpty(Mono.error(new RuntimeException("Notification message not found with ID: " + messageId)));
+    }
+
+    @Override
+    public Mono<NotificationMessageCatalogDTO> getNotificationMessageByCode(String messageCode) {
+        return repository.findByMessageCode(messageCode)
+                .map(mapper::toDTO)
+                .switchIfEmpty(Mono.error(new RuntimeException("Notification message not found with code: " + messageCode)));
+    }
+
+    @Override
+    public Mono<NotificationMessageCatalogDTO> updateNotificationMessage(Long messageId, NotificationMessageCatalogDTO notificationMessageDTO) {
+        return repository.findById(messageId)
+                .switchIfEmpty(Mono.error(new RuntimeException("Notification message not found with ID: " + messageId)))
+                .flatMap(existingEntity -> {
+                    NotificationMessageCatalog updatedEntity = mapper.toEntity(notificationMessageDTO);
+                    updatedEntity.setMessageId(messageId);
+                    updatedEntity.setDateCreated(existingEntity.getDateCreated());
+                    updatedEntity.setDateUpdated(LocalDateTime.now());
+                    return repository.save(updatedEntity);
+                })
+                .map(mapper::toDTO)
+                .onErrorResume(e -> Mono.error(new RuntimeException("Error updating notification message: " + e.getMessage(), e)));
+    }
+
+    @Override
+    public Mono<Void> deleteNotificationMessage(Long messageId) {
+        return repository.findById(messageId)
+                .switchIfEmpty(Mono.error(new RuntimeException("Notification message not found with ID: " + messageId)))
+                .flatMap(repository::delete)
+                .onErrorResume(e -> Mono.error(new RuntimeException("Error deleting notification message: " + e.getMessage(), e)));
+    }
+}
