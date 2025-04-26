@@ -153,7 +153,7 @@ public class NotificationMessageCatalogServiceImplTest {
     }
 
     @Test
-    void getNotificationMessage_ShouldReturnEmpty_WhenNotFound() {
+    void getNotificationMessage_ShouldReturnError_WhenNotFound() {
         // Arrange
         when(repository.findById(anyLong())).thenReturn(Mono.empty());
 
@@ -162,7 +162,10 @@ public class NotificationMessageCatalogServiceImplTest {
 
         // Assert
         StepVerifier.create(result)
-                .verifyComplete();
+                .expectErrorMatches(throwable ->
+                        throwable instanceof RuntimeException &&
+                                throwable.getMessage().contains("Notification message not found"))
+                .verify();
 
         verify(repository).findById(anyLong());
     }
