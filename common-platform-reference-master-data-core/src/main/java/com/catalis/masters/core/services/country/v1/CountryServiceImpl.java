@@ -1,5 +1,7 @@
 package com.catalis.masters.core.services.country.v1;
 
+import com.catalis.common.core.filters.FilterRequest;
+import com.catalis.common.core.filters.FilterUtils;
 import com.catalis.common.core.queries.PaginationRequest;
 import com.catalis.common.core.queries.PaginationResponse;
 import com.catalis.common.core.queries.PaginationUtils;
@@ -24,13 +26,13 @@ public class CountryServiceImpl implements CountryService {
     private CountryMapper mapper;
 
     @Override
-    public Mono<PaginationResponse<CountryDTO>> listCountries(PaginationRequest paginationRequest) {
-        return PaginationUtils.paginateQuery(
-                paginationRequest,
-                mapper::toDTO,
-                pageable -> repository.findAllBy(pageable),
-                () -> repository.count()
-        );
+    public Mono<PaginationResponse<CountryDTO>> listCountries(FilterRequest<CountryDTO> filterRequest) {
+        return FilterUtils
+                .createFilter(
+                        Country.class,
+                        mapper::toDTO
+                )
+                .filter(filterRequest);
     }
 
     @Override

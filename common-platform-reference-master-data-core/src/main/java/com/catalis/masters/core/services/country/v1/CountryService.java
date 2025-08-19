@@ -1,5 +1,6 @@
 package com.catalis.masters.core.services.country.v1;
 
+import com.catalis.common.core.filters.FilterRequest;
 import com.catalis.common.core.queries.PaginationRequest;
 import com.catalis.common.core.queries.PaginationResponse;
 import com.catalis.masters.interfaces.dtos.country.v1.CountryDTO;
@@ -9,10 +10,10 @@ public interface CountryService {
     /**
      * Retrieves a paginated list of countries based on the provided pagination request.
      *
-     * @param paginationRequest the pagination request containing page number, size, and sorting options
+     * @param filterRequest the pagination request containing page number, size, and sorting options
      * @return a Mono emitting a PaginationResponse containing a list of CountryDTO objects
      */
-    Mono<PaginationResponse<CountryDTO>> listCountries(PaginationRequest paginationRequest);
+    Mono<PaginationResponse<CountryDTO>> listCountries(FilterRequest<CountryDTO> filterRequest);
     /**
      * Creates a new country based on the provided CountryDTO.
      *

@@ -1,5 +1,6 @@
 package com.catalis.masters.core.services.country.v1;
 
+import com.catalis.common.core.filters.FilterRequest;
 import com.catalis.common.core.queries.PaginationRequest;
 import com.catalis.masters.core.utils.TestPaginationRequest;
 import com.catalis.common.core.queries.PaginationResponse;
@@ -41,6 +42,9 @@ public class CountryServiceImplTest {
     private CountryDTO countryDTO;
     private TestPaginationRequest paginationRequest;
 
+    @Mock
+    private FilterRequest<CountryDTO> filterRequest;
+
     @BeforeEach
     void setUp() {
         // Setup test data
@@ -48,46 +52,18 @@ public class CountryServiceImplTest {
         country.setCountryId(1L);
         country.setIsoCode("US");
         country.setCountryName("United States");
-        country.setRegionLkpId(1L);
         country.setStatus(StatusEnum.ACTIVE);
         country.setDateCreated(LocalDateTime.now());
         country.setDateUpdated(LocalDateTime.now());
 
         countryDTO = new CountryDTO();
-        countryDTO.setCountryId(1L);
         countryDTO.setIsoCode("US");
         countryDTO.setCountryName("United States");
-        countryDTO.setRegionLkpId(1L);
         countryDTO.setStatus(StatusEnum.ACTIVE);
         countryDTO.setDateCreated(LocalDateTime.now());
         countryDTO.setDateUpdated(LocalDateTime.now());
 
         paginationRequest = new TestPaginationRequest(0, 10);
-    }
-
-    @Test
-    void listCountries_ShouldReturnPaginatedResponse() {
-        // Arrange
-        Pageable pageable = paginationRequest.toPageable();
-        when(countryRepository.findAllBy(any(Pageable.class))).thenReturn(Flux.just(country));
-        when(countryRepository.count()).thenReturn(Mono.just(1L));
-        when(countryMapper.toDTO(any(Country.class))).thenReturn(countryDTO);
-
-        // Act
-        Mono<PaginationResponse<CountryDTO>> result = countryService.listCountries(paginationRequest);
-
-        // Assert
-        StepVerifier.create(result)
-                .expectNextMatches(response -> {
-                    return response.getContent().size() == 1 &&
-                            response.getContent().get(0).getCountryId().equals(1L) &&
-                            response.getTotalElements() == 1L;
-                })
-                .verifyComplete();
-
-        verify(countryRepository).findAllBy(any(Pageable.class));
-        verify(countryRepository).count();
-        verify(countryMapper).toDTO(any(Country.class));
     }
 
     @Test

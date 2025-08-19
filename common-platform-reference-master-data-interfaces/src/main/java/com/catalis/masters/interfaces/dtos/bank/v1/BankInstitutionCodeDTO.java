@@ -1,5 +1,6 @@
 package com.catalis.masters.interfaces.dtos.bank.v1;
 
+import com.catalis.annotations.ValidBic;
 import com.catalis.core.utils.annotations.FilterableId;
 import com.catalis.masters.interfaces.enums.commons.v1.StatusEnum;
 import lombok.Data;
@@ -17,7 +18,10 @@ public class BankInstitutionCodeDTO {
 
     private Long institutionId;
     private String bankName;
+
+    @ValidBic
     private String swiftCode;
+
     private String routingNumber;
     private String ibanPrefix;
 

@@ -18,6 +18,7 @@
         <module>common-platform-reference-master-data-models</module>
         <module>common-platform-reference-master-data-interfaces</module>
         <module>common-platform-reference-master-data-web</module>
+        <module>common-platform-reference-master-data-sdk</module>
     </modules>
 
     <properties>
@@ -47,6 +48,11 @@
             <dependency>
                 <groupId>com.catalis</groupId>
                 <artifactId>common-platform-reference-master-data-web</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.catalis</groupId>
+                <artifactId>common-platform-reference-master-data-sdk</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>

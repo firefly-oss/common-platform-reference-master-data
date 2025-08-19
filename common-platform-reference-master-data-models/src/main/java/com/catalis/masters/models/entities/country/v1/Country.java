@@ -1,6 +1,7 @@
 package com.catalis.masters.models.entities.country.v1;
 
 import com.catalis.masters.interfaces.enums.commons.v1.StatusEnum;
+import com.catalis.masters.interfaces.enums.country.v1.RegionEnum;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
@@ -30,8 +31,8 @@ public class Country {
     @Column("country_name")
     private String countryName;
 
-    @Column("region_lkp_id")
-    private Long regionLkpId;
+    @Column("region")
+    private RegionEnum region;
 
     @Column("status")
     private StatusEnum status;

@@ -1,5 +1,6 @@
 package com.catalis.masters.web.controllers.country.v1;
 
+import com.catalis.common.core.filters.FilterRequest;
 import com.catalis.common.core.queries.PaginationRequest;
 import com.catalis.common.core.queries.PaginationResponse;
 import com.catalis.masters.core.services.country.v1.CountryServiceImpl;
@@ -31,20 +32,16 @@ public class CountryController {
     @ApiResponses({
             @ApiResponse(
                     responseCode = "200",
-                    description = "Successfully retrieved list of countries",
-                    content = @Content(
-                            mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = PaginationResponse.class)
-                    )
+                    description = "Successfully retrieved list of countries"
             )
     })
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public Mono<ResponseEntity<PaginationResponse<CountryDTO>>> listCountries(
-            @ParameterObject
-            @ModelAttribute PaginationRequest paginationRequest
+    @PostMapping(value = "/filter", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public Mono<ResponseEntity<PaginationResponse<CountryDTO>>> filterCountries(
+            @RequestBody FilterRequest<CountryDTO> filterRequest
     ) {
-        return service.listCountries(paginationRequest)
-                .map(ResponseEntity::ok);
+        return service.listCountries(filterRequest)
+                .map(ResponseEntity::ok)
+                .defaultIfEmpty(ResponseEntity.notFound().build());
     }
 
     @Operation(summary = "Create Country", description = "Create a new country.")
