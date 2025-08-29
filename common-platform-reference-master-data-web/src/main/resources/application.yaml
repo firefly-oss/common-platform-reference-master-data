@@ -29,7 +29,10 @@ spring:
     virtual:
       enabled: true
 
-ç
+server:
+  address: ${SERVER_ADDRESS:localhost}
+  port: ${SERVER_PORT:8080}
+  shutdown: graceful
 
 springdoc:
   api-docs:
@@ -70,6 +73,11 @@ spring:
     activate:
       on-profile: dev
 
+server:
+  address: ${SERVER_ADDRESS:localhost}
+  port: ${SERVER_PORT:8080}
+  shutdown: graceful
+
 logging:
   level:
     root: INFO
@@ -82,6 +90,11 @@ spring:
   config:
     activate:
       on-profile: testing
+
+server:
+  address: ${SERVER_ADDRESS:localhost}
+  port: ${SERVER_PORT:8080}
+  shutdown: graceful
 
 logging:
   level:
@@ -100,6 +113,11 @@ spring:
   config:
     activate:
       on-profile: prod
+
+server:
+  address: ${SERVER_ADDRESS:localhost}
+  port: ${SERVER_PORT:8080}
+  shutdown: graceful
 
 logging:
   level:
