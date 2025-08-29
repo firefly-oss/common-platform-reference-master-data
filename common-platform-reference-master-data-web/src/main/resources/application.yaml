@@ -4,8 +4,8 @@ spring:
     version: 1.0.0
     description: Reference Master Data Application
     team:
-      name: Catalis Development
-      email: dev@catalis.com
+      name: Firefly Software Solutions Inc
+      email: dev@getfirefly.io
 
   r2dbc:
     pool:
@@ -29,9 +29,7 @@ spring:
     virtual:
       enabled: true
 
-server:
-  port: 8080
-  shutdown: graceful
+ç
 
 springdoc:
   api-docs:
