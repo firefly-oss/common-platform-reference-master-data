@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Data
@@ -17,9 +19,17 @@ public class ContractTypeDTO {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long contractId;
 
+    @NotBlank(message = "Contract code is required")
+    @Size(max = 20, message = "Contract code must not exceed 20 characters")
     private String contractCode;
+
+    @Size(max = 500, message = "Description must not exceed 500 characters")
     private String description;
+
+    @NotBlank(message = "Contract name is required")
+    @Size(max = 100, message = "Contract name must not exceed 100 characters")
     private String name;
+
     private Boolean isActive;
     private LocalDateTime dateCreated;
     private LocalDateTime dateUpdated;
