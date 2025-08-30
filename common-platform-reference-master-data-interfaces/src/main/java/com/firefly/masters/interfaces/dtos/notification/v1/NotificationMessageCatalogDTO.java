@@ -7,6 +7,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.Map;
 
@@ -20,18 +24,37 @@ import java.util.Map;
 @NoArgsConstructor
 public class NotificationMessageCatalogDTO {
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long messageId;
 
+    @NotBlank(message = "Message code is required")
+    @Size(max = 50, message = "Message code must not exceed 50 characters")
     private String messageCode;
+
+    @NotNull(message = "Type ID is required")
     private Long typeId;
+
+    @Valid
     private MessageTypeCatalogDTO messageType;
+
+    @NotBlank(message = "Event type is required")
+    @Size(max = 50, message = "Event type must not exceed 50 characters")
     private String eventType;
+
+    @Size(max = 500, message = "Description must not exceed 500 characters")
     private String description;
+
+    @Size(max = 200, message = "Default subject must not exceed 200 characters")
     private String defaultSubject;
+
+    @Size(max = 2000, message = "Default message must not exceed 2000 characters")
     private String defaultMessage;
+
     private Map<String, Object> parameters;
+
+    @NotNull(message = "Status is required")
     private StatusEnum status;
+
     private LocalDateTime dateCreated;
     private LocalDateTime dateUpdated;
 }

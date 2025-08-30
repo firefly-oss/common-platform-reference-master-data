@@ -7,6 +7,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 /**
@@ -19,14 +22,26 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class NotificationMessageLocalizationDTO {
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long localizationId;
 
+    @NotNull(message = "Message ID is required")
     private Long messageId;
+
+    @NotNull(message = "Locale ID is required")
     private Long localeId;
+
+    @NotBlank(message = "Subject is required")
+    @Size(max = 200, message = "Subject must not exceed 200 characters")
     private String subject;
+
+    @NotBlank(message = "Message is required")
+    @Size(max = 2000, message = "Message must not exceed 2000 characters")
     private String message;
+
+    @NotNull(message = "Status is required")
     private StatusEnum status;
+
     private LocalDateTime dateCreated;
     private LocalDateTime dateUpdated;
 }

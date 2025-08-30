@@ -7,6 +7,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.Map;
 
@@ -21,16 +24,32 @@ import java.util.Map;
 @NoArgsConstructor
 public class NotificationMessageTemplateDTO {
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long templateId;
 
+    @NotNull(message = "Message ID is required")
     private Long messageId;
+
+    @NotBlank(message = "Template name is required")
+    @Size(max = 100, message = "Template name must not exceed 100 characters")
     private String templateName;
+
+    @NotBlank(message = "Template content is required")
+    @Size(max = 5000, message = "Template content must not exceed 5000 characters")
     private String templateContent;
+
+    @NotBlank(message = "Template type is required")
+    @Size(max = 50, message = "Template type must not exceed 50 characters")
     private String templateType;
+
+    @Size(max = 20, message = "Version must not exceed 20 characters")
     private String version;
+
     private Map<String, Object> templateVariables;
+
+    @NotNull(message = "Status is required")
     private StatusEnum status;
+
     private LocalDateTime dateCreated;
     private LocalDateTime dateUpdated;
 }
