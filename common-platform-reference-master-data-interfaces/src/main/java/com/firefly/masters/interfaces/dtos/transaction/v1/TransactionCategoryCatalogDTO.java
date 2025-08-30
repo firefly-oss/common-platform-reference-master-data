@@ -7,6 +7,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 /**
@@ -20,16 +23,29 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class TransactionCategoryCatalogDTO {
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long categoryId;
 
+    @NotBlank(message = "Category code is required")
+    @Size(max = 20, message = "Category code must not exceed 20 characters")
     private String categoryCode;
+
+    @NotBlank(message = "Category name is required")
+    @Size(max = 100, message = "Category name must not exceed 100 characters")
     private String categoryName;
+
+    @Size(max = 500, message = "Description must not exceed 500 characters")
     private String description;
+
     private Long parentCategoryId;
     private TransactionCategoryCatalogDTO parentCategory;
+
+    @NotNull(message = "Status is required")
     private StatusEnum status;
+
     private LocalDateTime dateCreated;
     private LocalDateTime dateUpdated;
+
+    @Size(max = 10000, message = "SVG icon data must not exceed 10000 characters")
     private String svgIcon;
 }
