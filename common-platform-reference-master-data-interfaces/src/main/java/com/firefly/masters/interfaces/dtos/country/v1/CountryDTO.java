@@ -8,6 +8,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Data
@@ -18,12 +22,24 @@ public class CountryDTO {
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long countryId;
-    
+
+    @NotBlank(message = "ISO code is required")
+    @Pattern(regexp = "^[A-Z]{2,3}$", message = "ISO code must be 2 or 3 uppercase letters")
     private String isoCode;
+
+    @NotBlank(message = "Country name is required")
+    @Size(max = 100, message = "Country name must not exceed 100 characters")
     private String countryName;
+
+    @NotNull(message = "Region is required")
     private RegionEnum region;
+
+    @NotNull(message = "Status is required")
     private StatusEnum status;
+
+    @Size(max = 10000, message = "SVG flag data must not exceed 10000 characters")
     private String svgFlag;
+
     private LocalDateTime dateCreated;
     private LocalDateTime dateUpdated;
 }
