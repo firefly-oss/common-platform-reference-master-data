@@ -7,6 +7,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 /**
@@ -19,14 +22,26 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class DocumentTemplateLocalizationDTO {
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long localizationId;
 
+    @NotNull(message = "Template ID is required")
     private Long templateId;
+
+    @NotNull(message = "Locale ID is required")
     private Long localeId;
+
+    @NotBlank(message = "Template name is required")
+    @Size(max = 100, message = "Template name must not exceed 100 characters")
     private String templateName;
+
+    @NotBlank(message = "Template content is required")
+    @Size(max = 10000, message = "Template content must not exceed 10000 characters")
     private String templateContent;
+
+    @NotNull(message = "Status is required")
     private StatusEnum status;
+
     private LocalDateTime dateCreated;
     private LocalDateTime dateUpdated;
 }
