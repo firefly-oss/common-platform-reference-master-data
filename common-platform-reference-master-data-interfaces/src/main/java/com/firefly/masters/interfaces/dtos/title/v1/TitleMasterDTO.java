@@ -8,6 +8,9 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Data
@@ -19,10 +22,18 @@ public class TitleMasterDTO {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long titleId;
 
+    @NotBlank(message = "Prefix is required")
+    @Size(max = 10, message = "Prefix must not exceed 10 characters")
     private String prefix;
+
+    @Size(max = 500, message = "Description must not exceed 500 characters")
     private String description;
+
     private Boolean isActive;
+
+    @NotNull(message = "Status is required")
     private StatusEnum status;
+
     private LocalDateTime dateCreated;
     private LocalDateTime dateUpdated;
 }
