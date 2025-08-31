@@ -28,6 +28,8 @@ tags:
     description: API for managing identity document categories
   - name: Contract Type
     description: APIs for managing Contract Type data
+  - name: Contract Document Type
+    description: APIs for managing Contract Document Type data
   - name: Legal Forms
     description: APIs for managing legal forms
   - name: Currencies
@@ -3941,6 +3943,183 @@ paths:
                 $ref: '#/components/schemas/ContractTypeDTO'
         '400':
           description: Invalid input data
+  /api/v1/contract-document-types:
+    get:
+      tags:
+        - Contract Document Type
+      summary: List Contract Document Types
+      description: Retrieve a paginated list of contract document types.
+      operationId: listContractDocumentTypes
+      parameters:
+        - name: pageNumber
+          in: query
+          description: The zero-based page number to retrieve.
+          required: false
+          schema:
+            type: string
+            description: The zero-based page number to retrieve.
+            example: 0
+            default: '0'
+          example: 0
+        - name: pageSize
+          in: query
+          description: The number of items per page.
+          required: false
+          schema:
+            type: string
+            description: The number of items per page.
+            example: 10
+            default: '10'
+          example: 10
+        - name: sortBy
+          in: query
+          description: The field to sort the results by.
+          required: false
+          schema:
+            type: string
+            description: The field to sort the results by.
+            example: name
+          example: name
+        - name: sortDirection
+          in: query
+          description: The direction of sorting, either ASC or DESC.
+          required: false
+          schema:
+            type: string
+            description: The direction of sorting, either ASC or DESC.
+            example: DESC
+            default: DESC
+          example: DESC
+      responses:
+        '200':
+          description: Successfully retrieved list of contract document types
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginationResponse'
+    post:
+      tags:
+        - Contract Document Type
+      summary: Create Contract Document Type
+      description: Create a new contract document type record.
+      operationId: createContractDocumentType
+      parameters:
+        - name: X-Idempotency-Key
+          in: header
+          description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContractDocumentTypeDTO'
+        required: true
+      responses:
+        '201':
+          description: Contract document type created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContractDocumentTypeDTO'
+        '400':
+          description: Invalid input data
+  /api/v1/contract-document-types/{documentTypeId}:
+    get:
+      tags:
+        - Contract Document Type
+      summary: Get Contract Document Type by ID
+      description: Retrieve a specific contract document type by its ID.
+      operationId: getContractDocumentType
+      parameters:
+        - name: documentTypeId
+          in: path
+          description: ID of the contract document type
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Contract document type retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContractDocumentTypeDTO'
+        '404':
+          description: Contract document type not found
+    put:
+      tags:
+        - Contract Document Type
+      summary: Update Contract Document Type
+      description: Update an existing contract document type by its ID.
+      operationId: updateContractDocumentType
+      parameters:
+        - name: documentTypeId
+          in: path
+          description: ID of the contract document type
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContractDocumentTypeDTO'
+        required: true
+      responses:
+        '200':
+          description: Contract document type updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContractDocumentTypeDTO'
+        '404':
+          description: Contract document type not found
+    delete:
+      tags:
+        - Contract Document Type
+      summary: Delete Contract Document Type
+      description: Delete a specific contract document type by its ID.
+      operationId: deleteContractDocumentType
+      parameters:
+        - name: documentTypeId
+          in: path
+          description: ID of the contract document type
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: Contract document type deleted successfully
+        '404':
+          description: Contract document type not found
+  /api/v1/contract-document-types/by-code/{documentCode}:
+    get:
+      tags:
+        - Contract Document Type
+      summary: Get Contract Document Type by Code
+      description: Retrieve a specific contract document type by its code.
+      operationId: getContractDocumentTypeByCode
+      parameters:
+        - name: documentCode
+          in: path
+          description: Code of the contract document type
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Contract document type retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContractDocumentTypeDTO'
+        '404':
+          description: Contract document type not found
   /api/v1/contract-roles/filter:
     post:
       tags:
@@ -6601,6 +6780,36 @@ components:
           type: string
         name:
           maxLength: 100
+          minLength: 0
+          type: string
+        isActive:
+          type: boolean
+        dateCreated:
+          type: string
+          format: date-time
+        dateUpdated:
+          type: string
+          format: date-time
+    ContractDocumentTypeDTO:
+      required:
+        - documentCode
+        - name
+      type: object
+      properties:
+        documentTypeId:
+          type: integer
+          format: int64
+          readOnly: true
+        documentCode:
+          maxLength: 50
+          minLength: 0
+          type: string
+        name:
+          maxLength: 100
+          minLength: 0
+          type: string
+        description:
+          maxLength: 500
           minLength: 0
           type: string
         isActive:
