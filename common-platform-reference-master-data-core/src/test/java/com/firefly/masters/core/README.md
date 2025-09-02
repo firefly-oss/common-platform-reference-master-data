@@ -144,11 +144,12 @@ Each test method follows the Arrange-Act-Assert pattern:
 @Test
 void methodName_Scenario_ExpectedBehavior() {
     // Arrange - Set up test conditions
-    when(repository.findById(anyLong())).thenReturn(Mono.just(entity));
+    UUID testEntityId = UUID.randomUUID();
+    when(repository.findById(any(UUID.class))).thenReturn(Mono.just(entity));
     when(mapper.toDTO(any(Entity.class))).thenReturn(dto);
 
     // Act - Call the method being tested
-    Mono<DTO> result = service.getEntity(1L);
+    Mono<DTO> result = service.getEntity(testEntityId);
 
     // Assert - Verify the expected behavior
     StepVerifier.create(result)
@@ -156,7 +157,7 @@ void methodName_Scenario_ExpectedBehavior() {
             .verifyComplete();
 
     // Verify interactions with mocks
-    verify(repository).findById(anyLong());
+    verify(repository).findById(any(UUID.class));
     verify(mapper).toDTO(any(Entity.class));
 }
 ```

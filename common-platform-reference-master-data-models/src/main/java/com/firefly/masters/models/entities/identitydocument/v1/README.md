@@ -66,7 +66,7 @@ POST /api/v1/identity-document-categories
 Example response:
 ```json
 {
-  "categoryId": 1,
+  "categoryId": "550e8400-e29b-41d4-a716-446655440000",
   "categoryCode": "GOVERNMENT",
   "categoryName": "Government",
   "description": "Government-issued identification documents",
@@ -83,8 +83,8 @@ POST /api/v1/identity-documents
 {
   "documentCode": "PASSPORT",
   "documentName": "Passport",
-  "categoryId": 1,
-  "countryId": 724,
+  "categoryId": "550e8400-e29b-41d4-a716-446655440000",
+  "countryId": "550e8400-e29b-41d4-a716-446655440001",
   "description": "International passport for travel and identification",
   "validationRegex": "^[A-Z0-9]{9}$",
   "formatDescription": "9 characters, alphanumeric",
@@ -95,12 +95,12 @@ POST /api/v1/identity-documents
 Example response:
 ```json
 {
-  "documentId": 1,
+  "documentId": "550e8400-e29b-41d4-a716-446655440002",
   "documentCode": "PASSPORT",
   "documentName": "Passport",
-  "categoryId": 1,
+  "categoryId": "550e8400-e29b-41d4-a716-446655440000",
   "category": {
-    "categoryId": 1,
+    "categoryId": "550e8400-e29b-41d4-a716-446655440000",
     "categoryCode": "GOVERNMENT",
     "categoryName": "Government",
     "description": "Government-issued identification documents",
@@ -108,7 +108,7 @@ Example response:
     "dateCreated": "2023-06-15T11:30:00",
     "dateUpdated": "2023-06-15T11:30:00"
   },
-  "countryId": 724,
+  "countryId": "550e8400-e29b-41d4-a716-446655440001",
   "description": "International passport for travel and identification",
   "validationRegex": "^[A-Z0-9]{9}$",
   "formatDescription": "9 characters, alphanumeric",
@@ -123,8 +123,8 @@ Example response:
 ```json
 POST /api/v1/identity-document-localizations
 {
-  "documentId": 1,
-  "localeId": 2,
+  "documentId": "550e8400-e29b-41d4-a716-446655440002",
+  "localeId": "550e8400-e29b-41d4-a716-446655440003",
   "documentName": "Pasaporte",
   "description": "Pasaporte internacional para viajes e identificación",
   "formatDescription": "9 caracteres, alfanuméricos",
@@ -135,9 +135,9 @@ POST /api/v1/identity-document-localizations
 Example response:
 ```json
 {
-  "localizationId": 1,
-  "documentId": 1,
-  "localeId": 2,
+  "localizationId": "550e8400-e29b-41d4-a716-446655440004",
+  "documentId": "550e8400-e29b-41d4-a716-446655440002",
+  "localeId": "550e8400-e29b-41d4-a716-446655440003",
   "documentName": "Pasaporte",
   "description": "Pasaporte internacional para viajes e identificación",
   "formatDescription": "9 caracteres, alfanuméricos",
@@ -150,7 +150,7 @@ Example response:
 ### Listing Identity Documents by Category
 
 ```
-GET /api/v1/identity-documents/category/1?page=0&size=10
+GET /api/v1/identity-documents/category/550e8400-e29b-41d4-a716-446655440000?page=0&size=10
 ```
 
 Example response:
@@ -158,12 +158,12 @@ Example response:
 {
   "content": [
     {
-      "documentId": 1,
+      "documentId": "550e8400-e29b-41d4-a716-446655440002",
       "documentCode": "PASSPORT",
       "documentName": "Passport",
-      "categoryId": 1,
+      "categoryId": "550e8400-e29b-41d4-a716-446655440000",
       "category": {
-        "categoryId": 1,
+        "categoryId": "550e8400-e29b-41d4-a716-446655440000",
         "categoryCode": "GOVERNMENT",
         "categoryName": "Government",
         "description": "Government-issued identification documents",
@@ -171,7 +171,7 @@ Example response:
         "dateCreated": "2023-06-15T11:30:00",
         "dateUpdated": "2023-06-15T11:30:00"
       },
-      "countryId": 724,
+      "countryId": "550e8400-e29b-41d4-a716-446655440001",
       "description": "International passport for travel and identification",
       "validationRegex": "^[A-Z0-9]{9}$",
       "formatDescription": "9 characters, alphanumeric",
@@ -180,12 +180,12 @@ Example response:
       "dateUpdated": "2023-06-15T11:35:00"
     },
     {
-      "documentId": 2,
+      "documentId": "550e8400-e29b-41d4-a716-446655440005",
       "documentCode": "NATIONAL_ID",
       "documentName": "National ID Card",
-      "categoryId": 1,
+      "categoryId": "550e8400-e29b-41d4-a716-446655440000",
       "category": {
-        "categoryId": 1,
+        "categoryId": "550e8400-e29b-41d4-a716-446655440000",
         "categoryCode": "GOVERNMENT",
         "categoryName": "Government",
         "description": "Government-issued identification documents",
@@ -231,7 +231,7 @@ Example response:
 ### Getting Localizations for a Document
 
 ```
-GET /api/v1/identity-document-localizations/document/1?page=0&size=10
+GET /api/v1/identity-document-localizations/document/550e8400-e29b-41d4-a716-446655440002?page=0&size=10
 ```
 
 Example response:
@@ -281,15 +281,15 @@ Example response:
 ### Getting a Specific Localization
 
 ```
-GET /api/v1/identity-document-localizations/document/1/locale/2
+GET /api/v1/identity-document-localizations/document/550e8400-e29b-41d4-a716-446655440002/locale/550e8400-e29b-41d4-a716-446655440003
 ```
 
 Example response:
 ```json
 {
-  "localizationId": 1,
-  "documentId": 1,
-  "localeId": 2,
+  "localizationId": "550e8400-e29b-41d4-a716-446655440004",
+  "documentId": "550e8400-e29b-41d4-a716-446655440002",
+  "localeId": "550e8400-e29b-41d4-a716-446655440003",
   "documentName": "Pasaporte",
   "description": "Pasaporte internacional para viajes e identificación",
   "formatDescription": "9 caracteres, alfanuméricos",
@@ -302,10 +302,10 @@ Example response:
 ### Updating a Localization
 
 ```json
-PUT /api/v1/identity-document-localizations/1
+PUT /api/v1/identity-document-localizations/550e8400-e29b-41d4-a716-446655440004
 {
-  "documentId": 1,
-  "localeId": 2,
+  "documentId": "550e8400-e29b-41d4-a716-446655440002",
+  "localeId": "550e8400-e29b-41d4-a716-446655440003",
   "documentName": "Pasaporte",
   "description": "Pasaporte internacional para viajes e identificación personal",
   "formatDescription": "9 caracteres, alfanuméricos",
@@ -316,9 +316,9 @@ PUT /api/v1/identity-document-localizations/1
 Example response:
 ```json
 {
-  "localizationId": 1,
-  "documentId": 1,
-  "localeId": 2,
+  "localizationId": "550e8400-e29b-41d4-a716-446655440004",
+  "documentId": "550e8400-e29b-41d4-a716-446655440002",
+  "localeId": "550e8400-e29b-41d4-a716-446655440003",
   "documentName": "Pasaporte",
   "description": "Pasaporte internacional para viajes e identificación personal",
   "formatDescription": "9 caracteres, alfanuméricos",
@@ -331,7 +331,7 @@ Example response:
 ### Deleting an Identity Document
 
 ```
-DELETE /api/v1/identity-documents/1
+DELETE /api/v1/identity-documents/550e8400-e29b-41d4-a716-446655440002
 ```
 
 Response: HTTP 204 No Content
@@ -339,7 +339,7 @@ Response: HTTP 204 No Content
 ### Deleting a Localization
 
 ```
-DELETE /api/v1/identity-document-localizations/1
+DELETE /api/v1/identity-document-localizations/550e8400-e29b-41d4-a716-446655440004
 ```
 
 Response: HTTP 204 No Content
@@ -347,7 +347,7 @@ Response: HTTP 204 No Content
 ### Deleting All Localizations for a Document
 
 ```
-DELETE /api/v1/identity-document-localizations/document/1
+DELETE /api/v1/identity-document-localizations/document/550e8400-e29b-41d4-a716-446655440002
 ```
 
 Response: HTTP 204 No Content
@@ -397,13 +397,13 @@ public class DocumentLocalizationService {
         this.webClient = webClientBuilder.baseUrl("http://master-data-service").build();
     }
     
-    public Mono<String> getLocalizedDocumentName(String documentCode, Long localeId) {
+    public Mono<String> getLocalizedDocumentName(String documentCode, UUID localeId) {
         return webClient.get()
                 .uri("/api/v1/identity-documents/code/{code}", documentCode)
                 .retrieve()
                 .bodyToMono(IdentityDocumentDTO.class)
                 .flatMap(document -> webClient.get()
-                        .uri("/api/v1/identity-document-localizations/document/{documentId}/locale/{localeId}", 
+                        .uri("/api/v1/identity-document-localizations/document/{documentId}/locale/{localeId}",
                              document.getDocumentId(), localeId)
                         .retrieve()
                         .bodyToMono(IdentityDocumentLocalizationDTO.class)
