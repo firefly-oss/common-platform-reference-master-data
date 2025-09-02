@@ -41,14 +41,17 @@ public class MessageTypeCatalogServiceImplTest {
     private MessageTypeCatalog entity;
     private MessageTypeCatalogDTO dto;
     private TestPaginationRequest paginationRequest;
+    private UUID testTypeId;
 
     @BeforeEach
     void setUp() {
         // Setup test data
         LocalDateTime now = LocalDateTime.now();
         
+        testTypeId = UUID.randomUUID();
+
         entity = new MessageTypeCatalog();
-        entity.setTypeId(1L);
+        entity.setTypeId(testTypeId);
         entity.setTypeCode("EMAIL");
         entity.setTypeName("Email Message");
         entity.setDescription("Notification messages sent via email");
@@ -57,7 +60,7 @@ public class MessageTypeCatalogServiceImplTest {
         entity.setDateUpdated(now);
 
         dto = new MessageTypeCatalogDTO();
-        dto.setTypeId(1L);
+        dto.setTypeId(testTypeId);
         dto.setTypeCode("EMAIL");
         dto.setTypeName("Email Message");
         dto.setDescription("Notification messages sent via email");
@@ -114,18 +117,18 @@ public class MessageTypeCatalogServiceImplTest {
     @Test
     void getMessageType_ShouldReturnMessageType_WhenFound() {
         // Arrange
-        when(repository.findById(anyLong())).thenReturn(Mono.just(entity));
+        when(repository.findById(any(UUID.class))).thenReturn(Mono.just(entity));
         when(mapper.toDTO(any(MessageTypeCatalog.class))).thenReturn(dto);
 
         // Act
-        Mono<MessageTypeCatalogDTO> result = service.getMessageType(1L);
+        Mono<MessageTypeCatalogDTO> result = service.getMessageType(testTypeId);
 
         // Assert
         StepVerifier.create(result)
                 .expectNext(dto)
                 .verifyComplete();
 
-        verify(repository).findById(anyLong());
+        verify(repository).findById(any(UUID.class));
         verify(mapper).toDTO(any(MessageTypeCatalog.class));
     }
 
@@ -150,20 +153,20 @@ public class MessageTypeCatalogServiceImplTest {
     @Test
     void updateMessageType_ShouldReturnUpdatedMessageType_WhenFound() {
         // Arrange
-        when(repository.findById(anyLong())).thenReturn(Mono.just(entity));
+        when(repository.findById(any(UUID.class))).thenReturn(Mono.just(entity));
         when(mapper.toEntity(any(MessageTypeCatalogDTO.class))).thenReturn(entity);
         when(repository.save(any(MessageTypeCatalog.class))).thenReturn(Mono.just(entity));
         when(mapper.toDTO(any(MessageTypeCatalog.class))).thenReturn(dto);
 
         // Act
-        Mono<MessageTypeCatalogDTO> result = service.updateMessageType(1L, dto);
+        Mono<MessageTypeCatalogDTO> result = service.updateMessageType(testTypeId, dto);
 
         // Assert
         StepVerifier.create(result)
                 .expectNext(dto)
                 .verifyComplete();
 
-        verify(repository).findById(anyLong());
+        verify(repository).findById(any(UUID.class));
         verify(mapper).toEntity(any(MessageTypeCatalogDTO.class));
         verify(repository).save(any(MessageTypeCatalog.class));
         verify(mapper).toDTO(any(MessageTypeCatalog.class));
@@ -172,17 +175,17 @@ public class MessageTypeCatalogServiceImplTest {
     @Test
     void deleteMessageType_ShouldDeleteMessageType_WhenFound() {
         // Arrange
-        when(repository.findById(anyLong())).thenReturn(Mono.just(entity));
+        when(repository.findById(any(UUID.class))).thenReturn(Mono.just(entity));
         when(repository.delete(any(MessageTypeCatalog.class))).thenReturn(Mono.empty());
 
         // Act
-        Mono<Void> result = service.deleteMessageType(1L);
+        Mono<Void> result = service.deleteMessageType(testTypeId);
 
         // Assert
         StepVerifier.create(result)
                 .verifyComplete();
 
-        verify(repository).findById(anyLong());
+        verify(repository).findById(any(UUID.class));
         verify(repository).delete(any(MessageTypeCatalog.class));
     }
 }

@@ -43,16 +43,20 @@ public class NotificationMessageCatalogServiceImplTest {
     private NotificationMessageCatalog entity;
     private NotificationMessageCatalogDTO dto;
     private TestPaginationRequest paginationRequest;
+    private UUID testMessageId;
+    private UUID testTypeId;
 
     @BeforeEach
     void setUp() {
         // Setup test data
         LocalDateTime now = LocalDateTime.now();
+        testMessageId = UUID.randomUUID();
+        testTypeId = UUID.randomUUID();
 
         entity = new NotificationMessageCatalog();
-        entity.setMessageId(1L);
+        entity.setMessageId(testMessageId);
         entity.setMessageCode("LOW_BALANCE");
-        entity.setTypeId(1L); // Reference to EMAIL message type
+        entity.setTypeId(testTypeId); // Reference to EMAIL message type
         entity.setEventType("ACCOUNT_BALANCE");
         entity.setDescription("Notification for low account balance");
         entity.setDefaultSubject("Low Balance Alert");
@@ -67,7 +71,7 @@ public class NotificationMessageCatalogServiceImplTest {
 
         // Create MessageTypeCatalogDTO for EMAIL type
         MessageTypeCatalogDTO messageTypeDTO = new MessageTypeCatalogDTO();
-        messageTypeDTO.setTypeId(1L);
+        messageTypeDTO.setTypeId(testTypeId);
         messageTypeDTO.setTypeCode("EMAIL");
         messageTypeDTO.setTypeName("Email Message");
         messageTypeDTO.setDescription("Notification messages sent via email");
@@ -76,9 +80,9 @@ public class NotificationMessageCatalogServiceImplTest {
         messageTypeDTO.setDateUpdated(now);
 
         dto = new NotificationMessageCatalogDTO();
-        dto.setMessageId(1L);
+        dto.setMessageId(testMessageId);
         dto.setMessageCode("LOW_BALANCE");
-        dto.setTypeId(1L);
+        dto.setTypeId(testTypeId);
         dto.setMessageType(messageTypeDTO);
         dto.setEventType("ACCOUNT_BALANCE");
         dto.setDescription("Notification for low account balance");
@@ -138,28 +142,28 @@ public class NotificationMessageCatalogServiceImplTest {
     @Test
     void getNotificationMessage_ShouldReturnMessage_WhenFound() {
         // Arrange
-        when(repository.findById(anyLong())).thenReturn(Mono.just(entity));
+        when(repository.findById(any(UUID.class))).thenReturn(Mono.just(entity));
         when(mapper.toDTO(any(NotificationMessageCatalog.class))).thenReturn(dto);
 
         // Act
-        Mono<NotificationMessageCatalogDTO> result = service.getNotificationMessage(1L);
+        Mono<NotificationMessageCatalogDTO> result = service.getNotificationMessage(testMessageId);
 
         // Assert
         StepVerifier.create(result)
                 .expectNext(dto)
                 .verifyComplete();
 
-        verify(repository).findById(anyLong());
+        verify(repository).findById(any(UUID.class));
         verify(mapper).toDTO(any(NotificationMessageCatalog.class));
     }
 
     @Test
     void getNotificationMessage_ShouldReturnError_WhenNotFound() {
         // Arrange
-        when(repository.findById(anyLong())).thenReturn(Mono.empty());
+        when(repository.findById(any(UUID.class))).thenReturn(Mono.empty());
 
         // Act
-        Mono<NotificationMessageCatalogDTO> result = service.getNotificationMessage(1L);
+        Mono<NotificationMessageCatalogDTO> result = service.getNotificationMessage(testMessageId);
 
         // Assert
         StepVerifier.create(result)
@@ -168,7 +172,7 @@ public class NotificationMessageCatalogServiceImplTest {
                                 throwable.getMessage().contains("Notification message not found"))
                 .verify();
 
-        verify(repository).findById(anyLong());
+        verify(repository).findById(any(UUID.class));
     }
 
     @Test
@@ -192,20 +196,20 @@ public class NotificationMessageCatalogServiceImplTest {
     @Test
     void updateNotificationMessage_ShouldReturnUpdatedMessage_WhenFound() {
         // Arrange
-        when(repository.findById(anyLong())).thenReturn(Mono.just(entity));
+        when(repository.findById(any(UUID.class))).thenReturn(Mono.just(entity));
         when(mapper.toEntity(any(NotificationMessageCatalogDTO.class))).thenReturn(entity);
         when(repository.save(any(NotificationMessageCatalog.class))).thenReturn(Mono.just(entity));
         when(mapper.toDTO(any(NotificationMessageCatalog.class))).thenReturn(dto);
 
         // Act
-        Mono<NotificationMessageCatalogDTO> result = service.updateNotificationMessage(1L, dto);
+        Mono<NotificationMessageCatalogDTO> result = service.updateNotificationMessage(testMessageId, dto);
 
         // Assert
         StepVerifier.create(result)
                 .expectNext(dto)
                 .verifyComplete();
 
-        verify(repository).findById(anyLong());
+        verify(repository).findById(any(UUID.class));
         verify(mapper).toEntity(any(NotificationMessageCatalogDTO.class));
         verify(repository).save(any(NotificationMessageCatalog.class));
         verify(mapper).toDTO(any(NotificationMessageCatalog.class));
@@ -214,17 +218,17 @@ public class NotificationMessageCatalogServiceImplTest {
     @Test
     void deleteNotificationMessage_ShouldDeleteMessage_WhenFound() {
         // Arrange
-        when(repository.findById(anyLong())).thenReturn(Mono.just(entity));
+        when(repository.findById(any(UUID.class))).thenReturn(Mono.just(entity));
         when(repository.delete(any(NotificationMessageCatalog.class))).thenReturn(Mono.empty());
 
         // Act
-        Mono<Void> result = service.deleteNotificationMessage(1L);
+        Mono<Void> result = service.deleteNotificationMessage(testMessageId);
 
         // Assert
         StepVerifier.create(result)
                 .verifyComplete();
 
-        verify(repository).findById(anyLong());
+        verify(repository).findById(any(UUID.class));
         verify(repository).delete(any(NotificationMessageCatalog.class));
     }
 }

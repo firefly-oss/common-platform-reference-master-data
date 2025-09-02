@@ -40,14 +40,16 @@ public class LanguageLocaleServiceImplTest {
     private LanguageLocale entity;
     private LanguageLocaleDTO dto;
     private TestPaginationRequest paginationRequest;
+    private UUID testLocaleId;
 
     @BeforeEach
     void setUp() {
         // Setup test data
         LocalDateTime now = LocalDateTime.now();
-        
+        testLocaleId = UUID.randomUUID();
+
         entity = new LanguageLocale();
-        entity.setLocaleId(1L);
+        entity.setLocaleId(testLocaleId);
         entity.setLanguageCode("en");
         entity.setCountryCode("US");
         entity.setLocaleCode("en-US");
@@ -61,7 +63,7 @@ public class LanguageLocaleServiceImplTest {
         entity.setDateUpdated(now);
 
         dto = new LanguageLocaleDTO();
-        dto.setLocaleId(1L);
+        dto.setLocaleId(testLocaleId);
         dto.setLanguageCode("en");
         dto.setCountryCode("US");
         dto.setLocaleCode("en-US");
@@ -92,7 +94,7 @@ public class LanguageLocaleServiceImplTest {
         StepVerifier.create(result)
                 .expectNextMatches(response -> {
                     return response.getContent().size() == 1 &&
-                            response.getContent().get(0).getLocaleId().equals(1L) &&
+                            response.getContent().get(0).getLocaleId().equals(testLocaleId) &&
                             response.getTotalElements() == 1L;
                 })
                 .verifyComplete();
@@ -125,54 +127,54 @@ public class LanguageLocaleServiceImplTest {
     @Test
     void getLanguageLocale_ShouldReturnLanguageLocaleWhenFound() {
         // Arrange
-        when(repository.findById(anyLong())).thenReturn(Mono.just(entity));
+        when(repository.findById(any(UUID.class))).thenReturn(Mono.just(entity));
         when(mapper.toDTO(any(LanguageLocale.class))).thenReturn(dto);
 
         // Act
-        Mono<LanguageLocaleDTO> result = service.getLanguageLocale(1L);
+        Mono<LanguageLocaleDTO> result = service.getLanguageLocale(testLocaleId);
 
         // Assert
         StepVerifier.create(result)
                 .expectNext(dto)
                 .verifyComplete();
 
-        verify(repository).findById(anyLong());
+        verify(repository).findById(any(UUID.class));
         verify(mapper).toDTO(any(LanguageLocale.class));
     }
 
     @Test
     void getLanguageLocale_ShouldReturnEmptyWhenNotFound() {
         // Arrange
-        when(repository.findById(anyLong())).thenReturn(Mono.empty());
+        when(repository.findById(any(UUID.class))).thenReturn(Mono.empty());
 
         // Act
-        Mono<LanguageLocaleDTO> result = service.getLanguageLocale(1L);
+        Mono<LanguageLocaleDTO> result = service.getLanguageLocale(testLocaleId);
 
         // Assert
         StepVerifier.create(result)
                 .verifyComplete();
 
-        verify(repository).findById(anyLong());
+        verify(repository).findById(any(UUID.class));
         verify(mapper, never()).toDTO(any(LanguageLocale.class));
     }
 
     @Test
     void updateLanguageLocale_ShouldReturnUpdatedLanguageLocaleWhenFound() {
         // Arrange
-        when(repository.findById(anyLong())).thenReturn(Mono.just(entity));
+        when(repository.findById(any(UUID.class))).thenReturn(Mono.just(entity));
         when(mapper.toEntity(any(LanguageLocaleDTO.class))).thenReturn(entity);
         when(repository.save(any(LanguageLocale.class))).thenReturn(Mono.just(entity));
         when(mapper.toDTO(any(LanguageLocale.class))).thenReturn(dto);
 
         // Act
-        Mono<LanguageLocaleDTO> result = service.updateLanguageLocale(1L, dto);
+        Mono<LanguageLocaleDTO> result = service.updateLanguageLocale(testLocaleId, dto);
 
         // Assert
         StepVerifier.create(result)
                 .expectNext(dto)
                 .verifyComplete();
 
-        verify(repository).findById(anyLong());
+        verify(repository).findById(any(UUID.class));
         verify(mapper).toEntity(any(LanguageLocaleDTO.class));
         verify(repository).save(any(LanguageLocale.class));
         verify(mapper).toDTO(any(LanguageLocale.class));
@@ -181,16 +183,16 @@ public class LanguageLocaleServiceImplTest {
     @Test
     void updateLanguageLocale_ShouldReturnEmptyWhenNotFound() {
         // Arrange
-        when(repository.findById(anyLong())).thenReturn(Mono.empty());
+        when(repository.findById(any(UUID.class))).thenReturn(Mono.empty());
 
         // Act
-        Mono<LanguageLocaleDTO> result = service.updateLanguageLocale(1L, dto);
+        Mono<LanguageLocaleDTO> result = service.updateLanguageLocale(testLocaleId, dto);
 
         // Assert
         StepVerifier.create(result)
                 .verifyComplete();
 
-        verify(repository).findById(anyLong());
+        verify(repository).findById(any(UUID.class));
         verify(mapper, never()).toEntity(any(LanguageLocaleDTO.class));
         verify(repository, never()).save(any(LanguageLocale.class));
         verify(mapper, never()).toDTO(any(LanguageLocale.class));
@@ -199,33 +201,33 @@ public class LanguageLocaleServiceImplTest {
     @Test
     void deleteLanguageLocale_ShouldDeleteWhenFound() {
         // Arrange
-        when(repository.findById(anyLong())).thenReturn(Mono.just(entity));
+        when(repository.findById(any(UUID.class))).thenReturn(Mono.just(entity));
         when(repository.delete(any(LanguageLocale.class))).thenReturn(Mono.empty());
 
         // Act
-        Mono<Void> result = service.deleteLanguageLocale(1L);
+        Mono<Void> result = service.deleteLanguageLocale(testLocaleId);
 
         // Assert
         StepVerifier.create(result)
                 .verifyComplete();
 
-        verify(repository).findById(anyLong());
+        verify(repository).findById(any(UUID.class));
         verify(repository).delete(any(LanguageLocale.class));
     }
 
     @Test
     void deleteLanguageLocale_ShouldReturnEmptyWhenNotFound() {
         // Arrange
-        when(repository.findById(anyLong())).thenReturn(Mono.empty());
+        when(repository.findById(any(UUID.class))).thenReturn(Mono.empty());
 
         // Act
-        Mono<Void> result = service.deleteLanguageLocale(1L);
+        Mono<Void> result = service.deleteLanguageLocale(testLocaleId);
 
         // Assert
         StepVerifier.create(result)
                 .verifyComplete();
 
-        verify(repository).findById(anyLong());
+        verify(repository).findById(any(UUID.class));
         verify(repository, never()).delete(any(LanguageLocale.class));
     }
 }
