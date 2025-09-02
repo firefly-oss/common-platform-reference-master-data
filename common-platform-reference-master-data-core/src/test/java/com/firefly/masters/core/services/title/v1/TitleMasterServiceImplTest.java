@@ -41,12 +41,15 @@ public class TitleMasterServiceImplTest {
     private TitleMaster entity;
     private TitleMasterDTO dto;
     private TestPaginationRequest paginationRequest;
+    private UUID testTitleId;
 
     @BeforeEach
     void setUp() {
         // Setup test data
+        testTitleId = UUID.randomUUID();
+
         entity = new TitleMaster();
-        entity.setTitleId(1L);
+        entity.setTitleId(testTitleId);
         entity.setPrefix("MR");
         entity.setDescription("Mr.");
         entity.setStatus(StatusEnum.ACTIVE);
@@ -54,7 +57,7 @@ public class TitleMasterServiceImplTest {
         entity.setDateUpdated(LocalDateTime.now());
 
         dto = new TitleMasterDTO();
-        dto.setTitleId(1L);
+        dto.setTitleId(testTitleId);
         dto.setPrefix("MR");
         dto.setDescription("Mr.");
         dto.setIsActive(true);
@@ -80,7 +83,7 @@ public class TitleMasterServiceImplTest {
         StepVerifier.create(result)
                 .expectNextMatches(response -> {
                     return response.getContent().size() == 1 &&
-                            response.getContent().get(0).getTitleId().equals(1L) &&
+                            response.getContent().get(0).getTitleId().equals(testTitleId) &&
                             response.getTotalElements() == 1L;
                 })
                 .verifyComplete();
@@ -113,54 +116,54 @@ public class TitleMasterServiceImplTest {
     @Test
     void getTitle_ShouldReturnEntityWhenFound() {
         // Arrange
-        when(repository.findById(anyLong())).thenReturn(Mono.just(entity));
+        when(repository.findById(any(UUID.class))).thenReturn(Mono.just(entity));
         when(mapper.toDTO(any(TitleMaster.class))).thenReturn(dto);
 
         // Act
-        Mono<TitleMasterDTO> result = service.getTitle(1L);
+        Mono<TitleMasterDTO> result = service.getTitle(testTitleId);
 
         // Assert
         StepVerifier.create(result)
                 .expectNext(dto)
                 .verifyComplete();
 
-        verify(repository).findById(anyLong());
+        verify(repository).findById(any(UUID.class));
         verify(mapper).toDTO(any(TitleMaster.class));
     }
 
     @Test
     void getTitle_ShouldReturnEmptyWhenNotFound() {
         // Arrange
-        when(repository.findById(anyLong())).thenReturn(Mono.empty());
+        when(repository.findById(any(UUID.class))).thenReturn(Mono.empty());
 
         // Act
-        Mono<TitleMasterDTO> result = service.getTitle(1L);
+        Mono<TitleMasterDTO> result = service.getTitle(testTitleId);
 
         // Assert
         StepVerifier.create(result)
                 .verifyComplete();
 
-        verify(repository).findById(anyLong());
+        verify(repository).findById(any(UUID.class));
         verify(mapper, never()).toDTO(any(TitleMaster.class));
     }
 
     @Test
     void updateTitle_ShouldReturnUpdatedEntityWhenFound() {
         // Arrange
-        when(repository.findById(anyLong())).thenReturn(Mono.just(entity));
+        when(repository.findById(any(UUID.class))).thenReturn(Mono.just(entity));
         when(mapper.toEntity(any(TitleMasterDTO.class))).thenReturn(entity);
         when(repository.save(any(TitleMaster.class))).thenReturn(Mono.just(entity));
         when(mapper.toDTO(any(TitleMaster.class))).thenReturn(dto);
 
         // Act
-        Mono<TitleMasterDTO> result = service.updateTitle(1L, dto);
+        Mono<TitleMasterDTO> result = service.updateTitle(testTitleId, dto);
 
         // Assert
         StepVerifier.create(result)
                 .expectNext(dto)
                 .verifyComplete();
 
-        verify(repository).findById(anyLong());
+        verify(repository).findById(any(UUID.class));
         verify(mapper).toEntity(any(TitleMasterDTO.class));
         verify(repository).save(any(TitleMaster.class));
         verify(mapper).toDTO(any(TitleMaster.class));
@@ -169,16 +172,16 @@ public class TitleMasterServiceImplTest {
     @Test
     void updateTitle_ShouldReturnEmptyWhenNotFound() {
         // Arrange
-        when(repository.findById(anyLong())).thenReturn(Mono.empty());
+        when(repository.findById(any(UUID.class))).thenReturn(Mono.empty());
 
         // Act
-        Mono<TitleMasterDTO> result = service.updateTitle(1L, dto);
+        Mono<TitleMasterDTO> result = service.updateTitle(testTitleId, dto);
 
         // Assert
         StepVerifier.create(result)
                 .verifyComplete();
 
-        verify(repository).findById(anyLong());
+        verify(repository).findById(any(UUID.class));
         verify(mapper, never()).toEntity(any(TitleMasterDTO.class));
         verify(repository, never()).save(any(TitleMaster.class));
         verify(mapper, never()).toDTO(any(TitleMaster.class));
@@ -187,33 +190,33 @@ public class TitleMasterServiceImplTest {
     @Test
     void deleteTitle_ShouldDeleteWhenFound() {
         // Arrange
-        when(repository.findById(anyLong())).thenReturn(Mono.just(entity));
+        when(repository.findById(any(UUID.class))).thenReturn(Mono.just(entity));
         when(repository.delete(any(TitleMaster.class))).thenReturn(Mono.empty());
 
         // Act
-        Mono<Void> result = service.deleteTitle(1L);
+        Mono<Void> result = service.deleteTitle(testTitleId);
 
         // Assert
         StepVerifier.create(result)
                 .verifyComplete();
 
-        verify(repository).findById(anyLong());
+        verify(repository).findById(any(UUID.class));
         verify(repository).delete(any(TitleMaster.class));
     }
 
     @Test
     void deleteTitle_ShouldReturnEmptyWhenNotFound() {
         // Arrange
-        when(repository.findById(anyLong())).thenReturn(Mono.empty());
+        when(repository.findById(any(UUID.class))).thenReturn(Mono.empty());
 
         // Act
-        Mono<Void> result = service.deleteTitle(1L);
+        Mono<Void> result = service.deleteTitle(testTitleId);
 
         // Assert
         StepVerifier.create(result)
                 .verifyComplete();
 
-        verify(repository).findById(anyLong());
+        verify(repository).findById(any(UUID.class));
         verify(repository, never()).delete(any(TitleMaster.class));
     }
 }

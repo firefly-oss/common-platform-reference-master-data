@@ -41,12 +41,15 @@ public class RelationshipTypeMasterServiceImplTest {
     private RelationshipTypeMaster entity;
     private RelationshipTypeMasterDTO dto;
     private TestPaginationRequest paginationRequest;
+    private UUID testRelationshipTypeId;
 
     @BeforeEach
     void setUp() {
         // Setup test data
+        testRelationshipTypeId = UUID.randomUUID();
+
         entity = new RelationshipTypeMaster();
-        entity.setRelationshipTypeId(1L);
+        entity.setRelationshipTypeId(testRelationshipTypeId);
         entity.setCode("BENEFICIARY");
         entity.setDescription("Beneficiary");
         entity.setStatus(StatusEnum.ACTIVE);
@@ -54,7 +57,7 @@ public class RelationshipTypeMasterServiceImplTest {
         entity.setDateUpdated(LocalDateTime.now());
 
         dto = new RelationshipTypeMasterDTO();
-        dto.setRelationshipTypeId(1L);
+        dto.setRelationshipTypeId(testRelationshipTypeId);
         dto.setCode("BENEFICIARY");
         dto.setDescription("Beneficiary");
         dto.setStatus(StatusEnum.ACTIVE);
@@ -79,7 +82,7 @@ public class RelationshipTypeMasterServiceImplTest {
         StepVerifier.create(result)
                 .expectNextMatches(response -> {
                     return response.getContent().size() == 1 &&
-                            response.getContent().get(0).getRelationshipTypeId().equals(1L) &&
+                            response.getContent().get(0).getRelationshipTypeId().equals(testRelationshipTypeId) &&
                             response.getTotalElements() == 1L;
                 })
                 .verifyComplete();
@@ -112,54 +115,54 @@ public class RelationshipTypeMasterServiceImplTest {
     @Test
     void getRelationshipType_ShouldReturnEntityWhenFound() {
         // Arrange
-        when(repository.findById(anyLong())).thenReturn(Mono.just(entity));
+        when(repository.findById(any(UUID.class))).thenReturn(Mono.just(entity));
         when(mapper.toDTO(any(RelationshipTypeMaster.class))).thenReturn(dto);
 
         // Act
-        Mono<RelationshipTypeMasterDTO> result = service.getRelationshipType(1L);
+        Mono<RelationshipTypeMasterDTO> result = service.getRelationshipType(testRelationshipTypeId);
 
         // Assert
         StepVerifier.create(result)
                 .expectNext(dto)
                 .verifyComplete();
 
-        verify(repository).findById(anyLong());
+        verify(repository).findById(any(UUID.class));
         verify(mapper).toDTO(any(RelationshipTypeMaster.class));
     }
 
     @Test
     void getRelationshipType_ShouldReturnEmptyWhenNotFound() {
         // Arrange
-        when(repository.findById(anyLong())).thenReturn(Mono.empty());
+        when(repository.findById(any(UUID.class))).thenReturn(Mono.empty());
 
         // Act
-        Mono<RelationshipTypeMasterDTO> result = service.getRelationshipType(1L);
+        Mono<RelationshipTypeMasterDTO> result = service.getRelationshipType(testRelationshipTypeId);
 
         // Assert
         StepVerifier.create(result)
                 .verifyComplete();
 
-        verify(repository).findById(anyLong());
+        verify(repository).findById(any(UUID.class));
         verify(mapper, never()).toDTO(any(RelationshipTypeMaster.class));
     }
 
     @Test
     void updateRelationshipType_ShouldReturnUpdatedEntityWhenFound() {
         // Arrange
-        when(repository.findById(anyLong())).thenReturn(Mono.just(entity));
+        when(repository.findById(any(UUID.class))).thenReturn(Mono.just(entity));
         when(mapper.toEntity(any(RelationshipTypeMasterDTO.class))).thenReturn(entity);
         when(repository.save(any(RelationshipTypeMaster.class))).thenReturn(Mono.just(entity));
         when(mapper.toDTO(any(RelationshipTypeMaster.class))).thenReturn(dto);
 
         // Act
-        Mono<RelationshipTypeMasterDTO> result = service.updateRelationshipType(1L, dto);
+        Mono<RelationshipTypeMasterDTO> result = service.updateRelationshipType(testRelationshipTypeId, dto);
 
         // Assert
         StepVerifier.create(result)
                 .expectNext(dto)
                 .verifyComplete();
 
-        verify(repository).findById(anyLong());
+        verify(repository).findById(any(UUID.class));
         verify(mapper).toEntity(any(RelationshipTypeMasterDTO.class));
         verify(repository).save(any(RelationshipTypeMaster.class));
         verify(mapper).toDTO(any(RelationshipTypeMaster.class));
@@ -168,16 +171,16 @@ public class RelationshipTypeMasterServiceImplTest {
     @Test
     void updateRelationshipType_ShouldReturnEmptyWhenNotFound() {
         // Arrange
-        when(repository.findById(anyLong())).thenReturn(Mono.empty());
+        when(repository.findById(any(UUID.class))).thenReturn(Mono.empty());
 
         // Act
-        Mono<RelationshipTypeMasterDTO> result = service.updateRelationshipType(1L, dto);
+        Mono<RelationshipTypeMasterDTO> result = service.updateRelationshipType(testRelationshipTypeId, dto);
 
         // Assert
         StepVerifier.create(result)
                 .verifyComplete();
 
-        verify(repository).findById(anyLong());
+        verify(repository).findById(any(UUID.class));
         verify(mapper, never()).toEntity(any(RelationshipTypeMasterDTO.class));
         verify(repository, never()).save(any(RelationshipTypeMaster.class));
         verify(mapper, never()).toDTO(any(RelationshipTypeMaster.class));
@@ -186,33 +189,33 @@ public class RelationshipTypeMasterServiceImplTest {
     @Test
     void deleteRelationshipType_ShouldDeleteWhenFound() {
         // Arrange
-        when(repository.findById(anyLong())).thenReturn(Mono.just(entity));
+        when(repository.findById(any(UUID.class))).thenReturn(Mono.just(entity));
         when(repository.delete(any(RelationshipTypeMaster.class))).thenReturn(Mono.empty());
 
         // Act
-        Mono<Void> result = service.deleteRelationshipType(1L);
+        Mono<Void> result = service.deleteRelationshipType(testRelationshipTypeId);
 
         // Assert
         StepVerifier.create(result)
                 .verifyComplete();
 
-        verify(repository).findById(anyLong());
+        verify(repository).findById(any(UUID.class));
         verify(repository).delete(any(RelationshipTypeMaster.class));
     }
 
     @Test
     void deleteRelationshipType_ShouldReturnEmptyWhenNotFound() {
         // Arrange
-        when(repository.findById(anyLong())).thenReturn(Mono.empty());
+        when(repository.findById(any(UUID.class))).thenReturn(Mono.empty());
 
         // Act
-        Mono<Void> result = service.deleteRelationshipType(1L);
+        Mono<Void> result = service.deleteRelationshipType(testRelationshipTypeId);
 
         // Assert
         StepVerifier.create(result)
                 .verifyComplete();
 
-        verify(repository).findById(anyLong());
+        verify(repository).findById(any(UUID.class));
         verify(repository, never()).delete(any(RelationshipTypeMaster.class));
     }
 }
