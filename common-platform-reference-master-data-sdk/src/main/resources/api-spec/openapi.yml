@@ -28,8 +28,6 @@ tags:
     description: API for managing identity document categories
   - name: Contract Type
     description: APIs for managing Contract Type data
-  - name: Contract Document Type
-    description: APIs for managing Contract Document Type data
   - name: Legal Forms
     description: APIs for managing legal forms
   - name: Currencies
@@ -64,6 +62,8 @@ tags:
     description: APIs for managing activity codes
   - name: Message Type Catalog
     description: APIs for managing message type catalog
+  - name: Contract Document Type
+    description: APIs for managing Contract Document Type data
   - name: Identity Document Localizations
     description: API for managing identity document localizations
   - name: BankInstitutionCodes
@@ -84,8 +84,8 @@ paths:
           description: ID of the transaction category localization
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '200':
           description: Successfully retrieved the transaction category localization
@@ -107,8 +107,8 @@ paths:
           description: ID of the transaction category localization to update
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: X-Idempotency-Key
           in: header
           description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
@@ -144,8 +144,8 @@ paths:
           description: ID of the transaction category localization to delete
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '204':
           description: Transaction category localization deleted successfully
@@ -164,8 +164,8 @@ paths:
           description: ID of the transaction category
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '200':
           description: Successfully retrieved the transaction category
@@ -187,8 +187,8 @@ paths:
           description: ID of the transaction category to update
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: X-Idempotency-Key
           in: header
           description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
@@ -224,8 +224,8 @@ paths:
           description: ID of the transaction category to delete
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '204':
           description: Transaction category deleted successfully
@@ -244,8 +244,8 @@ paths:
           description: ID of the title
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '200':
           description: Title retrieved successfully
@@ -267,8 +267,8 @@ paths:
           description: ID of the title
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: X-Idempotency-Key
           in: header
           description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
@@ -302,8 +302,8 @@ paths:
           description: ID of the title
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '204':
           description: Title deleted successfully
@@ -322,8 +322,8 @@ paths:
           description: ID of the rule operation type
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '200':
           description: Rule operation type retrieved successfully
@@ -345,8 +345,8 @@ paths:
           description: ID of the rule operation type
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: X-Idempotency-Key
           in: header
           description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
@@ -380,8 +380,8 @@ paths:
           description: ID of the rule operation type
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '204':
           description: Rule operation type deleted successfully
@@ -400,8 +400,8 @@ paths:
           description: ID of the relationship type
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '200':
           description: Relationship type retrieved successfully
@@ -423,8 +423,8 @@ paths:
           description: ID of the relationship type
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: X-Idempotency-Key
           in: header
           description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
@@ -458,8 +458,8 @@ paths:
           description: ID of the relationship type
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '204':
           description: Relationship type deleted successfully
@@ -478,8 +478,8 @@ paths:
           description: ID of the notification message template
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '200':
           description: Notification message template retrieved successfully
@@ -501,8 +501,8 @@ paths:
           description: ID of the notification message template
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: X-Idempotency-Key
           in: header
           description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
@@ -538,8 +538,8 @@ paths:
           description: ID of the notification message template
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '204':
           description: Notification message template deleted successfully
@@ -558,8 +558,8 @@ paths:
           description: ID of the notification message
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '200':
           description: Notification message retrieved successfully
@@ -581,8 +581,8 @@ paths:
           description: ID of the notification message
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: X-Idempotency-Key
           in: header
           description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
@@ -618,8 +618,8 @@ paths:
           description: ID of the notification message
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '204':
           description: Notification message deleted successfully
@@ -638,8 +638,8 @@ paths:
           description: ID of the notification message localization
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '200':
           description: Notification message localization retrieved successfully
@@ -661,8 +661,8 @@ paths:
           description: ID of the notification message localization
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: X-Idempotency-Key
           in: header
           description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
@@ -698,8 +698,8 @@ paths:
           description: ID of the notification message localization
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '204':
           description: Notification message localization deleted successfully
@@ -718,8 +718,8 @@ paths:
           description: ID of the message type
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '200':
           description: Message type retrieved successfully
@@ -741,8 +741,8 @@ paths:
           description: ID of the message type
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: X-Idempotency-Key
           in: header
           description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
@@ -778,8 +778,8 @@ paths:
           description: ID of the message type
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '204':
           description: Message type deleted successfully
@@ -798,8 +798,8 @@ paths:
           description: ID of the lookup item
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '200':
           description: Lookup item retrieved successfully
@@ -821,8 +821,8 @@ paths:
           description: ID of the lookup item
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: X-Idempotency-Key
           in: header
           description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
@@ -856,8 +856,8 @@ paths:
           description: ID of the lookup item
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '204':
           description: Lookup item deleted successfully
@@ -876,8 +876,8 @@ paths:
           description: ID of the lookup domain
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '200':
           description: Lookup domain retrieved successfully
@@ -899,8 +899,8 @@ paths:
           description: ID of the lookup domain
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: X-Idempotency-Key
           in: header
           description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
@@ -934,8 +934,8 @@ paths:
           description: ID of the lookup domain
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '204':
           description: Lookup domain deleted successfully
@@ -954,8 +954,8 @@ paths:
           description: ID of the legal form
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '200':
           description: Legal form retrieved successfully
@@ -977,8 +977,8 @@ paths:
           description: ID of the legal form
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: X-Idempotency-Key
           in: header
           description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
@@ -1012,8 +1012,8 @@ paths:
           description: ID of the legal form
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '204':
           description: Legal form deleted successfully
@@ -1032,8 +1032,8 @@ paths:
           description: ID of the languageLocale
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '200':
           description: LanguageLocale retrieved successfully
@@ -1055,8 +1055,8 @@ paths:
           description: ID of the languageLocale
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: X-Idempotency-Key
           in: header
           description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
@@ -1090,8 +1090,8 @@ paths:
           description: ID of the languageLocale
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '204':
           description: LanguageLocale entry deleted successfully
@@ -1110,8 +1110,8 @@ paths:
           description: ID of the identity document
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '200':
           description: Successfully retrieved the identity document
@@ -1133,8 +1133,8 @@ paths:
           description: ID of the identity document
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: X-Idempotency-Key
           in: header
           description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
@@ -1170,8 +1170,8 @@ paths:
           description: ID of the identity document
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '204':
           description: Identity document deleted successfully
@@ -1190,8 +1190,8 @@ paths:
           description: ID of the identity document localization
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: X-Idempotency-Key
           in: header
           description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
@@ -1227,8 +1227,8 @@ paths:
           description: ID of the identity document localization
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '204':
           description: Identity document localization deleted successfully
@@ -1247,8 +1247,8 @@ paths:
           description: ID of the identity document category
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '200':
           description: Successfully retrieved the identity document category
@@ -1270,8 +1270,8 @@ paths:
           description: ID of the identity document category
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: X-Idempotency-Key
           in: header
           description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
@@ -1307,8 +1307,8 @@ paths:
           description: ID of the identity document category
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '204':
           description: Identity document category deleted successfully
@@ -1327,8 +1327,8 @@ paths:
           description: ID of the document template
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '200':
           description: Successfully retrieved document template
@@ -1354,8 +1354,8 @@ paths:
           description: ID of the document template
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: X-Idempotency-Key
           in: header
           description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
@@ -1393,8 +1393,8 @@ paths:
           description: ID of the document template
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '204':
           description: Document template deleted successfully
@@ -1413,8 +1413,8 @@ paths:
           description: ID of the document template type
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '200':
           description: Successfully retrieved document template type
@@ -1440,8 +1440,8 @@ paths:
           description: ID of the document template type
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: X-Idempotency-Key
           in: header
           description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
@@ -1479,8 +1479,8 @@ paths:
           description: ID of the document template type
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '204':
           description: Document template type deleted successfully
@@ -1499,8 +1499,8 @@ paths:
           description: ID of the document template localization
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '200':
           description: Successfully retrieved document template localization
@@ -1526,8 +1526,8 @@ paths:
           description: ID of the document template localization
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: X-Idempotency-Key
           in: header
           description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
@@ -1565,8 +1565,8 @@ paths:
           description: ID of the document template localization
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '204':
           description: Document template localization deleted successfully
@@ -1585,8 +1585,8 @@ paths:
           description: ID of the administrative division
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '200':
           description: Administrative division retrieved successfully
@@ -1608,8 +1608,8 @@ paths:
           description: ID of the administrative division
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: X-Idempotency-Key
           in: header
           description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
@@ -1643,8 +1643,8 @@ paths:
           description: ID of the administrative division
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '204':
           description: Administrative division deleted successfully
@@ -1663,8 +1663,8 @@ paths:
           description: ID of the currency
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '200':
           description: Currency retrieved successfully
@@ -1686,8 +1686,8 @@ paths:
           description: ID of the currency
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: X-Idempotency-Key
           in: header
           description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
@@ -1721,8 +1721,8 @@ paths:
           description: ID of the currency
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '204':
           description: Currency deleted successfully
@@ -1741,8 +1741,8 @@ paths:
           description: ID of the country
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '200':
           description: Country retrieved successfully
@@ -1764,8 +1764,8 @@ paths:
           description: ID of the country
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: X-Idempotency-Key
           in: header
           description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
@@ -1799,8 +1799,8 @@ paths:
           description: ID of the country
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '204':
           description: Country deleted successfully
@@ -1819,8 +1819,8 @@ paths:
           description: ID of the contract type
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '200':
           description: Contract type retrieved successfully
@@ -1842,8 +1842,8 @@ paths:
           description: ID of the contract type
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: X-Idempotency-Key
           in: header
           description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
@@ -1877,8 +1877,8 @@ paths:
           description: ID of the contract type
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '204':
           description: Contract type deleted successfully
@@ -1897,8 +1897,8 @@ paths:
           description: ID of the contract role
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '200':
           description: Contract role retrieved successfully
@@ -1920,8 +1920,8 @@ paths:
           description: ID of the contract role
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: X-Idempotency-Key
           in: header
           description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
@@ -1955,13 +1955,91 @@ paths:
           description: ID of the contract role
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '204':
           description: Contract role deleted successfully
         '404':
           description: Contract role not found
+  /api/v1/contract-document-types/{documentTypeId}:
+    get:
+      tags:
+        - Contract Document Type
+      summary: Get Contract Document Type by ID
+      description: Retrieve a specific contract document type by its ID.
+      operationId: getContractDocumentType
+      parameters:
+        - name: documentTypeId
+          in: path
+          description: ID of the contract document type
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Contract document type retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContractDocumentTypeDTO'
+        '404':
+          description: Contract document type not found
+    put:
+      tags:
+        - Contract Document Type
+      summary: Update Contract Document Type
+      description: Update an existing contract document type by its ID.
+      operationId: updateContractDocumentType
+      parameters:
+        - name: documentTypeId
+          in: path
+          description: ID of the contract document type
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: X-Idempotency-Key
+          in: header
+          description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContractDocumentTypeDTO'
+        required: true
+      responses:
+        '200':
+          description: Contract document type updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContractDocumentTypeDTO'
+        '404':
+          description: Contract document type not found
+    delete:
+      tags:
+        - Contract Document Type
+      summary: Delete Contract Document Type
+      description: Delete a specific contract document type by its ID.
+      operationId: deleteContractDocumentType
+      parameters:
+        - name: documentTypeId
+          in: path
+          description: ID of the contract document type
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Contract document type deleted successfully
+        '404':
+          description: Contract document type not found
   /api/v1/consent-catalog/{id}:
     get:
       tags:
@@ -1975,8 +2053,8 @@ paths:
           description: ID of the consent catalog entry
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '200':
           description: Consent catalog entry retrieved successfully
@@ -1998,8 +2076,8 @@ paths:
           description: ID of the consent catalog entry
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: X-Idempotency-Key
           in: header
           description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
@@ -2033,8 +2111,8 @@ paths:
           description: ID of the consent catalog entry
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '204':
           description: Consent catalog entry deleted successfully
@@ -2053,8 +2131,8 @@ paths:
           description: ID of the bank institution code
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '200':
           description: Bank institution code retrieved successfully
@@ -2076,8 +2154,8 @@ paths:
           description: ID of the bank institution code
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: X-Idempotency-Key
           in: header
           description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
@@ -2111,8 +2189,8 @@ paths:
           description: ID of the bank institution code
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '204':
           description: Bank institution code deleted successfully
@@ -2131,8 +2209,8 @@ paths:
           description: ID of the asset type
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '200':
           description: Asset type retrieved successfully
@@ -2154,8 +2232,8 @@ paths:
           description: ID of the asset type
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: X-Idempotency-Key
           in: header
           description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
@@ -2189,8 +2267,8 @@ paths:
           description: ID of the asset type
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '204':
           description: Asset type deleted successfully
@@ -2209,8 +2287,8 @@ paths:
           description: ID of the activity code
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '200':
           description: Activity code retrieved successfully
@@ -2232,8 +2310,8 @@ paths:
           description: ID of the activity code
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: X-Idempotency-Key
           in: header
           description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
@@ -2267,8 +2345,8 @@ paths:
           description: ID of the activity code
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '204':
           description: Activity code deleted successfully
@@ -3943,6 +4021,62 @@ paths:
                 $ref: '#/components/schemas/ContractTypeDTO'
         '400':
           description: Invalid input data
+  /api/v1/contract-roles/filter:
+    post:
+      tags:
+        - Contract Role
+      summary: List Contract Roles
+      description: Retrieve a paginated list of contract roles.
+      operationId: filterContractRoles
+      parameters:
+        - name: X-Idempotency-Key
+          in: header
+          description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FilterRequestContractRoleDTO'
+        required: true
+      responses:
+        '200':
+          description: Successfully retrieved list of contract roles
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginationResponseContractRoleDTO'
+  /api/v1/contract-roles:
+    post:
+      tags:
+        - Contract Role
+      summary: Create Contract Role
+      description: Create a new contract role record.
+      operationId: createContractRole
+      parameters:
+        - name: X-Idempotency-Key
+          in: header
+          description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContractRoleDTO'
+        required: true
+      responses:
+        '200':
+          description: Contract role created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContractRoleDTO'
+        '400':
+          description: Invalid input data
   /api/v1/contract-document-types:
     get:
       tags:
@@ -4023,157 +4157,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ContractDocumentTypeDTO'
-        '400':
-          description: Invalid input data
-  /api/v1/contract-document-types/{documentTypeId}:
-    get:
-      tags:
-        - Contract Document Type
-      summary: Get Contract Document Type by ID
-      description: Retrieve a specific contract document type by its ID.
-      operationId: getContractDocumentType
-      parameters:
-        - name: documentTypeId
-          in: path
-          description: ID of the contract document type
-          required: true
-          schema:
-            type: integer
-            format: int64
-      responses:
-        '200':
-          description: Contract document type retrieved successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ContractDocumentTypeDTO'
-        '404':
-          description: Contract document type not found
-    put:
-      tags:
-        - Contract Document Type
-      summary: Update Contract Document Type
-      description: Update an existing contract document type by its ID.
-      operationId: updateContractDocumentType
-      parameters:
-        - name: documentTypeId
-          in: path
-          description: ID of the contract document type
-          required: true
-          schema:
-            type: integer
-            format: int64
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ContractDocumentTypeDTO'
-        required: true
-      responses:
-        '200':
-          description: Contract document type updated successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ContractDocumentTypeDTO'
-        '404':
-          description: Contract document type not found
-    delete:
-      tags:
-        - Contract Document Type
-      summary: Delete Contract Document Type
-      description: Delete a specific contract document type by its ID.
-      operationId: deleteContractDocumentType
-      parameters:
-        - name: documentTypeId
-          in: path
-          description: ID of the contract document type
-          required: true
-          schema:
-            type: integer
-            format: int64
-      responses:
-        '204':
-          description: Contract document type deleted successfully
-        '404':
-          description: Contract document type not found
-  /api/v1/contract-document-types/by-code/{documentCode}:
-    get:
-      tags:
-        - Contract Document Type
-      summary: Get Contract Document Type by Code
-      description: Retrieve a specific contract document type by its code.
-      operationId: getContractDocumentTypeByCode
-      parameters:
-        - name: documentCode
-          in: path
-          description: Code of the contract document type
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: Contract document type retrieved successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ContractDocumentTypeDTO'
-        '404':
-          description: Contract document type not found
-  /api/v1/contract-roles/filter:
-    post:
-      tags:
-        - Contract Role
-      summary: List Contract Roles
-      description: Retrieve a paginated list of contract roles.
-      operationId: filterContractRoles
-      parameters:
-        - name: X-Idempotency-Key
-          in: header
-          description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
-          required: false
-          schema:
-            type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/FilterRequestContractRoleDTO'
-        required: true
-      responses:
-        '200':
-          description: Successfully retrieved list of contract roles
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PaginationResponseContractRoleDTO'
-  /api/v1/contract-roles:
-    post:
-      tags:
-        - Contract Role
-      summary: Create Contract Role
-      description: Create a new contract role record.
-      operationId: createContractRole
-      parameters:
-        - name: X-Idempotency-Key
-          in: header
-          description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
-          required: false
-          schema:
-            type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ContractRoleDTO'
-        required: true
-      responses:
-        '200':
-          description: Contract role created successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ContractRoleDTO'
         '400':
           description: Invalid input data
   /api/v1/consent-catalog:
@@ -4517,8 +4500,8 @@ paths:
           description: ID of the transaction category
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: pageNumber
           in: query
           description: The zero-based page number to retrieve.
@@ -4578,15 +4561,15 @@ paths:
           description: ID of the transaction category
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: localeId
           in: path
           description: ID of the locale
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '200':
           description: Successfully retrieved the transaction category localization
@@ -4609,8 +4592,8 @@ paths:
           description: ID of the transaction category
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '200':
           description: Successfully retrieved localizations for the specified category
@@ -4687,8 +4670,8 @@ paths:
           description: ID of the parent category
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: pageNumber
           in: query
           description: The zero-based page number to retrieve.
@@ -4831,8 +4814,8 @@ paths:
           description: ID of the notification message
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: templateName
           in: path
           description: Name of the template
@@ -4861,8 +4844,8 @@ paths:
           description: ID of the notification message
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '200':
           description: Successfully retrieved templates
@@ -4882,8 +4865,8 @@ paths:
           description: ID of the notification message
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '204':
           description: Templates deleted successfully
@@ -4902,8 +4885,8 @@ paths:
           description: Message type ID
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: pageNumber
           in: query
           description: The zero-based page number to retrieve.
@@ -5046,15 +5029,15 @@ paths:
           description: ID of the notification message
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: localeId
           in: path
           description: ID of the language locale
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '200':
           description: Notification message localization retrieved successfully
@@ -5077,8 +5060,8 @@ paths:
           description: ID of the notification message
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '200':
           description: Successfully retrieved localizations
@@ -5098,8 +5081,8 @@ paths:
           description: ID of the notification message
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '204':
           description: Localizations deleted successfully
@@ -5118,8 +5101,8 @@ paths:
           description: ID of the language locale
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '200':
           description: Successfully retrieved localizations
@@ -5163,8 +5146,8 @@ paths:
           description: ID of the domain
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '200':
           description: Successfully retrieved lookup items for the domain
@@ -5185,8 +5168,8 @@ paths:
           description: ID of the country
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '200':
           description: Successfully retrieved legal forms for the country
@@ -5207,8 +5190,8 @@ paths:
           description: ID of the country
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: pageNumber
           in: query
           description: The zero-based page number to retrieve.
@@ -5291,8 +5274,8 @@ paths:
           description: ID of the identity document category
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: pageNumber
           in: query
           description: The zero-based page number to retrieve.
@@ -5352,15 +5335,15 @@ paths:
           description: ID of the identity document
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: localeId
           in: path
           description: ID of the language locale
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '200':
           description: Successfully retrieved the identity document localization
@@ -5383,8 +5366,8 @@ paths:
           description: ID of the identity document
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: pageNumber
           in: query
           description: The zero-based page number to retrieve.
@@ -5443,8 +5426,8 @@ paths:
           description: ID of the identity document
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '204':
           description: Identity document localizations deleted successfully
@@ -5486,8 +5469,8 @@ paths:
           description: Template type ID
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: pageNumber
           in: query
           description: The zero-based page number to retrieve.
@@ -5661,15 +5644,15 @@ paths:
           description: ID of the document template
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
         - name: localeId
           in: path
           description: ID of the language locale
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '200':
           description: Successfully retrieved document template localization
@@ -5696,8 +5679,8 @@ paths:
           description: ID of the document template
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '200':
           description: Successfully retrieved localizations
@@ -5725,8 +5708,8 @@ paths:
           description: ID of the document template
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '204':
           description: Document template localizations deleted successfully
@@ -5743,8 +5726,8 @@ paths:
           description: ID of the language locale
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '200':
           description: Successfully retrieved localizations
@@ -5760,6 +5743,29 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/DocumentTemplateLocalizationDTO'
+  /api/v1/contract-document-types/by-code/{documentCode}:
+    get:
+      tags:
+        - Contract Document Type
+      summary: Get Contract Document Type by Code
+      description: Retrieve a specific contract document type by its code.
+      operationId: getContractDocumentTypeByCode
+      parameters:
+        - name: documentCode
+          in: path
+          description: Code of the contract document type
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Contract document type retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContractDocumentTypeDTO'
+        '404':
+          description: Contract document type not found
   /api/v1/consent-catalog/type/{consentType}:
     get:
       tags:
@@ -5833,8 +5839,8 @@ paths:
           description: ID of the parent activity code
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '200':
           description: Successfully retrieved child activity codes
@@ -5855,8 +5861,8 @@ paths:
           description: ID of the country
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '200':
           description: Successfully retrieved activity codes for the country
@@ -5875,15 +5881,15 @@ components:
       type: object
       properties:
         localizationId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
           readOnly: true
         categoryId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
         localeId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
         categoryName:
           maxLength: 100
           minLength: 0
@@ -5911,8 +5917,8 @@ components:
       type: object
       properties:
         categoryId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
           readOnly: true
         categoryCode:
           maxLength: 20
@@ -5927,8 +5933,8 @@ components:
           minLength: 0
           type: string
         parentCategoryId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
         parentCategory:
           $ref: '#/components/schemas/TransactionCategoryCatalogDTO'
         status:
@@ -5953,8 +5959,8 @@ components:
       type: object
       properties:
         titleId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
           readOnly: true
         prefix:
           maxLength: 10
@@ -5984,8 +5990,8 @@ components:
       type: object
       properties:
         operationTypeId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
           readOnly: true
         operationTypeCode:
           maxLength: 50
@@ -6015,8 +6021,8 @@ components:
       type: object
       properties:
         relationshipTypeId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
           readOnly: true
         code:
           maxLength: 100
@@ -6047,12 +6053,12 @@ components:
       type: object
       properties:
         templateId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
           readOnly: true
         messageId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
         templateName:
           maxLength: 100
           minLength: 0
@@ -6092,8 +6098,8 @@ components:
       type: object
       properties:
         typeId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
           readOnly: true
         typeCode:
           maxLength: 20
@@ -6127,16 +6133,16 @@ components:
       type: object
       properties:
         messageId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
           readOnly: true
         messageCode:
           maxLength: 50
           minLength: 0
           type: string
         typeId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
         messageType:
           $ref: '#/components/schemas/MessageTypeCatalogDTO'
         eventType:
@@ -6180,15 +6186,15 @@ components:
       type: object
       properties:
         localizationId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
           readOnly: true
         messageId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
         localeId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
         subject:
           maxLength: 200
           minLength: 0
@@ -6217,12 +6223,12 @@ components:
       type: object
       properties:
         itemId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
           readOnly: true
         domainId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
         itemCode:
           maxLength: 50
           minLength: 0
@@ -6236,8 +6242,8 @@ components:
           minLength: 0
           type: string
         parentItemId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
         sortOrder:
           minimum: 0
           type: integer
@@ -6255,8 +6261,8 @@ components:
           minLength: 0
           type: string
         tenantId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
         status:
           type: string
           enum:
@@ -6270,8 +6276,8 @@ components:
       type: object
       properties:
         domainId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
           readOnly: true
         domainCode:
           maxLength: 50
@@ -6286,8 +6292,8 @@ components:
           minLength: 0
           type: string
         parentDomainId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
         multiselectAllowed:
           type: boolean
         hierarchyAllowed:
@@ -6299,8 +6305,8 @@ components:
           minLength: 0
           type: string
         tenantId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
         status:
           type: string
           enum:
@@ -6315,12 +6321,12 @@ components:
       type: object
       properties:
         legalFormId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
           readOnly: true
         countryId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
         code:
           maxLength: 20
           minLength: 0
@@ -6348,8 +6354,8 @@ components:
       type: object
       properties:
         localeId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
         languageCode:
           type: string
         countryCode:
@@ -6388,8 +6394,8 @@ components:
       type: object
       properties:
         documentId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
           readOnly: true
         documentCode:
           maxLength: 20
@@ -6400,13 +6406,13 @@ components:
           minLength: 0
           type: string
         categoryId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
         category:
           $ref: '#/components/schemas/IdentityDocumentCategoryCatalogDTO'
         countryId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
         description:
           maxLength: 500
           minLength: 0
@@ -6438,8 +6444,8 @@ components:
       type: object
       properties:
         categoryId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
           readOnly: true
         categoryCode:
           maxLength: 20
@@ -6473,15 +6479,15 @@ components:
       type: object
       properties:
         localizationId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
           readOnly: true
         documentId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
         localeId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
         documentName:
           maxLength: 100
           minLength: 0
@@ -6516,16 +6522,16 @@ components:
       type: object
       properties:
         templateId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
           readOnly: true
         templateCode:
           maxLength: 50
           minLength: 0
           type: string
         typeId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
         templateType:
           $ref: '#/components/schemas/DocumentTemplateTypeCatalogDTO'
         category:
@@ -6571,8 +6577,8 @@ components:
       type: object
       properties:
         typeId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
           readOnly: true
         typeCode:
           maxLength: 20
@@ -6607,15 +6613,15 @@ components:
       type: object
       properties:
         localizationId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
           readOnly: true
         templateId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
         localeId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
         templateName:
           maxLength: 100
           minLength: 0
@@ -6645,12 +6651,12 @@ components:
       type: object
       properties:
         divisionId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
           readOnly: true
         countryId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
         code:
           maxLength: 20
           minLength: 0
@@ -6664,8 +6670,8 @@ components:
           minLength: 0
           type: string
         parentDivisionId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
         status:
           type: string
           enum:
@@ -6687,8 +6693,8 @@ components:
       type: object
       properties:
         currencyId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
           readOnly: true
         isoCode:
           type: string
@@ -6727,8 +6733,8 @@ components:
       type: object
       properties:
         countryId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
           readOnly: true
         isoCode:
           pattern: ^[A-Z]{2,3}$
@@ -6767,8 +6773,8 @@ components:
       type: object
       properties:
         contractId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
           readOnly: true
         contractCode:
           maxLength: 20
@@ -6790,6 +6796,27 @@ components:
         dateUpdated:
           type: string
           format: date-time
+    ContractRoleDTO:
+      type: object
+      properties:
+        roleId:
+          type: string
+          format: uuid
+          readOnly: true
+        roleCode:
+          type: string
+        description:
+          type: string
+        name:
+          type: string
+        isActive:
+          type: boolean
+        dateCreated:
+          type: string
+          format: date-time
+        dateUpdated:
+          type: string
+          format: date-time
     ContractDocumentTypeDTO:
       required:
         - documentCode
@@ -6797,8 +6824,8 @@ components:
       type: object
       properties:
         documentTypeId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
           readOnly: true
         documentCode:
           maxLength: 50
@@ -6820,27 +6847,6 @@ components:
         dateUpdated:
           type: string
           format: date-time
-    ContractRoleDTO:
-      type: object
-      properties:
-        roleId:
-          type: integer
-          format: int64
-          readOnly: true
-        roleCode:
-          type: string
-        description:
-          type: string
-        name:
-          type: string
-        isActive:
-          type: boolean
-        dateCreated:
-          type: string
-          format: date-time
-        dateUpdated:
-          type: string
-          format: date-time
     ConsentCatalogDTO:
       required:
         - consentDescription
@@ -6849,8 +6855,8 @@ components:
       type: object
       properties:
         consentId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
           readOnly: true
         consentType:
           maxLength: 50
@@ -6891,8 +6897,8 @@ components:
       type: object
       properties:
         institutionId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
           readOnly: true
         bankName:
           maxLength: 200
@@ -6908,11 +6914,11 @@ components:
           minLength: 0
           type: string
         countryId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
         institutionTypeLkpId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
         status:
           type: string
           enum:
@@ -6935,8 +6941,8 @@ components:
       type: object
       properties:
         assetId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
           readOnly: true
         assetCode:
           maxLength: 20
@@ -6968,12 +6974,12 @@ components:
       type: object
       properties:
         activityCodeId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
           readOnly: true
         countryId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
         code:
           maxLength: 20
           minLength: 0
@@ -6987,8 +6993,8 @@ components:
           minLength: 0
           type: string
         parentCodeId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
         highRisk:
           type: boolean
         riskFactors:
