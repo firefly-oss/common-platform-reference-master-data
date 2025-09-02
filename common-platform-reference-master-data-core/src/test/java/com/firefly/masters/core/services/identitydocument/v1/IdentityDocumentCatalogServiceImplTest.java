@@ -22,11 +22,11 @@ import reactor.test.StepVerifier;
 
 import java.time.LocalDateTime;
 
+import java.util.UUID;
+
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
-import java.util.UUID;
 
 @ExtendWith(MockitoExtension.class)
 public class IdentityDocumentCatalogServiceImplTest {
@@ -46,18 +46,24 @@ public class IdentityDocumentCatalogServiceImplTest {
     private IdentityDocumentCatalog entity;
     private IdentityDocumentCatalogDTO dto;
     private TestPaginationRequest paginationRequest;
+    private UUID testDocumentId;
+    private UUID testCategoryId;
+    private UUID testCountryId;
 
     @BeforeEach
     void setUp() {
         // Setup test data
         LocalDateTime now = LocalDateTime.now();
-        
+        testDocumentId = UUID.randomUUID();
+        testCategoryId = UUID.randomUUID();
+        testCountryId = UUID.randomUUID();
+
         entity = new IdentityDocumentCatalog();
-        entity.setDocumentId(1L);
+        entity.setDocumentId(testDocumentId);
         entity.setDocumentCode("PASSPORT");
         entity.setDocumentName("Passport");
-        entity.setCategoryId(1L);
-        entity.setCountryId(724L); // Spain
+        entity.setCategoryId(testCategoryId);
+        entity.setCountryId(testCountryId);
         entity.setDescription("International passport for travel and identification");
         entity.setValidationRegex("^[A-Z0-9]{9}$");
         entity.setFormatDescription("9 characters, alphanumeric");
@@ -66,7 +72,7 @@ public class IdentityDocumentCatalogServiceImplTest {
         entity.setDateUpdated(now);
 
         IdentityDocumentCategoryCatalogDTO categoryDTO = new IdentityDocumentCategoryCatalogDTO();
-        categoryDTO.setCategoryId(1L);
+        categoryDTO.setCategoryId(testCategoryId);
         categoryDTO.setCategoryCode("GOVERNMENT");
         categoryDTO.setCategoryName("Government");
         categoryDTO.setDescription("Government-issued identification documents");
@@ -75,12 +81,12 @@ public class IdentityDocumentCatalogServiceImplTest {
         categoryDTO.setDateUpdated(now);
 
         dto = new IdentityDocumentCatalogDTO();
-        dto.setDocumentId(1L);
+        dto.setDocumentId(testDocumentId);
         dto.setDocumentCode("PASSPORT");
         dto.setDocumentName("Passport");
-        dto.setCategoryId(1L);
+        dto.setCategoryId(testCategoryId);
         dto.setCategory(categoryDTO);
-        dto.setCountryId(724L);
+        dto.setCountryId(testCountryId);
         dto.setDescription("International passport for travel and identification");
         dto.setValidationRegex("^[A-Z0-9]{9}$");
         dto.setFormatDescription("9 characters, alphanumeric");
@@ -106,7 +112,7 @@ public class IdentityDocumentCatalogServiceImplTest {
         StepVerifier.create(result)
                 .expectNextMatches(response -> {
                     return response.getContent().size() == 1 &&
-                            response.getContent().get(0).getDocumentId().equals(1L) &&
+                            response.getContent().get(0).getDocumentId().equals(testDocumentId) &&
                             response.getTotalElements() == 1L;
                 })
                 .verifyComplete();
@@ -120,24 +126,24 @@ public class IdentityDocumentCatalogServiceImplTest {
     void listIdentityDocumentsByCategory_ShouldReturnPaginatedResponse() {
         // Arrange
         Pageable pageable = paginationRequest.toPageable();
-        when(repository.findByCategoryId(anyLong(), any(Pageable.class))).thenReturn(Flux.just(entity));
-        when(repository.countByCategoryId(anyLong())).thenReturn(Mono.just(1L));
+        when(repository.findByCategoryId(any(UUID.class), any(Pageable.class))).thenReturn(Flux.just(entity));
+        when(repository.countByCategoryId(any(UUID.class))).thenReturn(Mono.just(1L));
         when(mapper.toDTO(any(IdentityDocumentCatalog.class))).thenReturn(dto);
 
         // Act
-        Mono<PaginationResponse<IdentityDocumentCatalogDTO>> result = service.listIdentityDocumentsByCategory(1L, paginationRequest);
+        Mono<PaginationResponse<IdentityDocumentCatalogDTO>> result = service.listIdentityDocumentsByCategory(testCategoryId, paginationRequest);
 
         // Assert
         StepVerifier.create(result)
                 .expectNextMatches(response -> {
                     return response.getContent().size() == 1 &&
-                            response.getContent().get(0).getDocumentId().equals(1L) &&
+                            response.getContent().get(0).getDocumentId().equals(testDocumentId) &&
                             response.getTotalElements() == 1L;
                 })
                 .verifyComplete();
 
-        verify(repository).findByCategoryId(anyLong(), any(Pageable.class));
-        verify(repository).countByCategoryId(anyLong());
+        verify(repository).findByCategoryId(any(UUID.class), any(Pageable.class));
+        verify(repository).countByCategoryId(any(UUID.class));
         verify(mapper).toDTO(any(IdentityDocumentCatalog.class));
     }
 
@@ -145,24 +151,24 @@ public class IdentityDocumentCatalogServiceImplTest {
     void listIdentityDocumentsByCountry_ShouldReturnPaginatedResponse() {
         // Arrange
         Pageable pageable = paginationRequest.toPageable();
-        when(repository.findByCountryId(anyLong(), any(Pageable.class))).thenReturn(Flux.just(entity));
-        when(repository.countByCountryId(anyLong())).thenReturn(Mono.just(1L));
+        when(repository.findByCountryId(any(UUID.class), any(Pageable.class))).thenReturn(Flux.just(entity));
+        when(repository.countByCountryId(any(UUID.class))).thenReturn(Mono.just(1L));
         when(mapper.toDTO(any(IdentityDocumentCatalog.class))).thenReturn(dto);
 
         // Act
-        Mono<PaginationResponse<IdentityDocumentCatalogDTO>> result = service.listIdentityDocumentsByCountry(724L, paginationRequest);
+        Mono<PaginationResponse<IdentityDocumentCatalogDTO>> result = service.listIdentityDocumentsByCountry(testCountryId, paginationRequest);
 
         // Assert
         StepVerifier.create(result)
                 .expectNextMatches(response -> {
                     return response.getContent().size() == 1 &&
-                            response.getContent().get(0).getDocumentId().equals(1L) &&
+                            response.getContent().get(0).getDocumentId().equals(testDocumentId) &&
                             response.getTotalElements() == 1L;
                 })
                 .verifyComplete();
 
-        verify(repository).findByCountryId(anyLong(), any(Pageable.class));
-        verify(repository).countByCountryId(anyLong());
+        verify(repository).findByCountryId(any(UUID.class), any(Pageable.class));
+        verify(repository).countByCountryId(any(UUID.class));
         verify(mapper).toDTO(any(IdentityDocumentCatalog.class));
     }
 
@@ -189,36 +195,36 @@ public class IdentityDocumentCatalogServiceImplTest {
     @Test
     void getIdentityDocument_ShouldReturnDocument_WhenFound() {
         // Arrange
-        when(repository.findById(anyLong())).thenReturn(Mono.just(entity));
+        when(repository.findById(any(UUID.class))).thenReturn(Mono.just(entity));
         when(mapper.toDTO(any(IdentityDocumentCatalog.class))).thenReturn(dto);
 
         // Act
-        Mono<IdentityDocumentCatalogDTO> result = service.getIdentityDocument(1L);
+        Mono<IdentityDocumentCatalogDTO> result = service.getIdentityDocument(testDocumentId);
 
         // Assert
         StepVerifier.create(result)
                 .expectNext(dto)
                 .verifyComplete();
 
-        verify(repository).findById(anyLong());
+        verify(repository).findById(any(UUID.class));
         verify(mapper).toDTO(any(IdentityDocumentCatalog.class));
     }
 
     @Test
     void getIdentityDocument_ShouldReturnError_WhenNotFound() {
         // Arrange
-        when(repository.findById(anyLong())).thenReturn(Mono.empty());
+        when(repository.findById(any(UUID.class))).thenReturn(Mono.empty());
 
         // Act
-        Mono<IdentityDocumentCatalogDTO> result = service.getIdentityDocument(1L);
+        Mono<IdentityDocumentCatalogDTO> result = service.getIdentityDocument(testDocumentId);
 
         // Assert
         StepVerifier.create(result)
                 .expectErrorMatches(throwable -> throwable instanceof RuntimeException &&
-                        throwable.getMessage().contains("Identity document not found with ID: 1"))
+                        throwable.getMessage().contains("Identity document not found with ID: " + testDocumentId))
                 .verify();
 
-        verify(repository).findById(anyLong());
+        verify(repository).findById(any(UUID.class));
         verify(mapper, never()).toDTO(any(IdentityDocumentCatalog.class));
     }
 
@@ -261,20 +267,20 @@ public class IdentityDocumentCatalogServiceImplTest {
     @Test
     void updateIdentityDocument_ShouldReturnUpdatedDocument_WhenFound() {
         // Arrange
-        when(repository.findById(anyLong())).thenReturn(Mono.just(entity));
+        when(repository.findById(any(UUID.class))).thenReturn(Mono.just(entity));
         when(mapper.toEntity(any(IdentityDocumentCatalogDTO.class))).thenReturn(entity);
         when(repository.save(any(IdentityDocumentCatalog.class))).thenReturn(Mono.just(entity));
         when(mapper.toDTO(any(IdentityDocumentCatalog.class))).thenReturn(dto);
 
         // Act
-        Mono<IdentityDocumentCatalogDTO> result = service.updateIdentityDocument(1L, dto);
+        Mono<IdentityDocumentCatalogDTO> result = service.updateIdentityDocument(testDocumentId, dto);
 
         // Assert
         StepVerifier.create(result)
                 .expectNext(dto)
                 .verifyComplete();
 
-        verify(repository).findById(anyLong());
+        verify(repository).findById(any(UUID.class));
         verify(mapper).toEntity(any(IdentityDocumentCatalogDTO.class));
         verify(repository).save(any(IdentityDocumentCatalog.class));
         verify(mapper).toDTO(any(IdentityDocumentCatalog.class));
@@ -283,18 +289,18 @@ public class IdentityDocumentCatalogServiceImplTest {
     @Test
     void updateIdentityDocument_ShouldReturnError_WhenNotFound() {
         // Arrange
-        when(repository.findById(anyLong())).thenReturn(Mono.empty());
+        when(repository.findById(any(UUID.class))).thenReturn(Mono.empty());
 
         // Act
-        Mono<IdentityDocumentCatalogDTO> result = service.updateIdentityDocument(1L, dto);
+        Mono<IdentityDocumentCatalogDTO> result = service.updateIdentityDocument(testDocumentId, dto);
 
         // Assert
         StepVerifier.create(result)
                 .expectErrorMatches(throwable -> throwable instanceof RuntimeException &&
-                        throwable.getMessage().contains("Identity document not found with ID: 1"))
+                        throwable.getMessage().contains("Identity document not found with ID: " + testDocumentId))
                 .verify();
 
-        verify(repository).findById(anyLong());
+        verify(repository).findById(any(UUID.class));
         verify(mapper, never()).toEntity(any(IdentityDocumentCatalogDTO.class));
         verify(repository, never()).save(any(IdentityDocumentCatalog.class));
         verify(mapper, never()).toDTO(any(IdentityDocumentCatalog.class));
@@ -303,38 +309,38 @@ public class IdentityDocumentCatalogServiceImplTest {
     @Test
     void deleteIdentityDocument_ShouldDeleteDocument_WhenFound() {
         // Arrange
-        when(repository.findById(anyLong())).thenReturn(Mono.just(entity));
-        when(localizationRepository.deleteByDocumentId(anyLong())).thenReturn(Mono.empty());
-        when(repository.deleteById(anyLong())).thenReturn(Mono.empty());
+        when(repository.findById(any(UUID.class))).thenReturn(Mono.just(entity));
+        when(localizationRepository.deleteByDocumentId(any(UUID.class))).thenReturn(Mono.empty());
+        when(repository.deleteById(any(UUID.class))).thenReturn(Mono.empty());
 
         // Act
-        Mono<Void> result = service.deleteIdentityDocument(1L);
+        Mono<Void> result = service.deleteIdentityDocument(testDocumentId);
 
         // Assert
         StepVerifier.create(result)
                 .verifyComplete();
 
-        verify(repository).findById(anyLong());
-        verify(localizationRepository).deleteByDocumentId(anyLong());
-        verify(repository).deleteById(anyLong());
+        verify(repository).findById(any(UUID.class));
+        verify(localizationRepository).deleteByDocumentId(any(UUID.class));
+        verify(repository).deleteById(any(UUID.class));
     }
 
     @Test
     void deleteIdentityDocument_ShouldReturnError_WhenNotFound() {
         // Arrange
-        when(repository.findById(anyLong())).thenReturn(Mono.empty());
+        when(repository.findById(any(UUID.class))).thenReturn(Mono.empty());
 
         // Act
-        Mono<Void> result = service.deleteIdentityDocument(1L);
+        Mono<Void> result = service.deleteIdentityDocument(testDocumentId);
 
         // Assert
         StepVerifier.create(result)
                 .expectErrorMatches(throwable -> throwable instanceof RuntimeException &&
-                        throwable.getMessage().contains("Identity document not found with ID: 1"))
+                        throwable.getMessage().contains("Identity document not found with ID: " + testDocumentId))
                 .verify();
 
-        verify(repository).findById(anyLong());
-        verify(localizationRepository, never()).deleteByDocumentId(anyLong());
-        verify(repository, never()).deleteById(anyLong());
+        verify(repository).findById(any(UUID.class));
+        verify(localizationRepository, never()).deleteByDocumentId(any(UUID.class));
+        verify(repository, never()).deleteById(any(UUID.class));
     }
 }

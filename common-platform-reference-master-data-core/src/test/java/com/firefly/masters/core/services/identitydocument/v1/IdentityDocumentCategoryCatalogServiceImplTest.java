@@ -41,14 +41,16 @@ public class IdentityDocumentCategoryCatalogServiceImplTest {
     private IdentityDocumentCategoryCatalog entity;
     private IdentityDocumentCategoryCatalogDTO dto;
     private TestPaginationRequest paginationRequest;
+    private UUID testCategoryId;
 
     @BeforeEach
     void setUp() {
         // Setup test data
         LocalDateTime now = LocalDateTime.now();
-        
+        testCategoryId = UUID.randomUUID();
+
         entity = new IdentityDocumentCategoryCatalog();
-        entity.setCategoryId(1L);
+        entity.setCategoryId(testCategoryId);
         entity.setCategoryCode("GOVERNMENT");
         entity.setCategoryName("Government");
         entity.setDescription("Government-issued identification documents");
@@ -57,7 +59,7 @@ public class IdentityDocumentCategoryCatalogServiceImplTest {
         entity.setDateUpdated(now);
 
         dto = new IdentityDocumentCategoryCatalogDTO();
-        dto.setCategoryId(1L);
+        dto.setCategoryId(testCategoryId);
         dto.setCategoryCode("GOVERNMENT");
         dto.setCategoryName("Government");
         dto.setDescription("Government-issued identification documents");
@@ -83,7 +85,7 @@ public class IdentityDocumentCategoryCatalogServiceImplTest {
         StepVerifier.create(result)
                 .expectNextMatches(response -> {
                     return response.getContent().size() == 1 &&
-                            response.getContent().get(0).getCategoryId().equals(1L) &&
+                            response.getContent().get(0).getCategoryId().equals(testCategoryId) &&
                             response.getTotalElements() == 1L;
                 })
                 .verifyComplete();
@@ -116,36 +118,36 @@ public class IdentityDocumentCategoryCatalogServiceImplTest {
     @Test
     void getIdentityDocumentCategory_ShouldReturnCategory_WhenFound() {
         // Arrange
-        when(repository.findById(anyLong())).thenReturn(Mono.just(entity));
+        when(repository.findById(any(UUID.class))).thenReturn(Mono.just(entity));
         when(mapper.toDTO(any(IdentityDocumentCategoryCatalog.class))).thenReturn(dto);
 
         // Act
-        Mono<IdentityDocumentCategoryCatalogDTO> result = service.getIdentityDocumentCategory(1L);
+        Mono<IdentityDocumentCategoryCatalogDTO> result = service.getIdentityDocumentCategory(testCategoryId);
 
         // Assert
         StepVerifier.create(result)
                 .expectNext(dto)
                 .verifyComplete();
 
-        verify(repository).findById(anyLong());
+        verify(repository).findById(any(UUID.class));
         verify(mapper).toDTO(any(IdentityDocumentCategoryCatalog.class));
     }
 
     @Test
     void getIdentityDocumentCategory_ShouldReturnError_WhenNotFound() {
         // Arrange
-        when(repository.findById(anyLong())).thenReturn(Mono.empty());
+        when(repository.findById(any(UUID.class))).thenReturn(Mono.empty());
 
         // Act
-        Mono<IdentityDocumentCategoryCatalogDTO> result = service.getIdentityDocumentCategory(1L);
+        Mono<IdentityDocumentCategoryCatalogDTO> result = service.getIdentityDocumentCategory(testCategoryId);
 
         // Assert
         StepVerifier.create(result)
                 .expectErrorMatches(throwable -> throwable instanceof RuntimeException &&
-                        throwable.getMessage().contains("Identity document category not found with ID: 1"))
+                        throwable.getMessage().contains("Identity document category not found with ID: " + testCategoryId))
                 .verify();
 
-        verify(repository).findById(anyLong());
+        verify(repository).findById(any(UUID.class));
         verify(mapper, never()).toDTO(any(IdentityDocumentCategoryCatalog.class));
     }
 
@@ -188,20 +190,20 @@ public class IdentityDocumentCategoryCatalogServiceImplTest {
     @Test
     void updateIdentityDocumentCategory_ShouldReturnUpdatedCategory_WhenFound() {
         // Arrange
-        when(repository.findById(anyLong())).thenReturn(Mono.just(entity));
+        when(repository.findById(any(UUID.class))).thenReturn(Mono.just(entity));
         when(mapper.toEntity(any(IdentityDocumentCategoryCatalogDTO.class))).thenReturn(entity);
         when(repository.save(any(IdentityDocumentCategoryCatalog.class))).thenReturn(Mono.just(entity));
         when(mapper.toDTO(any(IdentityDocumentCategoryCatalog.class))).thenReturn(dto);
 
         // Act
-        Mono<IdentityDocumentCategoryCatalogDTO> result = service.updateIdentityDocumentCategory(1L, dto);
+        Mono<IdentityDocumentCategoryCatalogDTO> result = service.updateIdentityDocumentCategory(testCategoryId, dto);
 
         // Assert
         StepVerifier.create(result)
                 .expectNext(dto)
                 .verifyComplete();
 
-        verify(repository).findById(anyLong());
+        verify(repository).findById(any(UUID.class));
         verify(mapper).toEntity(any(IdentityDocumentCategoryCatalogDTO.class));
         verify(repository).save(any(IdentityDocumentCategoryCatalog.class));
         verify(mapper).toDTO(any(IdentityDocumentCategoryCatalog.class));
@@ -210,18 +212,18 @@ public class IdentityDocumentCategoryCatalogServiceImplTest {
     @Test
     void updateIdentityDocumentCategory_ShouldReturnError_WhenNotFound() {
         // Arrange
-        when(repository.findById(anyLong())).thenReturn(Mono.empty());
+        when(repository.findById(any(UUID.class))).thenReturn(Mono.empty());
 
         // Act
-        Mono<IdentityDocumentCategoryCatalogDTO> result = service.updateIdentityDocumentCategory(1L, dto);
+        Mono<IdentityDocumentCategoryCatalogDTO> result = service.updateIdentityDocumentCategory(testCategoryId, dto);
 
         // Assert
         StepVerifier.create(result)
                 .expectErrorMatches(throwable -> throwable instanceof RuntimeException &&
-                        throwable.getMessage().contains("Identity document category not found with ID: 1"))
+                        throwable.getMessage().contains("Identity document category not found with ID: " + testCategoryId))
                 .verify();
 
-        verify(repository).findById(anyLong());
+        verify(repository).findById(any(UUID.class));
         verify(mapper, never()).toEntity(any(IdentityDocumentCategoryCatalogDTO.class));
         verify(repository, never()).save(any(IdentityDocumentCategoryCatalog.class));
         verify(mapper, never()).toDTO(any(IdentityDocumentCategoryCatalog.class));
@@ -230,35 +232,35 @@ public class IdentityDocumentCategoryCatalogServiceImplTest {
     @Test
     void deleteIdentityDocumentCategory_ShouldDeleteCategory_WhenFound() {
         // Arrange
-        when(repository.findById(anyLong())).thenReturn(Mono.just(entity));
-        when(repository.deleteById(anyLong())).thenReturn(Mono.empty());
+        when(repository.findById(any(UUID.class))).thenReturn(Mono.just(entity));
+        when(repository.deleteById(any(UUID.class))).thenReturn(Mono.empty());
 
         // Act
-        Mono<Void> result = service.deleteIdentityDocumentCategory(1L);
+        Mono<Void> result = service.deleteIdentityDocumentCategory(testCategoryId);
 
         // Assert
         StepVerifier.create(result)
                 .verifyComplete();
 
-        verify(repository).findById(anyLong());
-        verify(repository).deleteById(anyLong());
+        verify(repository).findById(any(UUID.class));
+        verify(repository).deleteById(any(UUID.class));
     }
 
     @Test
     void deleteIdentityDocumentCategory_ShouldReturnError_WhenNotFound() {
         // Arrange
-        when(repository.findById(anyLong())).thenReturn(Mono.empty());
+        when(repository.findById(any(UUID.class))).thenReturn(Mono.empty());
 
         // Act
-        Mono<Void> result = service.deleteIdentityDocumentCategory(1L);
+        Mono<Void> result = service.deleteIdentityDocumentCategory(testCategoryId);
 
         // Assert
         StepVerifier.create(result)
                 .expectErrorMatches(throwable -> throwable instanceof RuntimeException &&
-                        throwable.getMessage().contains("Identity document category not found with ID: 1"))
+                        throwable.getMessage().contains("Identity document category not found with ID: " + testCategoryId))
                 .verify();
 
-        verify(repository).findById(anyLong());
-        verify(repository, never()).deleteById(anyLong());
+        verify(repository).findById(any(UUID.class));
+        verify(repository, never()).deleteById(any(UUID.class));
     }
 }
