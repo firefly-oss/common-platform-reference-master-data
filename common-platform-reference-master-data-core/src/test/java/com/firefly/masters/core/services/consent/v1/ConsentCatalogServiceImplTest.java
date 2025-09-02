@@ -41,14 +41,16 @@ public class ConsentCatalogServiceImplTest {
     private ConsentCatalog entity;
     private ConsentCatalogDTO dto;
     private TestPaginationRequest paginationRequest;
+    private UUID testConsentId;
 
     @BeforeEach
     void setUp() {
         // Setup test data
         LocalDateTime now = LocalDateTime.now();
-        
+        testConsentId = UUID.randomUUID();
+
         entity = new ConsentCatalog();
-        entity.setConsentId(1L);
+        entity.setConsentId(testConsentId);
         entity.setConsentType("MARKETING");
         entity.setConsentDescription("Marketing communications consent");
         entity.setExpiryPeriodDays(365);
@@ -59,7 +61,7 @@ public class ConsentCatalogServiceImplTest {
         entity.setDateUpdated(now);
 
         dto = new ConsentCatalogDTO();
-        dto.setConsentId(1L);
+        dto.setConsentId(testConsentId);
         dto.setConsentType("MARKETING");
         dto.setConsentDescription("Marketing communications consent");
         dto.setExpiryPeriodDays(365);
@@ -87,7 +89,7 @@ public class ConsentCatalogServiceImplTest {
         StepVerifier.create(result)
                 .expectNextMatches(response -> {
                     return response.getContent().size() == 1 &&
-                            response.getContent().get(0).getConsentId().equals(1L) &&
+                            response.getContent().get(0).getConsentId().equals(testConsentId) &&
                             response.getTotalElements() == 1L;
                 })
                 .verifyComplete();
@@ -112,7 +114,7 @@ public class ConsentCatalogServiceImplTest {
         StepVerifier.create(result)
                 .expectNextMatches(response -> {
                     return response.getContent().size() == 1 &&
-                            response.getContent().get(0).getConsentId().equals(1L) &&
+                            response.getContent().get(0).getConsentId().equals(testConsentId) &&
                             response.getTotalElements() == 1L;
                 })
                 .verifyComplete();
@@ -145,54 +147,54 @@ public class ConsentCatalogServiceImplTest {
     @Test
     void getConsentCatalog_ShouldReturnConsentCatalogWhenFound() {
         // Arrange
-        when(repository.findById(anyLong())).thenReturn(Mono.just(entity));
+        when(repository.findById(any(UUID.class))).thenReturn(Mono.just(entity));
         when(mapper.toDTO(any(ConsentCatalog.class))).thenReturn(dto);
 
         // Act
-        Mono<ConsentCatalogDTO> result = service.getConsentCatalog(1L);
+        Mono<ConsentCatalogDTO> result = service.getConsentCatalog(testConsentId);
 
         // Assert
         StepVerifier.create(result)
                 .expectNext(dto)
                 .verifyComplete();
 
-        verify(repository).findById(anyLong());
+        verify(repository).findById(any(UUID.class));
         verify(mapper).toDTO(any(ConsentCatalog.class));
     }
 
     @Test
     void getConsentCatalog_ShouldReturnEmptyWhenNotFound() {
         // Arrange
-        when(repository.findById(anyLong())).thenReturn(Mono.empty());
+        when(repository.findById(any(UUID.class))).thenReturn(Mono.empty());
 
         // Act
-        Mono<ConsentCatalogDTO> result = service.getConsentCatalog(1L);
+        Mono<ConsentCatalogDTO> result = service.getConsentCatalog(testConsentId);
 
         // Assert
         StepVerifier.create(result)
                 .verifyComplete();
 
-        verify(repository).findById(anyLong());
+        verify(repository).findById(any(UUID.class));
         verify(mapper, never()).toDTO(any(ConsentCatalog.class));
     }
 
     @Test
     void updateConsentCatalog_ShouldReturnUpdatedConsentCatalogWhenFound() {
         // Arrange
-        when(repository.findById(anyLong())).thenReturn(Mono.just(entity));
+        when(repository.findById(any(UUID.class))).thenReturn(Mono.just(entity));
         when(mapper.toEntity(any(ConsentCatalogDTO.class))).thenReturn(entity);
         when(repository.save(any(ConsentCatalog.class))).thenReturn(Mono.just(entity));
         when(mapper.toDTO(any(ConsentCatalog.class))).thenReturn(dto);
 
         // Act
-        Mono<ConsentCatalogDTO> result = service.updateConsentCatalog(1L, dto);
+        Mono<ConsentCatalogDTO> result = service.updateConsentCatalog(testConsentId, dto);
 
         // Assert
         StepVerifier.create(result)
                 .expectNext(dto)
                 .verifyComplete();
 
-        verify(repository).findById(anyLong());
+        verify(repository).findById(any(UUID.class));
         verify(mapper).toEntity(any(ConsentCatalogDTO.class));
         verify(repository).save(any(ConsentCatalog.class));
         verify(mapper).toDTO(any(ConsentCatalog.class));
@@ -201,16 +203,16 @@ public class ConsentCatalogServiceImplTest {
     @Test
     void updateConsentCatalog_ShouldReturnEmptyWhenNotFound() {
         // Arrange
-        when(repository.findById(anyLong())).thenReturn(Mono.empty());
+        when(repository.findById(any(UUID.class))).thenReturn(Mono.empty());
 
         // Act
-        Mono<ConsentCatalogDTO> result = service.updateConsentCatalog(1L, dto);
+        Mono<ConsentCatalogDTO> result = service.updateConsentCatalog(testConsentId, dto);
 
         // Assert
         StepVerifier.create(result)
                 .verifyComplete();
 
-        verify(repository).findById(anyLong());
+        verify(repository).findById(any(UUID.class));
         verify(mapper, never()).toEntity(any(ConsentCatalogDTO.class));
         verify(repository, never()).save(any(ConsentCatalog.class));
         verify(mapper, never()).toDTO(any(ConsentCatalog.class));
@@ -219,15 +221,15 @@ public class ConsentCatalogServiceImplTest {
     @Test
     void deleteConsentCatalog_ShouldDeleteWhenFound() {
         // Arrange
-        when(repository.deleteById(anyLong())).thenReturn(Mono.empty());
+        when(repository.deleteById(any(UUID.class))).thenReturn(Mono.empty());
 
         // Act
-        Mono<Void> result = service.deleteConsentCatalog(1L);
+        Mono<Void> result = service.deleteConsentCatalog(testConsentId);
 
         // Assert
         StepVerifier.create(result)
                 .verifyComplete();
 
-        verify(repository).deleteById(anyLong());
+        verify(repository).deleteById(any(UUID.class));
     }
 }
