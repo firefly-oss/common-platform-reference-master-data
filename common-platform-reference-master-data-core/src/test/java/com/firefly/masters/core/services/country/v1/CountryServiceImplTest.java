@@ -42,6 +42,7 @@ public class CountryServiceImplTest {
     private Country country;
     private CountryDTO countryDTO;
     private TestPaginationRequest paginationRequest;
+    private UUID testCountryId;
 
     @Mock
     private FilterRequest<CountryDTO> filterRequest;
@@ -49,8 +50,9 @@ public class CountryServiceImplTest {
     @BeforeEach
     void setUp() {
         // Setup test data
+        testCountryId = UUID.randomUUID();
         country = new Country();
-        country.setCountryId(1L);
+        country.setCountryId(testCountryId);
         country.setIsoCode("US");
         country.setCountryName("United States");
         country.setStatus(StatusEnum.ACTIVE);
@@ -90,54 +92,54 @@ public class CountryServiceImplTest {
     @Test
     void getCountry_ShouldReturnCountryWhenFound() {
         // Arrange
-        when(countryRepository.findById(anyLong())).thenReturn(Mono.just(country));
+        when(countryRepository.findById(any(UUID.class))).thenReturn(Mono.just(country));
         when(countryMapper.toDTO(any(Country.class))).thenReturn(countryDTO);
 
         // Act
-        Mono<CountryDTO> result = countryService.getCountry(1L);
+        Mono<CountryDTO> result = countryService.getCountry(testCountryId);
 
         // Assert
         StepVerifier.create(result)
                 .expectNext(countryDTO)
                 .verifyComplete();
 
-        verify(countryRepository).findById(anyLong());
+        verify(countryRepository).findById(any(UUID.class));
         verify(countryMapper).toDTO(any(Country.class));
     }
 
     @Test
     void getCountry_ShouldReturnEmptyWhenNotFound() {
         // Arrange
-        when(countryRepository.findById(anyLong())).thenReturn(Mono.empty());
+        when(countryRepository.findById(any(UUID.class))).thenReturn(Mono.empty());
 
         // Act
-        Mono<CountryDTO> result = countryService.getCountry(1L);
+        Mono<CountryDTO> result = countryService.getCountry(testCountryId);
 
         // Assert
         StepVerifier.create(result)
                 .verifyComplete();
 
-        verify(countryRepository).findById(anyLong());
+        verify(countryRepository).findById(any(UUID.class));
         verify(countryMapper, never()).toDTO(any(Country.class));
     }
 
     @Test
     void updateCountry_ShouldReturnUpdatedCountryWhenFound() {
         // Arrange
-        when(countryRepository.findById(anyLong())).thenReturn(Mono.just(country));
+        when(countryRepository.findById(any(UUID.class))).thenReturn(Mono.just(country));
         when(countryMapper.toEntity(any(CountryDTO.class))).thenReturn(country);
         when(countryRepository.save(any(Country.class))).thenReturn(Mono.just(country));
         when(countryMapper.toDTO(any(Country.class))).thenReturn(countryDTO);
 
         // Act
-        Mono<CountryDTO> result = countryService.updateCountry(1L, countryDTO);
+        Mono<CountryDTO> result = countryService.updateCountry(testCountryId, countryDTO);
 
         // Assert
         StepVerifier.create(result)
                 .expectNext(countryDTO)
                 .verifyComplete();
 
-        verify(countryRepository).findById(anyLong());
+        verify(countryRepository).findById(any(UUID.class));
         verify(countryMapper).toEntity(any(CountryDTO.class));
         verify(countryRepository).save(any(Country.class));
         verify(countryMapper).toDTO(any(Country.class));
@@ -146,16 +148,16 @@ public class CountryServiceImplTest {
     @Test
     void updateCountry_ShouldReturnEmptyWhenNotFound() {
         // Arrange
-        when(countryRepository.findById(anyLong())).thenReturn(Mono.empty());
+        when(countryRepository.findById(any(UUID.class))).thenReturn(Mono.empty());
 
         // Act
-        Mono<CountryDTO> result = countryService.updateCountry(1L, countryDTO);
+        Mono<CountryDTO> result = countryService.updateCountry(testCountryId, countryDTO);
 
         // Assert
         StepVerifier.create(result)
                 .verifyComplete();
 
-        verify(countryRepository).findById(anyLong());
+        verify(countryRepository).findById(any(UUID.class));
         verify(countryMapper, never()).toEntity(any(CountryDTO.class));
         verify(countryRepository, never()).save(any(Country.class));
         verify(countryMapper, never()).toDTO(any(Country.class));
@@ -164,33 +166,33 @@ public class CountryServiceImplTest {
     @Test
     void deleteCountry_ShouldDeleteWhenFound() {
         // Arrange
-        when(countryRepository.findById(anyLong())).thenReturn(Mono.just(country));
+        when(countryRepository.findById(any(UUID.class))).thenReturn(Mono.just(country));
         when(countryRepository.delete(any(Country.class))).thenReturn(Mono.empty());
 
         // Act
-        Mono<Void> result = countryService.deleteCountry(1L);
+        Mono<Void> result = countryService.deleteCountry(testCountryId);
 
         // Assert
         StepVerifier.create(result)
                 .verifyComplete();
 
-        verify(countryRepository).findById(anyLong());
+        verify(countryRepository).findById(any(UUID.class));
         verify(countryRepository).delete(any(Country.class));
     }
 
     @Test
     void deleteCountry_ShouldReturnEmptyWhenNotFound() {
         // Arrange
-        when(countryRepository.findById(anyLong())).thenReturn(Mono.empty());
+        when(countryRepository.findById(any(UUID.class))).thenReturn(Mono.empty());
 
         // Act
-        Mono<Void> result = countryService.deleteCountry(1L);
+        Mono<Void> result = countryService.deleteCountry(testCountryId);
 
         // Assert
         StepVerifier.create(result)
                 .verifyComplete();
 
-        verify(countryRepository).findById(anyLong());
+        verify(countryRepository).findById(any(UUID.class));
         verify(countryRepository, never()).delete(any(Country.class));
     }
 }

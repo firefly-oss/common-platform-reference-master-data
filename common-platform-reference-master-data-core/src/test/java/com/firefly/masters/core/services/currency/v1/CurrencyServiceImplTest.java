@@ -41,12 +41,15 @@ public class CurrencyServiceImplTest {
     private Currency currency;
     private CurrencyDTO currencyDTO;
     private TestPaginationRequest paginationRequest;
+    private UUID testCurrencyId;
 
     @BeforeEach
     void setUp() {
         // Setup test data
+        testCurrencyId = UUID.randomUUID();
+
         currency = new Currency();
-        currency.setCurrencyId(1L);
+        currency.setCurrencyId(testCurrencyId);
         currency.setIsoCode("USD");
         currency.setCurrencyName("US Dollar");
         currency.setSymbol("$");
@@ -57,7 +60,7 @@ public class CurrencyServiceImplTest {
         currency.setDateUpdated(LocalDateTime.now());
 
         currencyDTO = new CurrencyDTO();
-        currencyDTO.setCurrencyId(1L);
+        currencyDTO.setCurrencyId(testCurrencyId);
         currencyDTO.setIsoCode("USD");
         currencyDTO.setCurrencyName("US Dollar");
         currencyDTO.setSymbol("$");
@@ -85,7 +88,7 @@ public class CurrencyServiceImplTest {
         StepVerifier.create(result)
                 .expectNextMatches(response -> {
                     return response.getContent().size() == 1 &&
-                            response.getContent().get(0).getCurrencyId().equals(1L) &&
+                            response.getContent().get(0).getCurrencyId().equals(testCurrencyId) &&
                             response.getTotalElements() == 1L;
                 })
                 .verifyComplete();
@@ -118,54 +121,54 @@ public class CurrencyServiceImplTest {
     @Test
     void getCurrency_ShouldReturnCurrencyWhenFound() {
         // Arrange
-        when(currencyRepository.findById(anyLong())).thenReturn(Mono.just(currency));
+        when(currencyRepository.findById(any(UUID.class))).thenReturn(Mono.just(currency));
         when(currencyMapper.toDTO(any(Currency.class))).thenReturn(currencyDTO);
 
         // Act
-        Mono<CurrencyDTO> result = currencyService.getCurrency(1L);
+        Mono<CurrencyDTO> result = currencyService.getCurrency(testCurrencyId);
 
         // Assert
         StepVerifier.create(result)
                 .expectNext(currencyDTO)
                 .verifyComplete();
 
-        verify(currencyRepository).findById(anyLong());
+        verify(currencyRepository).findById(any(UUID.class));
         verify(currencyMapper).toDTO(any(Currency.class));
     }
 
     @Test
     void getCurrency_ShouldReturnEmptyWhenNotFound() {
         // Arrange
-        when(currencyRepository.findById(anyLong())).thenReturn(Mono.empty());
+        when(currencyRepository.findById(any(UUID.class))).thenReturn(Mono.empty());
 
         // Act
-        Mono<CurrencyDTO> result = currencyService.getCurrency(1L);
+        Mono<CurrencyDTO> result = currencyService.getCurrency(testCurrencyId);
 
         // Assert
         StepVerifier.create(result)
                 .verifyComplete();
 
-        verify(currencyRepository).findById(anyLong());
+        verify(currencyRepository).findById(any(UUID.class));
         verify(currencyMapper, never()).toDTO(any(Currency.class));
     }
 
     @Test
     void updateCurrency_ShouldReturnUpdatedCurrencyWhenFound() {
         // Arrange
-        when(currencyRepository.findById(anyLong())).thenReturn(Mono.just(currency));
+        when(currencyRepository.findById(any(UUID.class))).thenReturn(Mono.just(currency));
         when(currencyMapper.toEntity(any(CurrencyDTO.class))).thenReturn(currency);
         when(currencyRepository.save(any(Currency.class))).thenReturn(Mono.just(currency));
         when(currencyMapper.toDTO(any(Currency.class))).thenReturn(currencyDTO);
 
         // Act
-        Mono<CurrencyDTO> result = currencyService.updateCurrency(1L, currencyDTO);
+        Mono<CurrencyDTO> result = currencyService.updateCurrency(testCurrencyId, currencyDTO);
 
         // Assert
         StepVerifier.create(result)
                 .expectNext(currencyDTO)
                 .verifyComplete();
 
-        verify(currencyRepository).findById(anyLong());
+        verify(currencyRepository).findById(any(UUID.class));
         verify(currencyMapper).toEntity(any(CurrencyDTO.class));
         verify(currencyRepository).save(any(Currency.class));
         verify(currencyMapper).toDTO(any(Currency.class));
@@ -174,16 +177,16 @@ public class CurrencyServiceImplTest {
     @Test
     void updateCurrency_ShouldReturnEmptyWhenNotFound() {
         // Arrange
-        when(currencyRepository.findById(anyLong())).thenReturn(Mono.empty());
+        when(currencyRepository.findById(any(UUID.class))).thenReturn(Mono.empty());
 
         // Act
-        Mono<CurrencyDTO> result = currencyService.updateCurrency(1L, currencyDTO);
+        Mono<CurrencyDTO> result = currencyService.updateCurrency(testCurrencyId, currencyDTO);
 
         // Assert
         StepVerifier.create(result)
                 .verifyComplete();
 
-        verify(currencyRepository).findById(anyLong());
+        verify(currencyRepository).findById(any(UUID.class));
         verify(currencyMapper, never()).toEntity(any(CurrencyDTO.class));
         verify(currencyRepository, never()).save(any(Currency.class));
         verify(currencyMapper, never()).toDTO(any(Currency.class));
@@ -192,30 +195,30 @@ public class CurrencyServiceImplTest {
     @Test
     void deleteCurrency_ShouldDeleteWhenFound() {
         // Arrange
-        when(currencyRepository.deleteById(anyLong())).thenReturn(Mono.empty());
+        when(currencyRepository.deleteById(any(UUID.class))).thenReturn(Mono.empty());
 
         // Act
-        Mono<Void> result = currencyService.deleteCurrency(1L);
+        Mono<Void> result = currencyService.deleteCurrency(testCurrencyId);
 
         // Assert
         StepVerifier.create(result)
                 .verifyComplete();
 
-        verify(currencyRepository).deleteById(anyLong());
+        verify(currencyRepository).deleteById(any(UUID.class));
     }
 
     @Test
     void deleteCurrency_ShouldReturnEmptyWhenNotFound() {
         // Arrange
-        when(currencyRepository.deleteById(anyLong())).thenReturn(Mono.empty());
+        when(currencyRepository.deleteById(any(UUID.class))).thenReturn(Mono.empty());
 
         // Act
-        Mono<Void> result = currencyService.deleteCurrency(1L);
+        Mono<Void> result = currencyService.deleteCurrency(testCurrencyId);
 
         // Assert
         StepVerifier.create(result)
                 .verifyComplete();
 
-        verify(currencyRepository).deleteById(anyLong());
+        verify(currencyRepository).deleteById(any(UUID.class));
     }
 }
