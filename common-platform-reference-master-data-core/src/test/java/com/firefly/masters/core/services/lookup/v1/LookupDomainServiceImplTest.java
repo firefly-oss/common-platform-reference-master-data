@@ -39,12 +39,15 @@ public class LookupDomainServiceImplTest {
     private LookupDomain entity;
     private LookupDomainDTO dto;
     private TestPaginationRequest paginationRequest;
+    private UUID testDomainId;
 
     @BeforeEach
     void setUp() {
         // Setup test data
+        testDomainId = UUID.randomUUID();
+
         entity = new LookupDomain();
-        entity.setDomainId(1L);
+        entity.setDomainId(testDomainId);
         entity.setDomainCode("BRANCH_TYPE");
         entity.setDomainName("Branch Types");
         entity.setDomainDesc("Types of bank branches");
@@ -57,7 +60,7 @@ public class LookupDomainServiceImplTest {
         entity.setStatus(StatusEnum.ACTIVE);
 
         dto = new LookupDomainDTO();
-        dto.setDomainId(1L);
+        dto.setDomainId(testDomainId);
         dto.setDomainCode("BRANCH_TYPE");
         dto.setDomainName("Branch Types");
         dto.setDomainDesc("Types of bank branches");
@@ -87,7 +90,7 @@ public class LookupDomainServiceImplTest {
         StepVerifier.create(result)
                 .expectNextMatches(response -> {
                     return response.getContent().size() == 1 &&
-                            response.getContent().get(0).getDomainId().equals(1L) &&
+                            response.getContent().get(0).getDomainId().equals(testDomainId) &&
                             response.getTotalElements() == 1L;
                 })
                 .verifyComplete();
@@ -120,54 +123,54 @@ public class LookupDomainServiceImplTest {
     @Test
     void getDomain_ShouldReturnEntityWhenFound() {
         // Arrange
-        when(repository.findById(anyLong())).thenReturn(Mono.just(entity));
+        when(repository.findById(any(UUID.class))).thenReturn(Mono.just(entity));
         when(mapper.toDTO(any(LookupDomain.class))).thenReturn(dto);
 
         // Act
-        Mono<LookupDomainDTO> result = service.getDomain(1L);
+        Mono<LookupDomainDTO> result = service.getDomain(testDomainId);
 
         // Assert
         StepVerifier.create(result)
                 .expectNext(dto)
                 .verifyComplete();
 
-        verify(repository).findById(anyLong());
+        verify(repository).findById(any(UUID.class));
         verify(mapper).toDTO(any(LookupDomain.class));
     }
 
     @Test
     void getDomain_ShouldReturnEmptyWhenNotFound() {
         // Arrange
-        when(repository.findById(anyLong())).thenReturn(Mono.empty());
+        when(repository.findById(any(UUID.class))).thenReturn(Mono.empty());
 
         // Act
-        Mono<LookupDomainDTO> result = service.getDomain(1L);
+        Mono<LookupDomainDTO> result = service.getDomain(testDomainId);
 
         // Assert
         StepVerifier.create(result)
                 .verifyComplete();
 
-        verify(repository).findById(anyLong());
+        verify(repository).findById(any(UUID.class));
         verify(mapper, never()).toDTO(any(LookupDomain.class));
     }
 
     @Test
     void updateDomain_ShouldReturnUpdatedEntityWhenFound() {
         // Arrange
-        when(repository.findById(anyLong())).thenReturn(Mono.just(entity));
+        when(repository.findById(any(UUID.class))).thenReturn(Mono.just(entity));
         when(mapper.toEntity(any(LookupDomainDTO.class))).thenReturn(entity);
         when(repository.save(any(LookupDomain.class))).thenReturn(Mono.just(entity));
         when(mapper.toDTO(any(LookupDomain.class))).thenReturn(dto);
 
         // Act
-        Mono<LookupDomainDTO> result = service.updateDomain(1L, dto);
+        Mono<LookupDomainDTO> result = service.updateDomain(testDomainId, dto);
 
         // Assert
         StepVerifier.create(result)
                 .expectNext(dto)
                 .verifyComplete();
 
-        verify(repository).findById(anyLong());
+        verify(repository).findById(any(UUID.class));
         verify(mapper).toEntity(any(LookupDomainDTO.class));
         verify(repository).save(any(LookupDomain.class));
         verify(mapper).toDTO(any(LookupDomain.class));
@@ -176,16 +179,16 @@ public class LookupDomainServiceImplTest {
     @Test
     void updateDomain_ShouldReturnEmptyWhenNotFound() {
         // Arrange
-        when(repository.findById(anyLong())).thenReturn(Mono.empty());
+        when(repository.findById(any(UUID.class))).thenReturn(Mono.empty());
 
         // Act
-        Mono<LookupDomainDTO> result = service.updateDomain(1L, dto);
+        Mono<LookupDomainDTO> result = service.updateDomain(testDomainId, dto);
 
         // Assert
         StepVerifier.create(result)
                 .verifyComplete();
 
-        verify(repository).findById(anyLong());
+        verify(repository).findById(any(UUID.class));
         verify(mapper, never()).toEntity(any(LookupDomainDTO.class));
         verify(repository, never()).save(any(LookupDomain.class));
         verify(mapper, never()).toDTO(any(LookupDomain.class));
@@ -194,33 +197,33 @@ public class LookupDomainServiceImplTest {
     @Test
     void deleteDomain_ShouldDeleteWhenFound() {
         // Arrange
-        when(repository.findById(anyLong())).thenReturn(Mono.just(entity));
+        when(repository.findById(any(UUID.class))).thenReturn(Mono.just(entity));
         when(repository.delete(any(LookupDomain.class))).thenReturn(Mono.empty());
 
         // Act
-        Mono<Void> result = service.deleteDomain(1L);
+        Mono<Void> result = service.deleteDomain(testDomainId);
 
         // Assert
         StepVerifier.create(result)
                 .verifyComplete();
 
-        verify(repository).findById(anyLong());
+        verify(repository).findById(any(UUID.class));
         verify(repository).delete(any(LookupDomain.class));
     }
 
     @Test
     void deleteDomain_ShouldReturnEmptyWhenNotFound() {
         // Arrange
-        when(repository.findById(anyLong())).thenReturn(Mono.empty());
+        when(repository.findById(any(UUID.class))).thenReturn(Mono.empty());
 
         // Act
-        Mono<Void> result = service.deleteDomain(1L);
+        Mono<Void> result = service.deleteDomain(testDomainId);
 
         // Assert
         StepVerifier.create(result)
                 .verifyComplete();
 
-        verify(repository).findById(anyLong());
+        verify(repository).findById(any(UUID.class));
         verify(repository, never()).delete(any(LookupDomain.class));
     }
 }

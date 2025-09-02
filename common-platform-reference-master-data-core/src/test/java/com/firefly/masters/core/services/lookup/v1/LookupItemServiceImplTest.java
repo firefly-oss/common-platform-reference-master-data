@@ -22,10 +22,10 @@ import reactor.test.StepVerifier;
 
 import java.time.LocalDate;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.*;
 import java.util.UUID;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class LookupItemServiceImplTest {
@@ -42,13 +42,18 @@ public class LookupItemServiceImplTest {
     private LookupItem entity;
     private LookupItemDTO dto;
     private TestPaginationRequest paginationRequest;
+    private UUID testItemId;
+    private UUID testDomainId;
 
     @BeforeEach
     void setUp() {
         // Setup test data
+        testItemId = UUID.randomUUID();
+        testDomainId = UUID.randomUUID();
+
         entity = new LookupItem();
-        entity.setItemId(1L);
-        entity.setDomainId(1L);
+        entity.setItemId(testItemId);
+        entity.setDomainId(testDomainId);
         entity.setItemCode("MAIN");
         entity.setItemLabelDefault("Main Branch");
         entity.setItemDesc("Main bank branch with full services");
@@ -62,8 +67,8 @@ public class LookupItemServiceImplTest {
         entity.setStatus(StatusEnum.ACTIVE);
 
         dto = new LookupItemDTO();
-        dto.setItemId(1L);
-        dto.setDomainId(1L);
+        dto.setItemId(testItemId);
+        dto.setDomainId(testDomainId);
         dto.setItemCode("MAIN");
         dto.setItemLabelDefault("Main Branch");
         dto.setItemDesc("Main bank branch with full services");
@@ -94,7 +99,7 @@ public class LookupItemServiceImplTest {
         StepVerifier.create(result)
                 .expectNextMatches(response -> {
                     return response.getContent().size() == 1 &&
-                            response.getContent().get(0).getItemId().equals(1L) &&
+                            response.getContent().get(0).getItemId().equals(testItemId) &&
                             response.getTotalElements() == 1L;
                 })
                 .verifyComplete();
@@ -107,18 +112,18 @@ public class LookupItemServiceImplTest {
     @Test
     void getItemsByDomain_ShouldReturnItems() {
         // Arrange
-        when(repository.findByDomainId(anyLong())).thenReturn(Flux.just(entity));
+        when(repository.findByDomainId(any(UUID.class))).thenReturn(Flux.just(entity));
         when(mapper.toDTO(any(LookupItem.class))).thenReturn(dto);
 
         // Act
-        Flux<LookupItemDTO> result = service.getItemsByDomain(1L);
+        Flux<LookupItemDTO> result = service.getItemsByDomain(testDomainId);
 
         // Assert
         StepVerifier.create(result)
                 .expectNext(dto)
                 .verifyComplete();
 
-        verify(repository).findByDomainId(anyLong());
+        verify(repository).findByDomainId(any(UUID.class));
         verify(mapper).toDTO(any(LookupItem.class));
     }
 
@@ -145,54 +150,54 @@ public class LookupItemServiceImplTest {
     @Test
     void getItem_ShouldReturnEntityWhenFound() {
         // Arrange
-        when(repository.findById(anyLong())).thenReturn(Mono.just(entity));
+        when(repository.findById(any(UUID.class))).thenReturn(Mono.just(entity));
         when(mapper.toDTO(any(LookupItem.class))).thenReturn(dto);
 
         // Act
-        Mono<LookupItemDTO> result = service.getItem(1L);
+        Mono<LookupItemDTO> result = service.getItem(testItemId);
 
         // Assert
         StepVerifier.create(result)
                 .expectNext(dto)
                 .verifyComplete();
 
-        verify(repository).findById(anyLong());
+        verify(repository).findById(any(UUID.class));
         verify(mapper).toDTO(any(LookupItem.class));
     }
 
     @Test
     void getItem_ShouldReturnEmptyWhenNotFound() {
         // Arrange
-        when(repository.findById(anyLong())).thenReturn(Mono.empty());
+        when(repository.findById(any(UUID.class))).thenReturn(Mono.empty());
 
         // Act
-        Mono<LookupItemDTO> result = service.getItem(1L);
+        Mono<LookupItemDTO> result = service.getItem(testItemId);
 
         // Assert
         StepVerifier.create(result)
                 .verifyComplete();
 
-        verify(repository).findById(anyLong());
+        verify(repository).findById(any(UUID.class));
         verify(mapper, never()).toDTO(any(LookupItem.class));
     }
 
     @Test
     void updateItem_ShouldReturnUpdatedEntityWhenFound() {
         // Arrange
-        when(repository.findById(anyLong())).thenReturn(Mono.just(entity));
+        when(repository.findById(any(UUID.class))).thenReturn(Mono.just(entity));
         when(mapper.toEntity(any(LookupItemDTO.class))).thenReturn(entity);
         when(repository.save(any(LookupItem.class))).thenReturn(Mono.just(entity));
         when(mapper.toDTO(any(LookupItem.class))).thenReturn(dto);
 
         // Act
-        Mono<LookupItemDTO> result = service.updateItem(1L, dto);
+        Mono<LookupItemDTO> result = service.updateItem(testItemId, dto);
 
         // Assert
         StepVerifier.create(result)
                 .expectNext(dto)
                 .verifyComplete();
 
-        verify(repository).findById(anyLong());
+        verify(repository).findById(any(UUID.class));
         verify(mapper).toEntity(any(LookupItemDTO.class));
         verify(repository).save(any(LookupItem.class));
         verify(mapper).toDTO(any(LookupItem.class));
@@ -201,16 +206,16 @@ public class LookupItemServiceImplTest {
     @Test
     void updateItem_ShouldReturnEmptyWhenNotFound() {
         // Arrange
-        when(repository.findById(anyLong())).thenReturn(Mono.empty());
+        when(repository.findById(any(UUID.class))).thenReturn(Mono.empty());
 
         // Act
-        Mono<LookupItemDTO> result = service.updateItem(1L, dto);
+        Mono<LookupItemDTO> result = service.updateItem(testItemId, dto);
 
         // Assert
         StepVerifier.create(result)
                 .verifyComplete();
 
-        verify(repository).findById(anyLong());
+        verify(repository).findById(any(UUID.class));
         verify(mapper, never()).toEntity(any(LookupItemDTO.class));
         verify(repository, never()).save(any(LookupItem.class));
         verify(mapper, never()).toDTO(any(LookupItem.class));
@@ -219,33 +224,33 @@ public class LookupItemServiceImplTest {
     @Test
     void deleteItem_ShouldDeleteWhenFound() {
         // Arrange
-        when(repository.findById(anyLong())).thenReturn(Mono.just(entity));
+        when(repository.findById(any(UUID.class))).thenReturn(Mono.just(entity));
         when(repository.delete(any(LookupItem.class))).thenReturn(Mono.empty());
 
         // Act
-        Mono<Void> result = service.deleteItem(1L);
+        Mono<Void> result = service.deleteItem(testItemId);
 
         // Assert
         StepVerifier.create(result)
                 .verifyComplete();
 
-        verify(repository).findById(anyLong());
+        verify(repository).findById(any(UUID.class));
         verify(repository).delete(any(LookupItem.class));
     }
 
     @Test
     void deleteItem_ShouldReturnEmptyWhenNotFound() {
         // Arrange
-        when(repository.findById(anyLong())).thenReturn(Mono.empty());
+        when(repository.findById(any(UUID.class))).thenReturn(Mono.empty());
 
         // Act
-        Mono<Void> result = service.deleteItem(1L);
+        Mono<Void> result = service.deleteItem(testItemId);
 
         // Assert
         StepVerifier.create(result)
                 .verifyComplete();
 
-        verify(repository).findById(anyLong());
+        verify(repository).findById(any(UUID.class));
         verify(repository, never()).delete(any(LookupItem.class));
     }
 }

@@ -20,10 +20,10 @@ import reactor.test.StepVerifier;
 
 import java.time.LocalDateTime;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.*;
 import java.util.UUID;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class ActivityCodeServiceImplTest {
@@ -40,13 +40,18 @@ public class ActivityCodeServiceImplTest {
     private ActivityCode entity;
     private ActivityCodeDTO dto;
     private TestPaginationRequest paginationRequest;
+    private UUID testActivityCodeId;
+    private UUID testCountryId;
 
     @BeforeEach
     void setUp() {
         // Setup test data
+        testActivityCodeId = UUID.randomUUID();
+        testCountryId = UUID.randomUUID();
+
         entity = new ActivityCode();
-        entity.setActivityCodeId(1L);
-        entity.setCountryId(1L);
+        entity.setActivityCodeId(testActivityCodeId);
+        entity.setCountryId(testCountryId);
         entity.setCode("A01");
         entity.setClassificationSys("NAICS");
         entity.setDescription("Crop Production");
@@ -58,8 +63,8 @@ public class ActivityCodeServiceImplTest {
         entity.setDateUpdated(LocalDateTime.now());
 
         dto = new ActivityCodeDTO();
-        dto.setActivityCodeId(1L);
-        dto.setCountryId(1L);
+        dto.setActivityCodeId(testActivityCodeId);
+        dto.setCountryId(testCountryId);
         dto.setCode("A01");
         dto.setClassificationSys("NAICS");
         dto.setDescription("Crop Production");
@@ -86,7 +91,7 @@ public class ActivityCodeServiceImplTest {
         StepVerifier.create(result)
                 .expectNextMatches(response -> {
                     return response.getContent().size() == 1 &&
-                            response.getContent().get(0).getActivityCodeId().equals(1L) &&
+                            response.getContent().get(0).getActivityCodeId().equals(testActivityCodeId) &&
                             response.getTotalElements() == 1L;
                 })
                 .verifyComplete();
@@ -99,36 +104,36 @@ public class ActivityCodeServiceImplTest {
     @Test
     void getActivityCodesByCountry_ShouldReturnActivityCodes() {
         // Arrange
-        when(repository.findByCountryId(anyLong())).thenReturn(Flux.just(entity));
+        when(repository.findByCountryId(any(UUID.class))).thenReturn(Flux.just(entity));
         when(mapper.toDTO(any(ActivityCode.class))).thenReturn(dto);
 
         // Act
-        Flux<ActivityCodeDTO> result = service.getActivityCodesByCountry(1L);
+        Flux<ActivityCodeDTO> result = service.getActivityCodesByCountry(testCountryId);
 
         // Assert
         StepVerifier.create(result)
                 .expectNext(dto)
                 .verifyComplete();
 
-        verify(repository).findByCountryId(anyLong());
+        verify(repository).findByCountryId(any(UUID.class));
         verify(mapper).toDTO(any(ActivityCode.class));
     }
 
     @Test
     void getChildActivityCodes_ShouldReturnChildActivityCodes() {
         // Arrange
-        when(repository.findByParentCodeId(anyLong())).thenReturn(Flux.just(entity));
+        when(repository.findByParentCodeId(any(UUID.class))).thenReturn(Flux.just(entity));
         when(mapper.toDTO(any(ActivityCode.class))).thenReturn(dto);
 
         // Act
-        Flux<ActivityCodeDTO> result = service.getChildActivityCodes(1L);
+        Flux<ActivityCodeDTO> result = service.getChildActivityCodes(testActivityCodeId);
 
         // Assert
         StepVerifier.create(result)
                 .expectNext(dto)
                 .verifyComplete();
 
-        verify(repository).findByParentCodeId(anyLong());
+        verify(repository).findByParentCodeId(any(UUID.class));
         verify(mapper).toDTO(any(ActivityCode.class));
     }
 
@@ -155,54 +160,54 @@ public class ActivityCodeServiceImplTest {
     @Test
     void getActivityCode_ShouldReturnActivityCodeWhenFound() {
         // Arrange
-        when(repository.findById(anyLong())).thenReturn(Mono.just(entity));
+        when(repository.findById(any(UUID.class))).thenReturn(Mono.just(entity));
         when(mapper.toDTO(any(ActivityCode.class))).thenReturn(dto);
 
         // Act
-        Mono<ActivityCodeDTO> result = service.getActivityCode(1L);
+        Mono<ActivityCodeDTO> result = service.getActivityCode(testActivityCodeId);
 
         // Assert
         StepVerifier.create(result)
                 .expectNext(dto)
                 .verifyComplete();
 
-        verify(repository).findById(anyLong());
+        verify(repository).findById(any(UUID.class));
         verify(mapper).toDTO(any(ActivityCode.class));
     }
 
     @Test
     void getActivityCode_ShouldReturnEmptyWhenNotFound() {
         // Arrange
-        when(repository.findById(anyLong())).thenReturn(Mono.empty());
+        when(repository.findById(any(UUID.class))).thenReturn(Mono.empty());
 
         // Act
-        Mono<ActivityCodeDTO> result = service.getActivityCode(1L);
+        Mono<ActivityCodeDTO> result = service.getActivityCode(testActivityCodeId);
 
         // Assert
         StepVerifier.create(result)
                 .verifyComplete();
 
-        verify(repository).findById(anyLong());
+        verify(repository).findById(any(UUID.class));
         verify(mapper, never()).toDTO(any(ActivityCode.class));
     }
 
     @Test
     void updateActivityCode_ShouldReturnUpdatedActivityCodeWhenFound() {
         // Arrange
-        when(repository.findById(anyLong())).thenReturn(Mono.just(entity));
+        when(repository.findById(any(UUID.class))).thenReturn(Mono.just(entity));
         when(mapper.toEntity(any(ActivityCodeDTO.class))).thenReturn(entity);
         when(repository.save(any(ActivityCode.class))).thenReturn(Mono.just(entity));
         when(mapper.toDTO(any(ActivityCode.class))).thenReturn(dto);
 
         // Act
-        Mono<ActivityCodeDTO> result = service.updateActivityCode(1L, dto);
+        Mono<ActivityCodeDTO> result = service.updateActivityCode(testActivityCodeId, dto);
 
         // Assert
         StepVerifier.create(result)
                 .expectNext(dto)
                 .verifyComplete();
 
-        verify(repository).findById(anyLong());
+        verify(repository).findById(any(UUID.class));
         verify(mapper).toEntity(any(ActivityCodeDTO.class));
         verify(repository).save(any(ActivityCode.class));
         verify(mapper).toDTO(any(ActivityCode.class));
@@ -211,16 +216,16 @@ public class ActivityCodeServiceImplTest {
     @Test
     void updateActivityCode_ShouldReturnEmptyWhenNotFound() {
         // Arrange
-        when(repository.findById(anyLong())).thenReturn(Mono.empty());
+        when(repository.findById(any(UUID.class))).thenReturn(Mono.empty());
 
         // Act
-        Mono<ActivityCodeDTO> result = service.updateActivityCode(1L, dto);
+        Mono<ActivityCodeDTO> result = service.updateActivityCode(testActivityCodeId, dto);
 
         // Assert
         StepVerifier.create(result)
                 .verifyComplete();
 
-        verify(repository).findById(anyLong());
+        verify(repository).findById(any(UUID.class));
         verify(mapper, never()).toEntity(any(ActivityCodeDTO.class));
         verify(repository, never()).save(any(ActivityCode.class));
         verify(mapper, never()).toDTO(any(ActivityCode.class));
@@ -229,15 +234,15 @@ public class ActivityCodeServiceImplTest {
     @Test
     void deleteActivityCode_ShouldDeleteWhenFound() {
         // Arrange
-        when(repository.deleteById(anyLong())).thenReturn(Mono.empty());
+        when(repository.deleteById(any(UUID.class))).thenReturn(Mono.empty());
 
         // Act
-        Mono<Void> result = service.deleteActivityCode(1L);
+        Mono<Void> result = service.deleteActivityCode(testActivityCodeId);
 
         // Assert
         StepVerifier.create(result)
                 .verifyComplete();
 
-        verify(repository).deleteById(anyLong());
+        verify(repository).deleteById(any(UUID.class));
     }
 }
