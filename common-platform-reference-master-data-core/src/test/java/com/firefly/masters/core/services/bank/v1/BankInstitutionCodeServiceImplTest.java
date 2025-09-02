@@ -41,31 +41,38 @@ public class BankInstitutionCodeServiceImplTest {
     private BankInstitutionCode entity;
     private BankInstitutionCodeDTO dto;
     private TestPaginationRequest paginationRequest;
+    private UUID testInstitutionId;
+    private UUID testCountryId;
+    private UUID testInstitutionTypeLkpId;
 
     @BeforeEach
     void setUp() {
         // Setup test data
+        testInstitutionId = UUID.randomUUID();
+        testCountryId = UUID.randomUUID();
+        testInstitutionTypeLkpId = UUID.randomUUID();
+
         entity = new BankInstitutionCode();
-        entity.setInstitutionId(1L);
+        entity.setInstitutionId(testInstitutionId);
         entity.setBankName("Chase Bank");
         entity.setSwiftCode("CHASUS33");
         entity.setRoutingNumber("021000021");
         entity.setIbanPrefix("US");
-        entity.setCountryId(1L);
-        entity.setInstitutionTypeLkpId(1L);
+        entity.setCountryId(testCountryId);
+        entity.setInstitutionTypeLkpId(testInstitutionTypeLkpId);
         entity.setStatus(StatusEnum.ACTIVE);
         entity.setSvgIcon("data:image/svg+xml;base64,...");
         entity.setDateCreated(LocalDateTime.now());
         entity.setDateUpdated(LocalDateTime.now());
 
         dto = new BankInstitutionCodeDTO();
-        dto.setInstitutionId(1L);
+        dto.setInstitutionId(testInstitutionId);
         dto.setBankName("Chase Bank");
         dto.setSwiftCode("CHASUS33");
         dto.setRoutingNumber("021000021");
         dto.setIbanPrefix("US");
-        dto.setCountryId(1L);
-        dto.setInstitutionTypeLkpId(1L);
+        dto.setCountryId(testCountryId);
+        dto.setInstitutionTypeLkpId(testInstitutionTypeLkpId);
         dto.setStatus(StatusEnum.ACTIVE);
         dto.setSvgIcon("data:image/svg+xml;base64,...");
         dto.setDateCreated(LocalDateTime.now());
@@ -89,7 +96,7 @@ public class BankInstitutionCodeServiceImplTest {
         StepVerifier.create(result)
                 .expectNextMatches(response -> {
                     return response.getContent().size() == 1 &&
-                            response.getContent().get(0).getInstitutionId().equals(1L) &&
+                            response.getContent().get(0).getInstitutionId().equals(testInstitutionId) &&
                             response.getTotalElements() == 1L;
                 })
                 .verifyComplete();
@@ -122,54 +129,54 @@ public class BankInstitutionCodeServiceImplTest {
     @Test
     void getBankInstitutionCode_ShouldReturnEntityWhenFound() {
         // Arrange
-        when(repository.findById(anyLong())).thenReturn(Mono.just(entity));
+        when(repository.findById(any(UUID.class))).thenReturn(Mono.just(entity));
         when(mapper.toDTO(any(BankInstitutionCode.class))).thenReturn(dto);
 
         // Act
-        Mono<BankInstitutionCodeDTO> result = service.getBankInstitutionCode(1L);
+        Mono<BankInstitutionCodeDTO> result = service.getBankInstitutionCode(testInstitutionId);
 
         // Assert
         StepVerifier.create(result)
                 .expectNext(dto)
                 .verifyComplete();
 
-        verify(repository).findById(anyLong());
+        verify(repository).findById(any(UUID.class));
         verify(mapper).toDTO(any(BankInstitutionCode.class));
     }
 
     @Test
     void getBankInstitutionCode_ShouldReturnEmptyWhenNotFound() {
         // Arrange
-        when(repository.findById(anyLong())).thenReturn(Mono.empty());
+        when(repository.findById(any(UUID.class))).thenReturn(Mono.empty());
 
         // Act
-        Mono<BankInstitutionCodeDTO> result = service.getBankInstitutionCode(1L);
+        Mono<BankInstitutionCodeDTO> result = service.getBankInstitutionCode(testInstitutionId);
 
         // Assert
         StepVerifier.create(result)
                 .verifyComplete();
 
-        verify(repository).findById(anyLong());
+        verify(repository).findById(any(UUID.class));
         verify(mapper, never()).toDTO(any(BankInstitutionCode.class));
     }
 
     @Test
     void updateBankInstitutionCode_ShouldReturnUpdatedEntityWhenFound() {
         // Arrange
-        when(repository.findById(anyLong())).thenReturn(Mono.just(entity));
+        when(repository.findById(any(UUID.class))).thenReturn(Mono.just(entity));
         when(mapper.toEntity(any(BankInstitutionCodeDTO.class))).thenReturn(entity);
         when(repository.save(any(BankInstitutionCode.class))).thenReturn(Mono.just(entity));
         when(mapper.toDTO(any(BankInstitutionCode.class))).thenReturn(dto);
 
         // Act
-        Mono<BankInstitutionCodeDTO> result = service.updateBankInstitutionCode(1L, dto);
+        Mono<BankInstitutionCodeDTO> result = service.updateBankInstitutionCode(testInstitutionId, dto);
 
         // Assert
         StepVerifier.create(result)
                 .expectNext(dto)
                 .verifyComplete();
 
-        verify(repository).findById(anyLong());
+        verify(repository).findById(any(UUID.class));
         verify(mapper).toEntity(any(BankInstitutionCodeDTO.class));
         verify(repository).save(any(BankInstitutionCode.class));
         verify(mapper).toDTO(any(BankInstitutionCode.class));
@@ -178,16 +185,16 @@ public class BankInstitutionCodeServiceImplTest {
     @Test
     void updateBankInstitutionCode_ShouldReturnEmptyWhenNotFound() {
         // Arrange
-        when(repository.findById(anyLong())).thenReturn(Mono.empty());
+        when(repository.findById(any(UUID.class))).thenReturn(Mono.empty());
 
         // Act
-        Mono<BankInstitutionCodeDTO> result = service.updateBankInstitutionCode(1L, dto);
+        Mono<BankInstitutionCodeDTO> result = service.updateBankInstitutionCode(testInstitutionId, dto);
 
         // Assert
         StepVerifier.create(result)
                 .verifyComplete();
 
-        verify(repository).findById(anyLong());
+        verify(repository).findById(any(UUID.class));
         verify(mapper, never()).toEntity(any(BankInstitutionCodeDTO.class));
         verify(repository, never()).save(any(BankInstitutionCode.class));
         verify(mapper, never()).toDTO(any(BankInstitutionCode.class));
@@ -196,30 +203,30 @@ public class BankInstitutionCodeServiceImplTest {
     @Test
     void deleteBankInstitutionCode_ShouldDeleteWhenFound() {
         // Arrange
-        when(repository.deleteById(anyLong())).thenReturn(Mono.empty());
+        when(repository.deleteById(any(UUID.class))).thenReturn(Mono.empty());
 
         // Act
-        Mono<Void> result = service.deleteBankInstitutionCode(1L);
+        Mono<Void> result = service.deleteBankInstitutionCode(testInstitutionId);
 
         // Assert
         StepVerifier.create(result)
                 .verifyComplete();
 
-        verify(repository).deleteById(anyLong());
+        verify(repository).deleteById(any(UUID.class));
     }
 
     @Test
     void deleteBankInstitutionCode_ShouldReturnEmptyWhenNotFound() {
         // Arrange
-        when(repository.deleteById(anyLong())).thenReturn(Mono.empty());
+        when(repository.deleteById(any(UUID.class))).thenReturn(Mono.empty());
 
         // Act
-        Mono<Void> result = service.deleteBankInstitutionCode(1L);
+        Mono<Void> result = service.deleteBankInstitutionCode(testInstitutionId);
 
         // Assert
         StepVerifier.create(result)
                 .verifyComplete();
 
-        verify(repository).deleteById(anyLong());
+        verify(repository).deleteById(any(UUID.class));
     }
 }
