@@ -11,6 +11,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 /**
  * Data Transfer Object for transaction category localization information.
@@ -23,13 +24,13 @@ import java.time.LocalDateTime;
 public class TransactionCategoryLocalizationDTO {
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private Long localizationId;
+    private UUID localizationId;
 
     @NotNull(message = "Category ID is required")
-    private Long categoryId;
+    private UUID categoryId;
 
     @NotNull(message = "Locale ID is required")
-    private Long localeId;
+    private UUID localeId;
 
     @NotBlank(message = "Category name is required")
     @Size(max = 100, message = "Category name must not exceed 100 characters")

@@ -6,7 +6,7 @@
 -- Create TABLE asset_type
 ------------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS asset_type (
-    asset_id        BIGSERIAL       PRIMARY KEY,
+    asset_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     asset_code      VARCHAR(50)     NOT NULL,
     name            VARCHAR(100)    NOT NULL,
     description     VARCHAR(200),

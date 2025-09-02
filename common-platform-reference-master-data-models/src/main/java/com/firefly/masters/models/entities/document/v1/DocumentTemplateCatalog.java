@@ -11,6 +11,7 @@ import lombok.Builder;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 /**
  * Entity representing a document template catalog record.
@@ -26,13 +27,13 @@ public class DocumentTemplateCatalog {
 
     @Id
     @Column("template_id")
-    private Long templateId;
+    private UUID templateId;
 
     @Column("template_code")
     private String templateCode;
 
     @Column("type_id")
-    private Long typeId;
+    private UUID typeId;
 
     @Column("category")
     private String category;

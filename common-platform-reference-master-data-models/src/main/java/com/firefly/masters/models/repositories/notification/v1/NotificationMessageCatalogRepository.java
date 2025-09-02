@@ -7,13 +7,14 @@ import org.springframework.data.r2dbc.repository.Query;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 /**
  * Repository for managing NotificationMessageCatalog entities.
  * Extends BaseRepository to inherit common CRUD operations.
  */
 @Repository
-public interface NotificationMessageCatalogRepository extends BaseRepository<NotificationMessageCatalog, Long> {
+public interface NotificationMessageCatalogRepository extends BaseRepository<NotificationMessageCatalog, UUID> {
 
     /**
      * Find a notification message by its code.
@@ -48,7 +49,7 @@ public interface NotificationMessageCatalogRepository extends BaseRepository<Not
      * @param pageable pagination information
      * @return a Flux of NotificationMessageCatalog entities of the specified message type
      */
-    Flux<NotificationMessageCatalog> findByTypeId(Long typeId, Pageable pageable);
+    Flux<NotificationMessageCatalog> findByTypeId(UUID typeId, Pageable pageable);
 
     /**
      * Count notification messages of a specific message type.
@@ -57,5 +58,5 @@ public interface NotificationMessageCatalogRepository extends BaseRepository<Not
      * @return a Mono of Long representing the count
      */
     @Query("SELECT COUNT(*) FROM notification_message_catalog WHERE type_id = :typeId")
-    Mono<Long> countByTypeId(Long typeId);
+    Mono<Long> countByTypeId(UUID typeId);
 }

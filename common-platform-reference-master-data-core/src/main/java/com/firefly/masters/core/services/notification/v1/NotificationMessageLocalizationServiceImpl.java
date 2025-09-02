@@ -11,6 +11,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 /**
  * Implementation of the NotificationMessageLocalizationService interface.
@@ -26,14 +27,14 @@ public class NotificationMessageLocalizationServiceImpl implements NotificationM
     private NotificationMessageLocalizationMapper mapper;
 
     @Override
-    public Flux<NotificationMessageLocalizationDTO> getLocalizationsByMessageId(Long messageId) {
+    public Flux<NotificationMessageLocalizationDTO> getLocalizationsByMessageId(UUID messageId) {
         return repository.findByMessageId(messageId)
                 .map(mapper::toDTO)
                 .switchIfEmpty(Flux.error(new RuntimeException("No localizations found for message ID: " + messageId)));
     }
 
     @Override
-    public Flux<NotificationMessageLocalizationDTO> getLocalizationsByLocaleId(Long localeId) {
+    public Flux<NotificationMessageLocalizationDTO> getLocalizationsByLocaleId(UUID localeId) {
         return repository.findByLocaleId(localeId)
                 .map(mapper::toDTO)
                 .switchIfEmpty(Flux.error(new RuntimeException("No localizations found for locale ID: " + localeId)));
@@ -54,21 +55,21 @@ public class NotificationMessageLocalizationServiceImpl implements NotificationM
     }
 
     @Override
-    public Mono<NotificationMessageLocalizationDTO> getNotificationMessageLocalization(Long localizationId) {
+    public Mono<NotificationMessageLocalizationDTO> getNotificationMessageLocalization(UUID localizationId) {
         return repository.findById(localizationId)
                 .map(mapper::toDTO)
                 .switchIfEmpty(Mono.error(new RuntimeException("Notification message localization not found with ID: " + localizationId)));
     }
 
     @Override
-    public Mono<NotificationMessageLocalizationDTO> getNotificationMessageLocalizationByMessageAndLocale(Long messageId, Long localeId) {
+    public Mono<NotificationMessageLocalizationDTO> getNotificationMessageLocalizationByMessageAndLocale(UUID messageId, UUID localeId) {
         return repository.findByMessageIdAndLocaleId(messageId, localeId)
                 .map(mapper::toDTO)
                 .switchIfEmpty(Mono.error(new RuntimeException("Notification message localization not found with message ID: " + messageId + " and locale ID: " + localeId)));
     }
 
     @Override
-    public Mono<NotificationMessageLocalizationDTO> updateNotificationMessageLocalization(Long localizationId, NotificationMessageLocalizationDTO localizationDTO) {
+    public Mono<NotificationMessageLocalizationDTO> updateNotificationMessageLocalization(UUID localizationId, NotificationMessageLocalizationDTO localizationDTO) {
         return repository.findById(localizationId)
                 .switchIfEmpty(Mono.error(new RuntimeException("Notification message localization not found with ID: " + localizationId)))
                 .flatMap(existingEntity -> {
@@ -83,7 +84,7 @@ public class NotificationMessageLocalizationServiceImpl implements NotificationM
     }
 
     @Override
-    public Mono<Void> deleteNotificationMessageLocalization(Long localizationId) {
+    public Mono<Void> deleteNotificationMessageLocalization(UUID localizationId) {
         return repository.findById(localizationId)
                 .switchIfEmpty(Mono.error(new RuntimeException("Notification message localization not found with ID: " + localizationId)))
                 .flatMap(repository::delete)
@@ -91,7 +92,7 @@ public class NotificationMessageLocalizationServiceImpl implements NotificationM
     }
 
     @Override
-    public Mono<Void> deleteLocalizationsByMessageId(Long messageId) {
+    public Mono<Void> deleteLocalizationsByMessageId(UUID messageId) {
         return repository.deleteByMessageId(messageId)
                 .onErrorResume(e -> Mono.error(new RuntimeException("Error deleting localizations for message ID: " + messageId, e)));
     }

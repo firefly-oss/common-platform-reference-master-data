@@ -4,6 +4,7 @@ import com.firefly.common.core.queries.PaginationRequest;
 import com.firefly.common.core.queries.PaginationResponse;
 import com.firefly.masters.interfaces.dtos.identitydocument.v1.IdentityDocumentLocalizationDTO;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 /**
  * Service interface for managing identity document localization operations.
@@ -25,7 +26,7 @@ public interface IdentityDocumentLocalizationService {
      * @param paginationRequest pagination parameters
      * @return a paginated list of identity document localization DTOs
      */
-    Mono<PaginationResponse<IdentityDocumentLocalizationDTO>> getLocalizationsByDocumentId(Long documentId, PaginationRequest paginationRequest);
+    Mono<PaginationResponse<IdentityDocumentLocalizationDTO>> getLocalizationsByDocumentId(UUID documentId, PaginationRequest paginationRequest);
 
     /**
      * Create a new identity document localization.
@@ -42,7 +43,7 @@ public interface IdentityDocumentLocalizationService {
      * @param localeId the ID of the language locale
      * @return the identity document localization DTO
      */
-    Mono<IdentityDocumentLocalizationDTO> getIdentityDocumentLocalizationByDocumentAndLocale(Long documentId, Long localeId);
+    Mono<IdentityDocumentLocalizationDTO> getIdentityDocumentLocalizationByDocumentAndLocale(UUID documentId, UUID localeId);
 
     /**
      * Update an identity document localization.
@@ -51,7 +52,7 @@ public interface IdentityDocumentLocalizationService {
      * @param localizationDTO the updated identity document localization data
      * @return the updated identity document localization DTO
      */
-    Mono<IdentityDocumentLocalizationDTO> updateIdentityDocumentLocalization(Long localizationId, IdentityDocumentLocalizationDTO localizationDTO);
+    Mono<IdentityDocumentLocalizationDTO> updateIdentityDocumentLocalization(UUID localizationId, IdentityDocumentLocalizationDTO localizationDTO);
 
     /**
      * Delete an identity document localization.
@@ -59,7 +60,7 @@ public interface IdentityDocumentLocalizationService {
      * @param localizationId the ID of the identity document localization to delete
      * @return a Mono of Void
      */
-    Mono<Void> deleteIdentityDocumentLocalization(Long localizationId);
+    Mono<Void> deleteIdentityDocumentLocalization(UUID localizationId);
 
     /**
      * Delete all localizations for a specific identity document.
@@ -67,5 +68,5 @@ public interface IdentityDocumentLocalizationService {
      * @param documentId the ID of the identity document
      * @return a Mono of Void
      */
-    Mono<Void> deleteLocalizationsByDocumentId(Long documentId);
+    Mono<Void> deleteLocalizationsByDocumentId(UUID documentId);
 }

@@ -4,6 +4,7 @@ import com.firefly.common.core.filters.FilterRequest;
 import com.firefly.common.core.queries.PaginationResponse;
 import com.firefly.masters.interfaces.dtos.contractrole.v1.ContractRoleDTO;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 /**
  * Service interface for managing Contract Role data.
@@ -32,7 +33,7 @@ public interface ContractRoleService {
      * @param roleId the unique identifier of the contract role to retrieve
      * @return a Mono emitting the ContractRoleDTO containing details about the specified contract role, or an empty Mono if not found
      */
-    Mono<ContractRoleDTO> getContractRole(Long roleId);
+    Mono<ContractRoleDTO> getContractRole(UUID roleId);
 
     /**
      * Updates the details of an existing contract role by its unique identifier.
@@ -41,7 +42,7 @@ public interface ContractRoleService {
      * @param contractRoleDto the DTO containing the updated contract role details
      * @return a Mono emitting the updated ContractRoleDTO object if the update is successful
      */
-    Mono<ContractRoleDTO> updateContractRole(Long roleId, ContractRoleDTO contractRoleDto);
+    Mono<ContractRoleDTO> updateContractRole(UUID roleId, ContractRoleDTO contractRoleDto);
 
     /**
      * Deletes a contract role identified by its unique identifier.
@@ -49,5 +50,5 @@ public interface ContractRoleService {
      * @param roleId the unique identifier of the contract role to delete
      * @return a Mono signaling completion of the delete operation
      */
-    Mono<Void> deleteContractRole(Long roleId);
+    Mono<Void> deleteContractRole(UUID roleId);
 }

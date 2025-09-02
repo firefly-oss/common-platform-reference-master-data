@@ -5,6 +5,7 @@ import com.firefly.common.core.queries.PaginationRequest;
 import com.firefly.common.core.queries.PaginationResponse;
 import com.firefly.masters.interfaces.dtos.country.v1.CountryDTO;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 public interface CountryService {
     /**
@@ -27,7 +28,7 @@ public interface CountryService {
      * @param countryId the unique identifier of the country to retrieve
      * @return a Mono emitting the CountryDTO containing details about the specified country, or an empty Mono if not found
      */
-    Mono<CountryDTO> getCountry(Long countryId);
+    Mono<CountryDTO> getCountry(UUID countryId);
     /**
      * Updates the details of an existing country by its unique identifier.
      *
@@ -35,12 +36,12 @@ public interface CountryService {
      * @param countryDto the data transfer object containing the updated country details
      * @return a Mono emitting the updated CountryDTO object if the update is successful
      */
-    Mono<CountryDTO> updateCountry(Long countryId, CountryDTO countryDto);
+    Mono<CountryDTO> updateCountry(UUID countryId, CountryDTO countryDto);
     /**
      * Deletes a country identified by its unique identifier.
      *
      * @param countryId the unique identifier of the country to delete
      * @return a Mono signaling completion of the delete operation
      */
-    Mono<Void> deleteCountry(Long countryId);
+    Mono<Void> deleteCountry(UUID countryId);
 }

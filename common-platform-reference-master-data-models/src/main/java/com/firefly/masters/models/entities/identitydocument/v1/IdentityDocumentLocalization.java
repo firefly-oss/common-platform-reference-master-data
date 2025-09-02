@@ -11,6 +11,7 @@ import lombok.Builder;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 /**
  * Entity representing a localized version of an identity document.
@@ -26,13 +27,13 @@ public class IdentityDocumentLocalization {
 
     @Id
     @Column("localization_id")
-    private Long localizationId;
+    private UUID localizationId;
 
     @Column("document_id")
-    private Long documentId;  // References identity_document_catalog(document_id)
+    private UUID documentId;  // References identity_document_catalog(document_id)
 
     @Column("locale_id")
-    private Long localeId;  // References language_locale(locale_id)
+    private UUID localeId;  // References language_locale(locale_id)
 
     @Column("document_name")
     private String documentName;

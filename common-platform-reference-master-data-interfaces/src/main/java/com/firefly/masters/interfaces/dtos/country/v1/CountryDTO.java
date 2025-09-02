@@ -13,6 +13,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 @Builder
@@ -21,7 +22,7 @@ import java.time.LocalDateTime;
 public class CountryDTO {
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private Long countryId;
+    private UUID countryId;
 
     @NotBlank(message = "ISO code is required")
     @Pattern(regexp = "^[A-Z]{2,3}$", message = "ISO code must be 2 or 3 uppercase letters")

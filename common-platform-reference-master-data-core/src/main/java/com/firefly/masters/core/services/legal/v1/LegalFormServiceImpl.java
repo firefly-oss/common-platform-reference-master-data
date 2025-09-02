@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -34,7 +35,7 @@ public class LegalFormServiceImpl implements LegalFormService {
     }
 
     @Override
-    public Flux<LegalFormDTO> getLegalFormsByCountry(Long countryId) {
+    public Flux<LegalFormDTO> getLegalFormsByCountry(UUID countryId) {
         return repository.findByCountryId(countryId)
                 .map(mapper::toDTO);
     }
@@ -47,13 +48,13 @@ public class LegalFormServiceImpl implements LegalFormService {
     }
 
     @Override
-    public Mono<LegalFormDTO> getLegalForm(Long legalFormId) {
+    public Mono<LegalFormDTO> getLegalForm(UUID legalFormId) {
         return repository.findById(legalFormId)
                 .map(mapper::toDTO);
     }
 
     @Override
-    public Mono<LegalFormDTO> updateLegalForm(Long legalFormId, LegalFormDTO legalFormDto) {
+    public Mono<LegalFormDTO> updateLegalForm(UUID legalFormId, LegalFormDTO legalFormDto) {
         return repository.findById(legalFormId)
                 .flatMap(foundLegalForm -> {
                     LegalForm updatedLegalForm = mapper.toEntity(legalFormDto);
@@ -64,7 +65,7 @@ public class LegalFormServiceImpl implements LegalFormService {
     }
 
     @Override
-    public Mono<Void> deleteLegalForm(Long legalFormId) {
+    public Mono<Void> deleteLegalForm(UUID legalFormId) {
         return repository.findById(legalFormId)
                 .flatMap(repository::delete);
     }

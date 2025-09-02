@@ -5,6 +5,7 @@ import com.firefly.common.core.queries.PaginationResponse;
 import com.firefly.masters.interfaces.dtos.lookup.v1.LookupItemDTO;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 public interface LookupItemService {
     /**
@@ -21,7 +22,7 @@ public interface LookupItemService {
      * @param domainId the unique identifier of the domain to retrieve items for
      * @return a Flux emitting LookupItemDTO objects for the specified domain
      */
-    Flux<LookupItemDTO> getItemsByDomain(Long domainId);
+    Flux<LookupItemDTO> getItemsByDomain(UUID domainId);
     
     /**
      * Creates a new lookup item based on the provided LookupItemDTO.
@@ -37,7 +38,7 @@ public interface LookupItemService {
      * @param itemId the unique identifier of the lookup item to retrieve
      * @return a Mono emitting the LookupItemDTO containing details about the specified item, or an empty Mono if not found
      */
-    Mono<LookupItemDTO> getItem(Long itemId);
+    Mono<LookupItemDTO> getItem(UUID itemId);
     
     /**
      * Updates the details of an existing lookup item by its unique identifier.
@@ -46,7 +47,7 @@ public interface LookupItemService {
      * @param itemDto the data transfer object containing the updated lookup item details
      * @return a Mono emitting the updated LookupItemDTO object if the update is successful
      */
-    Mono<LookupItemDTO> updateItem(Long itemId, LookupItemDTO itemDto);
+    Mono<LookupItemDTO> updateItem(UUID itemId, LookupItemDTO itemDto);
     
     /**
      * Deletes a lookup item identified by its unique identifier.
@@ -54,5 +55,5 @@ public interface LookupItemService {
      * @param itemId the unique identifier of the lookup item to delete
      * @return a Mono signaling completion of the delete operation
      */
-    Mono<Void> deleteItem(Long itemId);
+    Mono<Void> deleteItem(UUID itemId);
 }

@@ -4,6 +4,7 @@ import com.firefly.common.core.queries.PaginationRequest;
 import com.firefly.common.core.queries.PaginationResponse;
 import com.firefly.masters.interfaces.dtos.document.v1.DocumentTemplateTypeCatalogDTO;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 /**
  * Service interface for managing document template type catalog operations.
@@ -32,7 +33,7 @@ public interface DocumentTemplateTypeCatalogService {
      * @param typeId the ID of the document template type
      * @return the document template type DTO
      */
-    Mono<DocumentTemplateTypeCatalogDTO> getDocumentTemplateType(Long typeId);
+    Mono<DocumentTemplateTypeCatalogDTO> getDocumentTemplateType(UUID typeId);
 
     /**
      * Get a document template type by code.
@@ -49,7 +50,7 @@ public interface DocumentTemplateTypeCatalogService {
      * @param documentTemplateTypeDTO the updated document template type data
      * @return the updated document template type DTO
      */
-    Mono<DocumentTemplateTypeCatalogDTO> updateDocumentTemplateType(Long typeId, DocumentTemplateTypeCatalogDTO documentTemplateTypeDTO);
+    Mono<DocumentTemplateTypeCatalogDTO> updateDocumentTemplateType(UUID typeId, DocumentTemplateTypeCatalogDTO documentTemplateTypeDTO);
 
     /**
      * Delete a document template type.
@@ -57,5 +58,5 @@ public interface DocumentTemplateTypeCatalogService {
      * @param typeId the ID of the document template type to delete
      * @return a Mono of Void
      */
-    Mono<Void> deleteDocumentTemplateType(Long typeId);
+    Mono<Void> deleteDocumentTemplateType(UUID typeId);
 }

@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -43,13 +44,13 @@ public class ContractRoleServiceImpl implements ContractRoleService {
     }
 
     @Override
-    public Mono<ContractRoleDTO> getContractRole(Long roleId) {
+    public Mono<ContractRoleDTO> getContractRole(UUID roleId) {
         return repository.findById(roleId)
                 .map(mapper::toDTO);
     }
 
     @Override
-    public Mono<ContractRoleDTO> updateContractRole(Long roleId, ContractRoleDTO contractRoleDto) {
+    public Mono<ContractRoleDTO> updateContractRole(UUID roleId, ContractRoleDTO contractRoleDto) {
         return repository.findById(roleId)
                 .flatMap(role -> {
                     ContractRole updated = mapper.toEntity(contractRoleDto);
@@ -61,7 +62,7 @@ public class ContractRoleServiceImpl implements ContractRoleService {
     }
 
     @Override
-    public Mono<Void> deleteContractRole(Long roleId) {
+    public Mono<Void> deleteContractRole(UUID roleId) {
         return repository.findById(roleId)
                 .flatMap(repository::delete);
     }

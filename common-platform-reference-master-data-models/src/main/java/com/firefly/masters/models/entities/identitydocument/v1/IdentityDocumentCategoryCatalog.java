@@ -11,6 +11,7 @@ import lombok.Builder;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 /**
  * Entity representing an identity document category catalog record.
@@ -26,7 +27,7 @@ public class IdentityDocumentCategoryCatalog {
 
     @Id
     @Column("category_id")
-    private Long categoryId;
+    private UUID categoryId;
 
     @Column("category_code")
     private String categoryCode;

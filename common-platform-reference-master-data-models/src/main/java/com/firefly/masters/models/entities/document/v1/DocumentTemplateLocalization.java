@@ -11,6 +11,7 @@ import lombok.Builder;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 /**
  * Entity representing a localized version of a document template.
@@ -26,13 +27,13 @@ public class DocumentTemplateLocalization {
 
     @Id
     @Column("localization_id")
-    private Long localizationId;
+    private UUID localizationId;
 
     @Column("template_id")
-    private Long templateId;  // References document_template_catalog(template_id)
+    private UUID templateId;  // References document_template_catalog(template_id)
 
     @Column("locale_id")
-    private Long localeId;  // References language_locale(locale_id)
+    private UUID localeId;  // References language_locale(locale_id)
 
     @Column("template_name")
     private String templateName;

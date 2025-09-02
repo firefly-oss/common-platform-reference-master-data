@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 /**
  * Implementation of the IdentityDocumentLocalizationService interface.
@@ -39,7 +40,7 @@ public class IdentityDocumentLocalizationServiceImpl implements IdentityDocument
     }
 
     @Override
-    public Mono<PaginationResponse<IdentityDocumentLocalizationDTO>> getLocalizationsByDocumentId(Long documentId, PaginationRequest paginationRequest) {
+    public Mono<PaginationResponse<IdentityDocumentLocalizationDTO>> getLocalizationsByDocumentId(UUID documentId, PaginationRequest paginationRequest) {
         return PaginationUtils.paginateQuery(
                 paginationRequest,
                 mapper::toDTO,
@@ -63,14 +64,14 @@ public class IdentityDocumentLocalizationServiceImpl implements IdentityDocument
     }
 
     @Override
-    public Mono<IdentityDocumentLocalizationDTO> getIdentityDocumentLocalizationByDocumentAndLocale(Long documentId, Long localeId) {
+    public Mono<IdentityDocumentLocalizationDTO> getIdentityDocumentLocalizationByDocumentAndLocale(UUID documentId, UUID localeId) {
         return repository.findByDocumentIdAndLocaleId(documentId, localeId)
                 .map(mapper::toDTO)
                 .switchIfEmpty(Mono.error(new RuntimeException("Identity document localization not found with document ID: " + documentId + " and locale ID: " + localeId)));
     }
 
     @Override
-    public Mono<IdentityDocumentLocalizationDTO> updateIdentityDocumentLocalization(Long localizationId, IdentityDocumentLocalizationDTO localizationDTO) {
+    public Mono<IdentityDocumentLocalizationDTO> updateIdentityDocumentLocalization(UUID localizationId, IdentityDocumentLocalizationDTO localizationDTO) {
         return repository.findById(localizationId)
                 .switchIfEmpty(Mono.error(new RuntimeException("Identity document localization not found with ID: " + localizationId)))
                 .flatMap(existingEntity -> {
@@ -85,7 +86,7 @@ public class IdentityDocumentLocalizationServiceImpl implements IdentityDocument
     }
 
     @Override
-    public Mono<Void> deleteIdentityDocumentLocalization(Long localizationId) {
+    public Mono<Void> deleteIdentityDocumentLocalization(UUID localizationId) {
         return repository.findById(localizationId)
                 .switchIfEmpty(Mono.error(new RuntimeException("Identity document localization not found with ID: " + localizationId)))
                 .flatMap(entity -> repository.deleteById(localizationId))
@@ -93,7 +94,7 @@ public class IdentityDocumentLocalizationServiceImpl implements IdentityDocument
     }
 
     @Override
-    public Mono<Void> deleteLocalizationsByDocumentId(Long documentId) {
+    public Mono<Void> deleteLocalizationsByDocumentId(UUID documentId) {
         return repository.deleteByDocumentId(documentId)
                 .onErrorResume(e -> Mono.error(new RuntimeException("Error deleting localizations for document ID: " + documentId, e)));
     }

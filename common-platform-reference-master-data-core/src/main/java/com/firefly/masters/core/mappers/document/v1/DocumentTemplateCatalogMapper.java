@@ -13,6 +13,7 @@ import org.mapstruct.Named;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * Mapper for converting between DocumentTemplateCatalog entities and DTOs.
@@ -92,7 +93,7 @@ public abstract class DocumentTemplateCatalogMapper {
      * @return the converted DocumentTemplateTypeCatalogDTO
      */
     @Named("typeIdToTemplateType")
-    protected DocumentTemplateTypeCatalogDTO typeIdToTemplateType(Long typeId) {
+    protected DocumentTemplateTypeCatalogDTO typeIdToTemplateType(UUID typeId) {
         if (typeId == null) {
             return null;
         }
@@ -108,7 +109,7 @@ public abstract class DocumentTemplateCatalogMapper {
      * @return the converted type ID
      */
     @Named("templateTypeToTypeId")
-    protected Long templateTypeToTypeId(DocumentTemplateTypeCatalogDTO templateType) {
+    protected UUID templateTypeToTypeId(DocumentTemplateTypeCatalogDTO templateType) {
         if (templateType == null) {
             return null;
         }

@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 /**
  * REST controller for managing transaction category localization operations.
@@ -50,7 +51,7 @@ public class TransactionCategoryLocalizationController {
     @GetMapping(value = "/category/{categoryId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<Flux<TransactionCategoryLocalizationDTO>>> getLocalizationsByCategoryId(
             @Parameter(in = ParameterIn.PATH, description = "ID of the transaction category", required = true)
-            @PathVariable Long categoryId
+            @PathVariable UUID categoryId
     ) {
         return Mono.just(ResponseEntity.ok(service.getLocalizationsByCategoryId(categoryId)));
     }
@@ -69,7 +70,7 @@ public class TransactionCategoryLocalizationController {
     @GetMapping(value = "/category/{categoryId}/paginated", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<PaginationResponse<TransactionCategoryLocalizationDTO>>> listLocalizationsByCategoryId(
             @Parameter(in = ParameterIn.PATH, description = "ID of the transaction category", required = true)
-            @PathVariable Long categoryId,
+            @PathVariable UUID categoryId,
             @ParameterObject
             @ModelAttribute PaginationRequest paginationRequest
     ) {
@@ -96,7 +97,7 @@ public class TransactionCategoryLocalizationController {
     @GetMapping(value = "/{localizationId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<TransactionCategoryLocalizationDTO>> getTransactionCategoryLocalization(
             @Parameter(in = ParameterIn.PATH, description = "ID of the transaction category localization", required = true)
-            @PathVariable Long localizationId
+            @PathVariable UUID localizationId
     ) {
         return service.getTransactionCategoryLocalization(localizationId)
                 .map(ResponseEntity::ok)
@@ -122,9 +123,9 @@ public class TransactionCategoryLocalizationController {
     @GetMapping(value = "/category/{categoryId}/locale/{localeId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<TransactionCategoryLocalizationDTO>> getTransactionCategoryLocalizationByCategoryAndLocale(
             @Parameter(in = ParameterIn.PATH, description = "ID of the transaction category", required = true)
-            @PathVariable Long categoryId,
+            @PathVariable UUID categoryId,
             @Parameter(in = ParameterIn.PATH, description = "ID of the locale", required = true)
-            @PathVariable Long localeId
+            @PathVariable UUID localeId
     ) {
         return service.getTransactionCategoryLocalizationByCategoryAndLocale(categoryId, localeId)
                 .map(ResponseEntity::ok)
@@ -179,7 +180,7 @@ public class TransactionCategoryLocalizationController {
     @PutMapping(value = "/{localizationId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<TransactionCategoryLocalizationDTO>> updateTransactionCategoryLocalization(
             @Parameter(in = ParameterIn.PATH, description = "ID of the transaction category localization to update", required = true)
-            @PathVariable Long localizationId,
+            @PathVariable UUID localizationId,
             @RequestBody TransactionCategoryLocalizationDTO dto
     ) {
         return service.updateTransactionCategoryLocalization(localizationId, dto)
@@ -202,7 +203,7 @@ public class TransactionCategoryLocalizationController {
     @DeleteMapping(value = "/{localizationId}")
     public Mono<ResponseEntity<Void>> deleteTransactionCategoryLocalization(
             @Parameter(in = ParameterIn.PATH, description = "ID of the transaction category localization to delete", required = true)
-            @PathVariable Long localizationId
+            @PathVariable UUID localizationId
     ) {
         return service.deleteTransactionCategoryLocalization(localizationId)
                 .then(Mono.just(ResponseEntity.noContent().<Void>build()))

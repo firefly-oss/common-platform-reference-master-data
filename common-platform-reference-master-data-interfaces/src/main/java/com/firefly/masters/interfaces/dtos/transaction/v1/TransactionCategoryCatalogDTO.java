@@ -11,6 +11,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 /**
  * Data Transfer Object for transaction category catalog information.
@@ -24,7 +25,7 @@ import java.time.LocalDateTime;
 public class TransactionCategoryCatalogDTO {
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private Long categoryId;
+    private UUID categoryId;
 
     @NotBlank(message = "Category code is required")
     @Size(max = 20, message = "Category code must not exceed 20 characters")
@@ -37,7 +38,7 @@ public class TransactionCategoryCatalogDTO {
     @Size(max = 500, message = "Description must not exceed 500 characters")
     private String description;
 
-    private Long parentCategoryId;
+    private UUID parentCategoryId;
     private TransactionCategoryCatalogDTO parentCategory;
 
     @NotNull(message = "Status is required")

@@ -11,6 +11,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 /**
  * Data Transfer Object for consent catalog information.
@@ -23,7 +24,7 @@ import java.time.LocalDateTime;
 public class ConsentCatalogDTO {
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private Long consentId;
+    private UUID consentId;
 
     @NotBlank(message = "Consent type is required")
     @Size(max = 50, message = "Consent type must not exceed 50 characters")

@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 @Builder
@@ -14,7 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class LanguageLocaleDTO {
 
-    private Long localeId;
+    private UUID localeId;
     private String languageCode;
     private String countryCode;
     private String localeCode;

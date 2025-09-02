@@ -18,6 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 /**
  * REST controller for managing identity document localization operations.
@@ -64,7 +65,7 @@ public class IdentityDocumentLocalizationController {
     @GetMapping(value = "/document/{documentId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<PaginationResponse<IdentityDocumentLocalizationDTO>>> getLocalizationsByDocumentId(
             @Parameter(in = ParameterIn.PATH, description = "ID of the identity document", required = true)
-            @PathVariable Long documentId,
+            @PathVariable UUID documentId,
             @ParameterObject
             @ModelAttribute PaginationRequest paginationRequest
     ) {
@@ -115,9 +116,9 @@ public class IdentityDocumentLocalizationController {
     @GetMapping(value = "/document/{documentId}/locale/{localeId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<IdentityDocumentLocalizationDTO>> getIdentityDocumentLocalizationByDocumentAndLocale(
             @Parameter(in = ParameterIn.PATH, description = "ID of the identity document", required = true)
-            @PathVariable Long documentId,
+            @PathVariable UUID documentId,
             @Parameter(in = ParameterIn.PATH, description = "ID of the language locale", required = true)
-            @PathVariable Long localeId
+            @PathVariable UUID localeId
     ) {
         return service.getIdentityDocumentLocalizationByDocumentAndLocale(documentId, localeId)
                 .map(ResponseEntity::ok)
@@ -148,7 +149,7 @@ public class IdentityDocumentLocalizationController {
     @PutMapping(value = "/{localizationId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<IdentityDocumentLocalizationDTO>> updateIdentityDocumentLocalization(
             @Parameter(in = ParameterIn.PATH, description = "ID of the identity document localization", required = true)
-            @PathVariable Long localizationId,
+            @PathVariable UUID localizationId,
             @RequestBody IdentityDocumentLocalizationDTO localizationDTO
     ) {
         return service.updateIdentityDocumentLocalization(localizationId, localizationDTO)
@@ -164,7 +165,7 @@ public class IdentityDocumentLocalizationController {
     @DeleteMapping(value = "/{localizationId}")
     public Mono<ResponseEntity<Void>> deleteIdentityDocumentLocalization(
             @Parameter(in = ParameterIn.PATH, description = "ID of the identity document localization", required = true)
-            @PathVariable Long localizationId
+            @PathVariable UUID localizationId
     ) {
         return service.deleteIdentityDocumentLocalization(localizationId)
                 .then(Mono.just(ResponseEntity.noContent().<Void>build()))
@@ -179,7 +180,7 @@ public class IdentityDocumentLocalizationController {
     @DeleteMapping(value = "/document/{documentId}")
     public Mono<ResponseEntity<Void>> deleteLocalizationsByDocumentId(
             @Parameter(in = ParameterIn.PATH, description = "ID of the identity document", required = true)
-            @PathVariable Long documentId
+            @PathVariable UUID documentId
     ) {
         return service.deleteLocalizationsByDocumentId(documentId)
                 .then(Mono.just(ResponseEntity.noContent().<Void>build()))

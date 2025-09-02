@@ -5,6 +5,7 @@ import com.firefly.common.core.queries.PaginationResponse;
 import com.firefly.masters.interfaces.dtos.title.v1.TitleMasterDTO;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 /**
  * Service interface for managing Title Master data.
@@ -33,7 +34,7 @@ public interface TitleMasterService {
      * @param titleId the unique identifier of the title to retrieve
      * @return a Mono emitting the TitleMasterDTO containing details about the specified title, or an empty Mono if not found
      */
-    Mono<TitleMasterDTO> getTitle(Long titleId);
+    Mono<TitleMasterDTO> getTitle(UUID titleId);
 
     /**
      * Updates the details of an existing title by its unique identifier.
@@ -42,7 +43,7 @@ public interface TitleMasterService {
      * @param titleDto the DTO containing the updated title details
      * @return a Mono emitting the updated TitleMasterDTO object if the update is successful
      */
-    Mono<TitleMasterDTO> updateTitle(Long titleId, TitleMasterDTO titleDto);
+    Mono<TitleMasterDTO> updateTitle(UUID titleId, TitleMasterDTO titleDto);
 
     /**
      * Deletes a title identified by its unique identifier.
@@ -50,5 +51,5 @@ public interface TitleMasterService {
      * @param titleId the unique identifier of the title to delete
      * @return a Mono signaling completion of the delete operation
      */
-    Mono<Void> deleteTitle(Long titleId);
+    Mono<Void> deleteTitle(UUID titleId);
 }

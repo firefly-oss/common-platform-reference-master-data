@@ -4,6 +4,7 @@ import com.firefly.common.core.queries.PaginationRequest;
 import com.firefly.common.core.queries.PaginationResponse;
 import com.firefly.masters.interfaces.dtos.consent.v1.ConsentCatalogDTO;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 /**
  * Service interface for managing consent catalog.
@@ -45,7 +46,7 @@ public interface ConsentCatalogService {
      * @param id the unique identifier of the consent catalog entry to retrieve
      * @return a {@code Mono} containing the {@code ConsentCatalogDTO} if found, or an empty {@code Mono} if not found
      */
-    Mono<ConsentCatalogDTO> getConsentCatalog(Long id);
+    Mono<ConsentCatalogDTO> getConsentCatalog(UUID id);
 
     /**
      * Updates the consent catalog entry corresponding to the specified identifier.
@@ -54,7 +55,7 @@ public interface ConsentCatalogService {
      * @param dto the data transfer object containing the updated details for the consent catalog entry
      * @return a Mono containing the updated ConsentCatalogDTO
      */
-    Mono<ConsentCatalogDTO> updateConsentCatalog(Long id, ConsentCatalogDTO dto);
+    Mono<ConsentCatalogDTO> updateConsentCatalog(UUID id, ConsentCatalogDTO dto);
 
     /**
      * Deletes the consent catalog entry associated with the specified ID.
@@ -62,5 +63,5 @@ public interface ConsentCatalogService {
      * @param id the unique identifier of the consent catalog entry to be deleted
      * @return a Mono that completes when the deletion operation is finished
      */
-    Mono<Void> deleteConsentCatalog(Long id);
+    Mono<Void> deleteConsentCatalog(UUID id);
 }

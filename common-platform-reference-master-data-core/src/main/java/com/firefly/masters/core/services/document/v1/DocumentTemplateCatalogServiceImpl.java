@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 /**
  * Implementation of the DocumentTemplateCatalogService interface.
@@ -48,7 +49,7 @@ public class DocumentTemplateCatalogServiceImpl implements DocumentTemplateCatal
     }
 
     @Override
-    public Mono<PaginationResponse<DocumentTemplateCatalogDTO>> listDocumentTemplatesByTypeId(Long typeId, PaginationRequest paginationRequest) {
+    public Mono<PaginationResponse<DocumentTemplateCatalogDTO>> listDocumentTemplatesByTypeId(UUID typeId, PaginationRequest paginationRequest) {
         return PaginationUtils.paginateQuery(
                 paginationRequest,
                 mapper::toDTO,
@@ -72,7 +73,7 @@ public class DocumentTemplateCatalogServiceImpl implements DocumentTemplateCatal
     }
 
     @Override
-    public Mono<DocumentTemplateCatalogDTO> getDocumentTemplate(Long templateId) {
+    public Mono<DocumentTemplateCatalogDTO> getDocumentTemplate(UUID templateId) {
         return repository.findById(templateId)
                 .map(mapper::toDTO)
                 .switchIfEmpty(Mono.error(new RuntimeException("Document template not found with ID: " + templateId)));
@@ -86,7 +87,7 @@ public class DocumentTemplateCatalogServiceImpl implements DocumentTemplateCatal
     }
 
     @Override
-    public Mono<DocumentTemplateCatalogDTO> updateDocumentTemplate(Long templateId, DocumentTemplateCatalogDTO documentTemplateDTO) {
+    public Mono<DocumentTemplateCatalogDTO> updateDocumentTemplate(UUID templateId, DocumentTemplateCatalogDTO documentTemplateDTO) {
         return repository.findById(templateId)
                 .switchIfEmpty(Mono.error(new RuntimeException("Document template not found with ID: " + templateId)))
                 .flatMap(existingEntity -> {
@@ -101,7 +102,7 @@ public class DocumentTemplateCatalogServiceImpl implements DocumentTemplateCatal
     }
 
     @Override
-    public Mono<Void> deleteDocumentTemplate(Long templateId) {
+    public Mono<Void> deleteDocumentTemplate(UUID templateId) {
         return repository.findById(templateId)
                 .switchIfEmpty(Mono.error(new RuntimeException("Document template not found with ID: " + templateId)))
                 .flatMap(repository::delete)

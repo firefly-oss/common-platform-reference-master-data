@@ -6,7 +6,7 @@
 -- Create TABLE rule_operation_type
 ------------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS rule_operation_type (
-    operation_type_id     BIGSERIAL       PRIMARY KEY,
+    operation_type_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     operation_type_code   VARCHAR(50)     NOT NULL,
     name                  VARCHAR(100)    NOT NULL,
     description           VARCHAR(200),

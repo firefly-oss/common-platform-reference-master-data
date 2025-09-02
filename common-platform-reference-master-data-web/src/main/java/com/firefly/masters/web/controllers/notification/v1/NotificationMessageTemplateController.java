@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 /**
  * REST controller for managing notification message template operations.
@@ -87,7 +88,7 @@ public class NotificationMessageTemplateController {
     @GetMapping(value = "/message/{messageId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<Flux<NotificationMessageTemplateDTO>>> getTemplatesByMessageId(
             @Parameter(in = ParameterIn.PATH, description = "ID of the notification message", required = true)
-            @PathVariable Long messageId
+            @PathVariable UUID messageId
     ) {
         return Mono.just(ResponseEntity.ok(service.getTemplatesByMessageId(messageId)));
     }
@@ -135,7 +136,7 @@ public class NotificationMessageTemplateController {
     @GetMapping(value = "/{templateId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<NotificationMessageTemplateDTO>> getNotificationMessageTemplate(
             @Parameter(in = ParameterIn.PATH, description = "ID of the notification message template", required = true)
-            @PathVariable Long templateId
+            @PathVariable UUID templateId
     ) {
         return service.getNotificationMessageTemplate(templateId)
                 .map(ResponseEntity::ok)
@@ -161,7 +162,7 @@ public class NotificationMessageTemplateController {
     @GetMapping(value = "/message/{messageId}/name/{templateName}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<NotificationMessageTemplateDTO>> getNotificationMessageTemplateByNameAndMessageId(
             @Parameter(in = ParameterIn.PATH, description = "ID of the notification message", required = true)
-            @PathVariable Long messageId,
+            @PathVariable UUID messageId,
             @Parameter(in = ParameterIn.PATH, description = "Name of the template", required = true)
             @PathVariable String templateName
     ) {
@@ -194,7 +195,7 @@ public class NotificationMessageTemplateController {
     @PutMapping(value = "/{templateId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<NotificationMessageTemplateDTO>> updateNotificationMessageTemplate(
             @Parameter(in = ParameterIn.PATH, description = "ID of the notification message template", required = true)
-            @PathVariable Long templateId,
+            @PathVariable UUID templateId,
             @RequestBody NotificationMessageTemplateDTO templateDTO
     ) {
         return service.updateNotificationMessageTemplate(templateId, templateDTO)
@@ -210,7 +211,7 @@ public class NotificationMessageTemplateController {
     @DeleteMapping("/{templateId}")
     public Mono<ResponseEntity<Void>> deleteNotificationMessageTemplate(
             @Parameter(in = ParameterIn.PATH, description = "ID of the notification message template", required = true)
-            @PathVariable Long templateId
+            @PathVariable UUID templateId
     ) {
         return service.deleteNotificationMessageTemplate(templateId)
                 .then(Mono.just(ResponseEntity.noContent().<Void>build()))
@@ -225,7 +226,7 @@ public class NotificationMessageTemplateController {
     @DeleteMapping("/message/{messageId}")
     public Mono<ResponseEntity<Void>> deleteTemplatesByMessageId(
             @Parameter(in = ParameterIn.PATH, description = "ID of the notification message", required = true)
-            @PathVariable Long messageId
+            @PathVariable UUID messageId
     ) {
         return service.deleteTemplatesByMessageId(messageId)
                 .then(Mono.just(ResponseEntity.noContent().<Void>build()))

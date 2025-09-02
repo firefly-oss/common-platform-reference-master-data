@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 /**
  * Implementation of the DocumentTemplateTypeCatalogService interface.
@@ -52,7 +53,7 @@ public class DocumentTemplateTypeCatalogServiceImpl implements DocumentTemplateT
     }
 
     @Override
-    public Mono<DocumentTemplateTypeCatalogDTO> getDocumentTemplateType(Long typeId) {
+    public Mono<DocumentTemplateTypeCatalogDTO> getDocumentTemplateType(UUID typeId) {
         return repository.findById(typeId)
                 .map(mapper::toDTO)
                 .switchIfEmpty(Mono.error(new RuntimeException("Document template type not found with ID: " + typeId)));
@@ -66,7 +67,7 @@ public class DocumentTemplateTypeCatalogServiceImpl implements DocumentTemplateT
     }
 
     @Override
-    public Mono<DocumentTemplateTypeCatalogDTO> updateDocumentTemplateType(Long typeId, DocumentTemplateTypeCatalogDTO documentTemplateTypeDTO) {
+    public Mono<DocumentTemplateTypeCatalogDTO> updateDocumentTemplateType(UUID typeId, DocumentTemplateTypeCatalogDTO documentTemplateTypeDTO) {
         return repository.findById(typeId)
                 .switchIfEmpty(Mono.error(new RuntimeException("Document template type not found with ID: " + typeId)))
                 .flatMap(existingEntity -> {
@@ -81,7 +82,7 @@ public class DocumentTemplateTypeCatalogServiceImpl implements DocumentTemplateT
     }
 
     @Override
-    public Mono<Void> deleteDocumentTemplateType(Long typeId) {
+    public Mono<Void> deleteDocumentTemplateType(UUID typeId) {
         return repository.findById(typeId)
                 .switchIfEmpty(Mono.error(new RuntimeException("Document template type not found with ID: " + typeId)))
                 .flatMap(repository::delete)

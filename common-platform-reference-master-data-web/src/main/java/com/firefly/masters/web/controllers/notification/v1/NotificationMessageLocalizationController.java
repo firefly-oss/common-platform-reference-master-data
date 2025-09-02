@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 /**
  * REST controller for managing notification message localization operations.
@@ -42,7 +43,7 @@ public class NotificationMessageLocalizationController {
     @GetMapping(value = "/message/{messageId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<Flux<NotificationMessageLocalizationDTO>>> getLocalizationsByMessageId(
             @Parameter(in = ParameterIn.PATH, description = "ID of the notification message", required = true)
-            @PathVariable Long messageId
+            @PathVariable UUID messageId
     ) {
         return Mono.just(ResponseEntity.ok(service.getLocalizationsByMessageId(messageId)));
     }
@@ -61,7 +62,7 @@ public class NotificationMessageLocalizationController {
     @GetMapping(value = "/locale/{localeId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<Flux<NotificationMessageLocalizationDTO>>> getLocalizationsByLocaleId(
             @Parameter(in = ParameterIn.PATH, description = "ID of the language locale", required = true)
-            @PathVariable Long localeId
+            @PathVariable UUID localeId
     ) {
         return Mono.just(ResponseEntity.ok(service.getLocalizationsByLocaleId(localeId)));
     }
@@ -109,7 +110,7 @@ public class NotificationMessageLocalizationController {
     @GetMapping(value = "/{localizationId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<NotificationMessageLocalizationDTO>> getNotificationMessageLocalization(
             @Parameter(in = ParameterIn.PATH, description = "ID of the notification message localization", required = true)
-            @PathVariable Long localizationId
+            @PathVariable UUID localizationId
     ) {
         return service.getNotificationMessageLocalization(localizationId)
                 .map(ResponseEntity::ok)
@@ -135,9 +136,9 @@ public class NotificationMessageLocalizationController {
     @GetMapping(value = "/message/{messageId}/locale/{localeId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<NotificationMessageLocalizationDTO>> getNotificationMessageLocalizationByMessageAndLocale(
             @Parameter(in = ParameterIn.PATH, description = "ID of the notification message", required = true)
-            @PathVariable Long messageId,
+            @PathVariable UUID messageId,
             @Parameter(in = ParameterIn.PATH, description = "ID of the language locale", required = true)
-            @PathVariable Long localeId
+            @PathVariable UUID localeId
     ) {
         return service.getNotificationMessageLocalizationByMessageAndLocale(messageId, localeId)
                 .map(ResponseEntity::ok)
@@ -168,7 +169,7 @@ public class NotificationMessageLocalizationController {
     @PutMapping(value = "/{localizationId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<NotificationMessageLocalizationDTO>> updateNotificationMessageLocalization(
             @Parameter(in = ParameterIn.PATH, description = "ID of the notification message localization", required = true)
-            @PathVariable Long localizationId,
+            @PathVariable UUID localizationId,
             @RequestBody NotificationMessageLocalizationDTO localizationDTO
     ) {
         return service.updateNotificationMessageLocalization(localizationId, localizationDTO)
@@ -184,7 +185,7 @@ public class NotificationMessageLocalizationController {
     @DeleteMapping("/{localizationId}")
     public Mono<ResponseEntity<Void>> deleteNotificationMessageLocalization(
             @Parameter(in = ParameterIn.PATH, description = "ID of the notification message localization", required = true)
-            @PathVariable Long localizationId
+            @PathVariable UUID localizationId
     ) {
         return service.deleteNotificationMessageLocalization(localizationId)
                 .then(Mono.just(ResponseEntity.noContent().<Void>build()))
@@ -199,7 +200,7 @@ public class NotificationMessageLocalizationController {
     @DeleteMapping("/message/{messageId}")
     public Mono<ResponseEntity<Void>> deleteLocalizationsByMessageId(
             @Parameter(in = ParameterIn.PATH, description = "ID of the notification message", required = true)
-            @PathVariable Long messageId
+            @PathVariable UUID messageId
     ) {
         return service.deleteLocalizationsByMessageId(messageId)
                 .then(Mono.just(ResponseEntity.noContent().<Void>build()))

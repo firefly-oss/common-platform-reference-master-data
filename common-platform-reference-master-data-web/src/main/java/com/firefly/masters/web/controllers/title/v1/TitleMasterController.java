@@ -18,6 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 @Tag(name = "Title Master", description = "APIs for managing Title Master data")
 @RestController
@@ -90,7 +91,7 @@ public class TitleMasterController {
     @GetMapping(value = "/{titleId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<TitleMasterDTO>> getTitle(
             @Parameter(in = ParameterIn.PATH, description = "ID of the title", required = true)
-            @PathVariable Long titleId
+            @PathVariable UUID titleId
     ) {
         return titleMasterService.getTitle(titleId)
                 .map(ResponseEntity::ok)
@@ -116,7 +117,7 @@ public class TitleMasterController {
     @PutMapping(value = "/{titleId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<TitleMasterDTO>> updateTitle(
             @Parameter(in = ParameterIn.PATH, description = "ID of the title", required = true)
-            @PathVariable Long titleId,
+            @PathVariable UUID titleId,
             @RequestBody TitleMasterDTO titleDto
     ) {
         return titleMasterService.updateTitle(titleId, titleDto)
@@ -132,7 +133,7 @@ public class TitleMasterController {
     @DeleteMapping(value = "/{titleId}")
     public Mono<ResponseEntity<Void>> deleteTitle(
             @Parameter(in = ParameterIn.PATH, description = "ID of the title", required = true)
-            @PathVariable Long titleId
+            @PathVariable UUID titleId
     ) {
         return titleMasterService.deleteTitle(titleId)
                 .then(Mono.just(ResponseEntity.noContent().build()));

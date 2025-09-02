@@ -14,6 +14,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 @Builder
@@ -22,7 +23,7 @@ import java.time.LocalDateTime;
 public class CurrencyDTO {
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private Long currencyId;
+    private UUID currencyId;
 
     @ValidCurrencyCode
     @NotBlank(message = "ISO code is required")

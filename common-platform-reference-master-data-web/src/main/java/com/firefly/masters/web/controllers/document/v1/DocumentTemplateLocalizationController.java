@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 /**
  * REST controller for managing document template localization operations.
@@ -47,7 +48,7 @@ public class DocumentTemplateLocalizationController {
     @GetMapping(value = "/template/{templateId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<Flux<DocumentTemplateLocalizationDTO>>> getLocalizationsByTemplateId(
             @Parameter(in = ParameterIn.PATH, description = "ID of the document template", required = true)
-            @PathVariable Long templateId
+            @PathVariable UUID templateId
     ) {
         return Mono.just(ResponseEntity.ok(service.getLocalizationsByTemplateId(templateId)));
     }
@@ -70,7 +71,7 @@ public class DocumentTemplateLocalizationController {
     @GetMapping(value = "/locale/{localeId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<Flux<DocumentTemplateLocalizationDTO>>> getLocalizationsByLocaleId(
             @Parameter(in = ParameterIn.PATH, description = "ID of the language locale", required = true)
-            @PathVariable Long localeId
+            @PathVariable UUID localeId
     ) {
         return Mono.just(ResponseEntity.ok(service.getLocalizationsByLocaleId(localeId)));
     }
@@ -112,7 +113,7 @@ public class DocumentTemplateLocalizationController {
     @GetMapping(value = "/{localizationId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<DocumentTemplateLocalizationDTO>> getDocumentTemplateLocalization(
             @Parameter(in = ParameterIn.PATH, description = "ID of the document template localization", required = true)
-            @PathVariable Long localizationId
+            @PathVariable UUID localizationId
     ) {
         return service.getDocumentTemplateLocalization(localizationId)
                 .map(ResponseEntity::ok)
@@ -137,9 +138,9 @@ public class DocumentTemplateLocalizationController {
     @GetMapping(value = "/template/{templateId}/locale/{localeId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<DocumentTemplateLocalizationDTO>> getDocumentTemplateLocalizationByTemplateAndLocale(
             @Parameter(in = ParameterIn.PATH, description = "ID of the document template", required = true)
-            @PathVariable Long templateId,
+            @PathVariable UUID templateId,
             @Parameter(in = ParameterIn.PATH, description = "ID of the language locale", required = true)
-            @PathVariable Long localeId
+            @PathVariable UUID localeId
     ) {
         return service.getDocumentTemplateLocalizationByTemplateAndLocale(templateId, localeId)
                 .map(ResponseEntity::ok)
@@ -164,7 +165,7 @@ public class DocumentTemplateLocalizationController {
     @PutMapping(value = "/{localizationId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<DocumentTemplateLocalizationDTO>> updateDocumentTemplateLocalization(
             @Parameter(in = ParameterIn.PATH, description = "ID of the document template localization", required = true)
-            @PathVariable Long localizationId,
+            @PathVariable UUID localizationId,
             @RequestBody DocumentTemplateLocalizationDTO localizationDTO
     ) {
         return service.updateDocumentTemplateLocalization(localizationId, localizationDTO)
@@ -186,7 +187,7 @@ public class DocumentTemplateLocalizationController {
     @DeleteMapping(value = "/{localizationId}")
     public Mono<ResponseEntity<Void>> deleteDocumentTemplateLocalization(
             @Parameter(in = ParameterIn.PATH, description = "ID of the document template localization", required = true)
-            @PathVariable Long localizationId
+            @PathVariable UUID localizationId
     ) {
         return service.deleteDocumentTemplateLocalization(localizationId)
                 .then(Mono.just(ResponseEntity.noContent().<Void>build()))
@@ -203,7 +204,7 @@ public class DocumentTemplateLocalizationController {
     @DeleteMapping(value = "/template/{templateId}")
     public Mono<ResponseEntity<Void>> deleteLocalizationsByTemplateId(
             @Parameter(in = ParameterIn.PATH, description = "ID of the document template", required = true)
-            @PathVariable Long templateId
+            @PathVariable UUID templateId
     ) {
         return service.deleteLocalizationsByTemplateId(templateId)
                 .then(Mono.just(ResponseEntity.noContent().<Void>build()));

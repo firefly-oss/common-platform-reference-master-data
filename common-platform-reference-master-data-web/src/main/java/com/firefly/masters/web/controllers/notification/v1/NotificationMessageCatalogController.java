@@ -18,6 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 /**
  * REST controller for managing notification message catalog operations.
@@ -86,7 +87,7 @@ public class NotificationMessageCatalogController {
     @GetMapping(value = "/message-type/{typeId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<PaginationResponse<NotificationMessageCatalogDTO>>> listNotificationMessagesByTypeId(
             @Parameter(in = ParameterIn.PATH, description = "Message type ID", required = true)
-            @PathVariable Long typeId,
+            @PathVariable UUID typeId,
             @ParameterObject
             @ModelAttribute PaginationRequest paginationRequest
     ) {
@@ -137,7 +138,7 @@ public class NotificationMessageCatalogController {
     @GetMapping(value = "/{messageId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<NotificationMessageCatalogDTO>> getNotificationMessage(
             @Parameter(in = ParameterIn.PATH, description = "ID of the notification message", required = true)
-            @PathVariable Long messageId
+            @PathVariable UUID messageId
     ) {
         return service.getNotificationMessage(messageId)
                 .map(ResponseEntity::ok)
@@ -194,7 +195,7 @@ public class NotificationMessageCatalogController {
     @PutMapping(value = "/{messageId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<NotificationMessageCatalogDTO>> updateNotificationMessage(
             @Parameter(in = ParameterIn.PATH, description = "ID of the notification message", required = true)
-            @PathVariable Long messageId,
+            @PathVariable UUID messageId,
             @RequestBody NotificationMessageCatalogDTO notificationMessageDTO
     ) {
         return service.updateNotificationMessage(messageId, notificationMessageDTO)
@@ -210,7 +211,7 @@ public class NotificationMessageCatalogController {
     @DeleteMapping("/{messageId}")
     public Mono<ResponseEntity<Void>> deleteNotificationMessage(
             @Parameter(in = ParameterIn.PATH, description = "ID of the notification message", required = true)
-            @PathVariable Long messageId
+            @PathVariable UUID messageId
     ) {
         return service.deleteNotificationMessage(messageId)
                 .then(Mono.just(ResponseEntity.noContent().<Void>build()))

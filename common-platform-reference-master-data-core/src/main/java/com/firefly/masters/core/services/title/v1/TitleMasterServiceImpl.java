@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -43,13 +44,13 @@ public class TitleMasterServiceImpl implements TitleMasterService {
     }
 
     @Override
-    public Mono<TitleMasterDTO> getTitle(Long titleId) {
+    public Mono<TitleMasterDTO> getTitle(UUID titleId) {
         return repository.findById(titleId)
                 .map(mapper::toDTO);
     }
 
     @Override
-    public Mono<TitleMasterDTO> updateTitle(Long titleId, TitleMasterDTO titleDto) {
+    public Mono<TitleMasterDTO> updateTitle(UUID titleId, TitleMasterDTO titleDto) {
         return repository.findById(titleId)
                 .flatMap(title -> {
                     TitleMaster titleMaster = mapper.toEntity(titleDto);
@@ -61,7 +62,7 @@ public class TitleMasterServiceImpl implements TitleMasterService {
     }
 
     @Override
-    public Mono<Void> deleteTitle(Long titleId) {
+    public Mono<Void> deleteTitle(UUID titleId) {
         return repository.findById(titleId)
                 .flatMap(repository::delete);
     }

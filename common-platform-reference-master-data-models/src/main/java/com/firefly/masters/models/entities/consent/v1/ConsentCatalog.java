@@ -11,6 +11,7 @@ import lombok.Builder;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 /**
  * Entity representing a consent catalog record.
@@ -26,7 +27,7 @@ public class ConsentCatalog {
 
     @Id
     @Column("consent_id")
-    private Long consentId;
+    private UUID consentId;
 
     @Column("consent_type")
     private String consentType;

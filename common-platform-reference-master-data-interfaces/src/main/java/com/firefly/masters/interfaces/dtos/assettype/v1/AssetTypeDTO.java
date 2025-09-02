@@ -9,6 +9,7 @@ import lombok.experimental.SuperBuilder;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 @SuperBuilder
@@ -17,7 +18,7 @@ import java.time.LocalDateTime;
 public class AssetTypeDTO {
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private Long assetId;
+    private UUID assetId;
 
     @NotBlank(message = "Asset code is required")
     @Size(max = 20, message = "Asset code must not exceed 20 characters")

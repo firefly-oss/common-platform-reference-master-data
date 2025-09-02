@@ -4,6 +4,7 @@ import com.firefly.common.core.filters.FilterRequest;
 import com.firefly.common.core.queries.PaginationResponse;
 import com.firefly.masters.interfaces.dtos.ruleoperationtype.v1.RuleOperationTypeDTO;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 /**
  * Service interface for managing Rule Operation Type data.
@@ -32,7 +33,7 @@ public interface RuleOperationTypeService {
      * @param operationTypeId the unique identifier of the rule operation type to retrieve
      * @return a Mono emitting the RuleOperationTypeDTO, or an empty Mono if not found
      */
-    Mono<RuleOperationTypeDTO> getRuleOperationType(Long operationTypeId);
+    Mono<RuleOperationTypeDTO> getRuleOperationType(UUID operationTypeId);
 
     /**
      * Updates the details of an existing rule operation type by its unique identifier.
@@ -41,7 +42,7 @@ public interface RuleOperationTypeService {
      * @param dto the DTO containing the updated rule operation type details
      * @return a Mono emitting the updated RuleOperationTypeDTO object
      */
-    Mono<RuleOperationTypeDTO> updateRuleOperationType(Long operationTypeId, RuleOperationTypeDTO dto);
+    Mono<RuleOperationTypeDTO> updateRuleOperationType(UUID operationTypeId, RuleOperationTypeDTO dto);
 
     /**
      * Deletes a rule operation type identified by its unique identifier.
@@ -49,5 +50,5 @@ public interface RuleOperationTypeService {
      * @param operationTypeId the unique identifier of the rule operation type to delete
      * @return a Mono signaling completion of the delete operation
      */
-    Mono<Void> deleteRuleOperationType(Long operationTypeId);
+    Mono<Void> deleteRuleOperationType(UUID operationTypeId);
 }

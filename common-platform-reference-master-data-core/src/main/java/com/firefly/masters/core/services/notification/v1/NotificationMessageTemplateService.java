@@ -5,6 +5,7 @@ import com.firefly.common.core.queries.PaginationResponse;
 import com.firefly.masters.interfaces.dtos.notification.v1.NotificationMessageTemplateDTO;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 /**
  * Service interface for managing notification message template operations.
@@ -34,7 +35,7 @@ public interface NotificationMessageTemplateService {
      * @param messageId the ID of the notification message
      * @return a Flux of notification message template DTOs
      */
-    Flux<NotificationMessageTemplateDTO> getTemplatesByMessageId(Long messageId);
+    Flux<NotificationMessageTemplateDTO> getTemplatesByMessageId(UUID messageId);
 
     /**
      * Create a new notification message template.
@@ -50,7 +51,7 @@ public interface NotificationMessageTemplateService {
      * @param templateId the ID of the notification message template
      * @return the notification message template DTO
      */
-    Mono<NotificationMessageTemplateDTO> getNotificationMessageTemplate(Long templateId);
+    Mono<NotificationMessageTemplateDTO> getNotificationMessageTemplate(UUID templateId);
 
     /**
      * Get a notification message template by message ID and template name.
@@ -59,7 +60,7 @@ public interface NotificationMessageTemplateService {
      * @param templateName the name of the template
      * @return the notification message template DTO
      */
-    Mono<NotificationMessageTemplateDTO> getNotificationMessageTemplateByNameAndMessageId(Long messageId, String templateName);
+    Mono<NotificationMessageTemplateDTO> getNotificationMessageTemplateByNameAndMessageId(UUID messageId, String templateName);
 
     /**
      * Update a notification message template.
@@ -68,7 +69,7 @@ public interface NotificationMessageTemplateService {
      * @param templateDTO the updated notification message template data
      * @return the updated notification message template DTO
      */
-    Mono<NotificationMessageTemplateDTO> updateNotificationMessageTemplate(Long templateId, NotificationMessageTemplateDTO templateDTO);
+    Mono<NotificationMessageTemplateDTO> updateNotificationMessageTemplate(UUID templateId, NotificationMessageTemplateDTO templateDTO);
 
     /**
      * Delete a notification message template.
@@ -76,7 +77,7 @@ public interface NotificationMessageTemplateService {
      * @param templateId the ID of the notification message template to delete
      * @return a Mono of Void
      */
-    Mono<Void> deleteNotificationMessageTemplate(Long templateId);
+    Mono<Void> deleteNotificationMessageTemplate(UUID templateId);
 
     /**
      * Delete all templates for a specific message.
@@ -84,5 +85,5 @@ public interface NotificationMessageTemplateService {
      * @param messageId the ID of the notification message
      * @return a Mono of Void
      */
-    Mono<Void> deleteTemplatesByMessageId(Long messageId);
+    Mono<Void> deleteTemplatesByMessageId(UUID messageId);
 }

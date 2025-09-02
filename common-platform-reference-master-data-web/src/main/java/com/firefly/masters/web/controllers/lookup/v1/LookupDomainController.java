@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 @Tag(name = "Lookup Domains", description = "APIs for managing lookup domains")
 @RestController
@@ -90,7 +91,7 @@ public class LookupDomainController {
     @GetMapping(value = "/{domainId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<LookupDomainDTO>> getDomain(
             @Parameter(in = ParameterIn.PATH, description = "ID of the lookup domain", required = true)
-            @PathVariable Long domainId
+            @PathVariable UUID domainId
     ) {
         return service.getDomain(domainId)
                 .map(ResponseEntity::ok)
@@ -116,7 +117,7 @@ public class LookupDomainController {
     @PutMapping(value = "/{domainId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<LookupDomainDTO>> updateDomain(
             @Parameter(in = ParameterIn.PATH, description = "ID of the lookup domain", required = true)
-            @PathVariable Long domainId,
+            @PathVariable UUID domainId,
             @RequestBody LookupDomainDTO domainDto
     ) {
         return service.updateDomain(domainId, domainDto)
@@ -132,7 +133,7 @@ public class LookupDomainController {
     @DeleteMapping(value = "/{domainId}")
     public Mono<ResponseEntity<Void>> deleteDomain(
             @Parameter(in = ParameterIn.PATH, description = "ID of the lookup domain", required = true)
-            @PathVariable Long domainId
+            @PathVariable UUID domainId
     ) {
         return service.deleteDomain(domainId)
                 .then(Mono.just(ResponseEntity.noContent().build()));

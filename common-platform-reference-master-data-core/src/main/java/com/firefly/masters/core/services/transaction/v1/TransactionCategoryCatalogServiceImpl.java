@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 /**
  * Implementation of the TransactionCategoryCatalogService interface.
@@ -52,7 +53,7 @@ public class TransactionCategoryCatalogServiceImpl implements TransactionCategor
     }
 
     @Override
-    public Mono<PaginationResponse<TransactionCategoryCatalogDTO>> listChildTransactionCategories(Long parentCategoryId, PaginationRequest paginationRequest) {
+    public Mono<PaginationResponse<TransactionCategoryCatalogDTO>> listChildTransactionCategories(UUID parentCategoryId, PaginationRequest paginationRequest) {
         return PaginationUtils.paginateQuery(
                 paginationRequest,
                 mapper::toDTO,
@@ -74,7 +75,7 @@ public class TransactionCategoryCatalogServiceImpl implements TransactionCategor
     }
 
     @Override
-    public Mono<TransactionCategoryCatalogDTO> getTransactionCategory(Long categoryId) {
+    public Mono<TransactionCategoryCatalogDTO> getTransactionCategory(UUID categoryId) {
         return repository.findById(categoryId)
                 .flatMap(this::enrichWithParentCategory);
     }
@@ -86,7 +87,7 @@ public class TransactionCategoryCatalogServiceImpl implements TransactionCategor
     }
 
     @Override
-    public Mono<TransactionCategoryCatalogDTO> updateTransactionCategory(Long categoryId, TransactionCategoryCatalogDTO transactionCategoryDTO) {
+    public Mono<TransactionCategoryCatalogDTO> updateTransactionCategory(UUID categoryId, TransactionCategoryCatalogDTO transactionCategoryDTO) {
         return repository.findById(categoryId)
                 .flatMap(existingCategory -> {
                     TransactionCategoryCatalog updatedCategory = mapper.toEntity(transactionCategoryDTO);
@@ -99,7 +100,7 @@ public class TransactionCategoryCatalogServiceImpl implements TransactionCategor
     }
 
     @Override
-    public Mono<Void> deleteTransactionCategory(Long categoryId) {
+    public Mono<Void> deleteTransactionCategory(UUID categoryId) {
         return repository.findById(categoryId)
                 .switchIfEmpty(Mono.error(new RuntimeException("Transaction category not found with ID: " + categoryId)))
                 .flatMap(entity -> localizationRepository.deleteByCategoryId(categoryId)

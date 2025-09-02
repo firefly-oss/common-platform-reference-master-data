@@ -4,6 +4,7 @@ import com.firefly.common.core.queries.PaginationRequest;
 import com.firefly.common.core.queries.PaginationResponse;
 import com.firefly.masters.interfaces.dtos.transaction.v1.TransactionCategoryCatalogDTO;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 /**
  * Service interface for managing transaction category catalog operations.
@@ -33,7 +34,7 @@ public interface TransactionCategoryCatalogService {
      * @param paginationRequest pagination parameters
      * @return a paginated list of child transaction categories
      */
-    Mono<PaginationResponse<TransactionCategoryCatalogDTO>> listChildTransactionCategories(Long parentCategoryId, PaginationRequest paginationRequest);
+    Mono<PaginationResponse<TransactionCategoryCatalogDTO>> listChildTransactionCategories(UUID parentCategoryId, PaginationRequest paginationRequest);
 
     /**
      * Create a new transaction category.
@@ -49,7 +50,7 @@ public interface TransactionCategoryCatalogService {
      * @param categoryId the ID of the transaction category
      * @return the transaction category with the specified ID
      */
-    Mono<TransactionCategoryCatalogDTO> getTransactionCategory(Long categoryId);
+    Mono<TransactionCategoryCatalogDTO> getTransactionCategory(UUID categoryId);
 
     /**
      * Get a transaction category by its code.
@@ -66,7 +67,7 @@ public interface TransactionCategoryCatalogService {
      * @param transactionCategoryDTO the updated transaction category data
      * @return the updated transaction category
      */
-    Mono<TransactionCategoryCatalogDTO> updateTransactionCategory(Long categoryId, TransactionCategoryCatalogDTO transactionCategoryDTO);
+    Mono<TransactionCategoryCatalogDTO> updateTransactionCategory(UUID categoryId, TransactionCategoryCatalogDTO transactionCategoryDTO);
 
     /**
      * Delete a transaction category.
@@ -74,5 +75,5 @@ public interface TransactionCategoryCatalogService {
      * @param categoryId the ID of the transaction category to delete
      * @return a Mono that completes when the transaction category is deleted
      */
-    Mono<Void> deleteTransactionCategory(Long categoryId);
+    Mono<Void> deleteTransactionCategory(UUID categoryId);
 }

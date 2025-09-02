@@ -11,6 +11,7 @@ import lombok.Builder;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 @Builder
@@ -22,7 +23,7 @@ public class LookupDomain {
 
     @Id
     @Column("domain_id")
-    private Long domainId;
+    private UUID domainId;
 
     @Column("domain_code")
     private String domainCode;
@@ -34,7 +35,7 @@ public class LookupDomain {
     private String domainDesc;
 
     @Column("parent_domain_id")
-    private Long parentDomainId;  // Self-referencing to lookup_domain(domain_id)
+    private UUID parentDomainId;  // Self-referencing to lookup_domain(domain_id)
 
     @Column("multiselect_allowed")
     private Boolean multiselectAllowed;
@@ -49,7 +50,7 @@ public class LookupDomain {
     private String extraJson;  // Stored as JSONB in the database
 
     @Column("tenant_id")
-    private Long tenantId;
+    private UUID tenantId;
 
     @Column("status")
     private StatusEnum status;

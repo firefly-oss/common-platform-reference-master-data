@@ -13,6 +13,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * Data Transfer Object for notification message catalog information.
@@ -25,14 +26,14 @@ import java.util.Map;
 public class NotificationMessageCatalogDTO {
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private Long messageId;
+    private UUID messageId;
 
     @NotBlank(message = "Message code is required")
     @Size(max = 50, message = "Message code must not exceed 50 characters")
     private String messageCode;
 
     @NotNull(message = "Type ID is required")
-    private Long typeId;
+    private UUID typeId;
 
     @Valid
     private MessageTypeCatalogDTO messageType;

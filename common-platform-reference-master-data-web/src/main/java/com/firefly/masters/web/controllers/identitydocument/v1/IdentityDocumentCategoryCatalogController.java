@@ -18,6 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 /**
  * REST controller for managing identity document category catalog operations.
@@ -93,7 +94,7 @@ public class IdentityDocumentCategoryCatalogController {
     @GetMapping(value = "/{categoryId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<IdentityDocumentCategoryCatalogDTO>> getIdentityDocumentCategory(
             @Parameter(in = ParameterIn.PATH, description = "ID of the identity document category", required = true)
-            @PathVariable Long categoryId
+            @PathVariable UUID categoryId
     ) {
         return service.getIdentityDocumentCategory(categoryId)
                 .map(ResponseEntity::ok);
@@ -148,7 +149,7 @@ public class IdentityDocumentCategoryCatalogController {
     @PutMapping(value = "/{categoryId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<IdentityDocumentCategoryCatalogDTO>> updateIdentityDocumentCategory(
             @Parameter(in = ParameterIn.PATH, description = "ID of the identity document category", required = true)
-            @PathVariable Long categoryId,
+            @PathVariable UUID categoryId,
             @RequestBody IdentityDocumentCategoryCatalogDTO dto
     ) {
         return service.updateIdentityDocumentCategory(categoryId, dto)
@@ -163,7 +164,7 @@ public class IdentityDocumentCategoryCatalogController {
     @DeleteMapping(value = "/{categoryId}")
     public Mono<ResponseEntity<Void>> deleteIdentityDocumentCategory(
             @Parameter(in = ParameterIn.PATH, description = "ID of the identity document category", required = true)
-            @PathVariable Long categoryId
+            @PathVariable UUID categoryId
     ) {
         return service.deleteIdentityDocumentCategory(categoryId)
                 .then(Mono.just(ResponseEntity.noContent().build()));

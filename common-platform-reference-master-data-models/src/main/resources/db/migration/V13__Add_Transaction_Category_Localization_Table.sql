@@ -4,9 +4,9 @@
 
 -- Create the transaction_category_localization table
 CREATE TABLE IF NOT EXISTS transaction_category_localization (
-    localization_id BIGSERIAL PRIMARY KEY,
-    category_id BIGINT NOT NULL REFERENCES transaction_category_catalog(category_id) ON DELETE CASCADE,
-    locale_id BIGINT NOT NULL REFERENCES language_locale(locale_id) ON DELETE RESTRICT,
+    localization_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    category_id UUID NOT NULL REFERENCES transaction_category_catalog(category_id) ON DELETE CASCADE,
+    locale_id UUID NOT NULL REFERENCES language_locale(locale_id) ON DELETE RESTRICT,
     category_name VARCHAR(255),
     description TEXT,
     status status_enum NOT NULL,

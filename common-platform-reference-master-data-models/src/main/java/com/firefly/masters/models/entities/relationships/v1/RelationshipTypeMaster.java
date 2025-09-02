@@ -9,6 +9,7 @@ import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Table("relationship_type_master")
 @Getter
@@ -18,7 +19,7 @@ public class RelationshipTypeMaster {
 
     @Id
     @Column("relationship_type_id")
-    private Long relationshipTypeId;
+    private UUID relationshipTypeId;
 
     @Column("relationship_type_code")
     private String code; // e.g. "BENEFICIARY", "CEO"

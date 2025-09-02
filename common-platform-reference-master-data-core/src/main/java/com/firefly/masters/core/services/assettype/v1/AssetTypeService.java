@@ -4,6 +4,7 @@ import com.firefly.common.core.queries.PaginationRequest;
 import com.firefly.common.core.queries.PaginationResponse;
 import com.firefly.masters.interfaces.dtos.assettype.v1.AssetTypeDTO;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 /**
  * Service interface for managing Asset Type data.
@@ -32,7 +33,7 @@ public interface AssetTypeService {
      * @param assetId the unique identifier of the asset type to retrieve
      * @return a Mono emitting the AssetTypeDTO containing details about the specified asset type, or an empty Mono if not found
      */
-    Mono<AssetTypeDTO> getAssetType(Long assetId);
+    Mono<AssetTypeDTO> getAssetType(UUID assetId);
 
     /**
      * Updates the details of an existing asset type by its unique identifier.
@@ -41,7 +42,7 @@ public interface AssetTypeService {
      * @param assetTypeDto the DTO containing the updated asset type details
      * @return a Mono emitting the updated AssetTypeDTO object if the update is successful
      */
-    Mono<AssetTypeDTO> updateAssetType(Long assetId, AssetTypeDTO assetTypeDto);
+    Mono<AssetTypeDTO> updateAssetType(UUID assetId, AssetTypeDTO assetTypeDto);
 
     /**
      * Deletes an asset type identified by its unique identifier.
@@ -49,5 +50,5 @@ public interface AssetTypeService {
      * @param assetId the unique identifier of the asset type to delete
      * @return a Mono signaling completion of the delete operation
      */
-    Mono<Void> deleteAssetType(Long assetId);
+    Mono<Void> deleteAssetType(UUID assetId);
 }

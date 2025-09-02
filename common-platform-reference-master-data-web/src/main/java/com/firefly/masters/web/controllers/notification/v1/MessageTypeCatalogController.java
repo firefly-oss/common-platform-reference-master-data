@@ -18,6 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 /**
  * REST controller for managing message type catalog operations.
@@ -93,7 +94,7 @@ public class MessageTypeCatalogController {
     @GetMapping(value = "/{typeId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<MessageTypeCatalogDTO>> getMessageType(
             @Parameter(in = ParameterIn.PATH, description = "ID of the message type", required = true)
-            @PathVariable Long typeId
+            @PathVariable UUID typeId
     ) {
         return service.getMessageType(typeId)
                 .map(ResponseEntity::ok)
@@ -150,7 +151,7 @@ public class MessageTypeCatalogController {
     @PutMapping(value = "/{typeId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<MessageTypeCatalogDTO>> updateMessageType(
             @Parameter(in = ParameterIn.PATH, description = "ID of the message type", required = true)
-            @PathVariable Long typeId,
+            @PathVariable UUID typeId,
             @RequestBody MessageTypeCatalogDTO messageTypeDTO
     ) {
         return service.updateMessageType(typeId, messageTypeDTO)
@@ -166,7 +167,7 @@ public class MessageTypeCatalogController {
     @DeleteMapping("/{typeId}")
     public Mono<ResponseEntity<Void>> deleteMessageType(
             @Parameter(in = ParameterIn.PATH, description = "ID of the message type", required = true)
-            @PathVariable Long typeId
+            @PathVariable UUID typeId
     ) {
         return service.deleteMessageType(typeId)
                 .then(Mono.just(ResponseEntity.noContent().<Void>build()))

@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 @Tag(name = "Administrative Divisions", description = "APIs for managing administrative divisions")
 @RestController
@@ -90,7 +91,7 @@ public class AdministrativeDivisionController {
     @GetMapping(value = "/{divisionId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<AdministrativeDivisionDTO>> getDivision(
             @Parameter(in = ParameterIn.PATH, description = "ID of the administrative division", required = true)
-            @PathVariable Long divisionId
+            @PathVariable UUID divisionId
     ) {
         return service.getDivision(divisionId)
                 .map(ResponseEntity::ok)
@@ -116,7 +117,7 @@ public class AdministrativeDivisionController {
     @PutMapping(value = "/{divisionId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<AdministrativeDivisionDTO>> updateDivision(
             @Parameter(in = ParameterIn.PATH, description = "ID of the administrative division", required = true)
-            @PathVariable Long divisionId,
+            @PathVariable UUID divisionId,
             @RequestBody AdministrativeDivisionDTO divisionDto
     ) {
         return service.updateDivision(divisionId, divisionDto)
@@ -132,7 +133,7 @@ public class AdministrativeDivisionController {
     @DeleteMapping(value = "/{divisionId}")
     public Mono<ResponseEntity<Void>> deleteDivision(
             @Parameter(in = ParameterIn.PATH, description = "ID of the administrative division", required = true)
-            @PathVariable Long divisionId
+            @PathVariable UUID divisionId
     ) {
         return service.deleteDivision(divisionId)
                 .then(Mono.just(ResponseEntity.noContent().build()));

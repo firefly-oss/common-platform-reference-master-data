@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -43,13 +44,13 @@ public class AssetTypeServiceImpl implements AssetTypeService {
     }
 
     @Override
-    public Mono<AssetTypeDTO> getAssetType(Long assetId) {
+    public Mono<AssetTypeDTO> getAssetType(UUID assetId) {
         return repository.findById(assetId)
                 .map(mapper::toDTO);
     }
 
     @Override
-    public Mono<AssetTypeDTO> updateAssetType(Long assetId, AssetTypeDTO assetTypeDto) {
+    public Mono<AssetTypeDTO> updateAssetType(UUID assetId, AssetTypeDTO assetTypeDto) {
         return repository.findById(assetId)
                 .flatMap(assetType -> {
                     AssetType updatedAssetType = mapper.toEntity(assetTypeDto);
@@ -61,7 +62,7 @@ public class AssetTypeServiceImpl implements AssetTypeService {
     }
 
     @Override
-    public Mono<Void> deleteAssetType(Long assetId) {
+    public Mono<Void> deleteAssetType(UUID assetId) {
         return repository.findById(assetId)
                 .flatMap(repository::delete);
     }

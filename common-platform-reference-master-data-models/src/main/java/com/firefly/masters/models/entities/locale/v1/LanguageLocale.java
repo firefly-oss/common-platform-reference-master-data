@@ -11,6 +11,7 @@ import lombok.Builder;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 @Builder
@@ -22,7 +23,7 @@ public class LanguageLocale {
 
     @Id
     @Column("locale_id")
-    private Long localeId;
+    private UUID localeId;
 
     @Column("language_code")
     private String languageCode;

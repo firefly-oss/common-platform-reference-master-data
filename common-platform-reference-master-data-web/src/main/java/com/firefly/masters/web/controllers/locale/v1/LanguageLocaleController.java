@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 @Tag(name = "LanguageLocale", description = "APIs for managing language/locale data")
 @RestController
@@ -90,7 +91,7 @@ public class LanguageLocaleController {
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<LanguageLocaleDTO>> getLanguageLocale(
             @Parameter(in = ParameterIn.PATH, description = "ID of the languageLocale", required = true)
-            @PathVariable Long id
+            @PathVariable UUID id
     ) {
         return service.getLanguageLocale(id)
                 .map(ResponseEntity::ok)
@@ -116,7 +117,7 @@ public class LanguageLocaleController {
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<LanguageLocaleDTO>> updateLanguageLocale(
             @Parameter(in = ParameterIn.PATH, description = "ID of the languageLocale", required = true)
-            @PathVariable Long id,
+            @PathVariable UUID id,
             @RequestBody LanguageLocaleDTO dto
     ) {
         return service.updateLanguageLocale(id, dto)
@@ -132,7 +133,7 @@ public class LanguageLocaleController {
     @DeleteMapping(value = "/{id}")
     public Mono<ResponseEntity<Void>> deleteLanguageLocale(
             @Parameter(in = ParameterIn.PATH, description = "ID of the languageLocale", required = true)
-            @PathVariable Long id
+            @PathVariable UUID id
     ) {
         return service.deleteLanguageLocale(id)
                 .then(Mono.just(ResponseEntity.noContent().build()));

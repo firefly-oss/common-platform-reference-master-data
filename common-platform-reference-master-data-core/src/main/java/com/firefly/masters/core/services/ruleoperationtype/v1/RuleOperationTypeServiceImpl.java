@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -43,13 +44,13 @@ public class RuleOperationTypeServiceImpl implements RuleOperationTypeService {
     }
 
     @Override
-    public Mono<RuleOperationTypeDTO> getRuleOperationType(Long operationTypeId) {
+    public Mono<RuleOperationTypeDTO> getRuleOperationType(UUID operationTypeId) {
         return repository.findById(operationTypeId)
                 .map(mapper::toDTO);
     }
 
     @Override
-    public Mono<RuleOperationTypeDTO> updateRuleOperationType(Long operationTypeId, RuleOperationTypeDTO dto) {
+    public Mono<RuleOperationTypeDTO> updateRuleOperationType(UUID operationTypeId, RuleOperationTypeDTO dto) {
         return repository.findById(operationTypeId)
                 .flatMap(found -> {
                     RuleOperationType updated = mapper.toEntity(dto);
@@ -61,7 +62,7 @@ public class RuleOperationTypeServiceImpl implements RuleOperationTypeService {
     }
 
     @Override
-    public Mono<Void> deleteRuleOperationType(Long operationTypeId) {
+    public Mono<Void> deleteRuleOperationType(UUID operationTypeId) {
         return repository.findById(operationTypeId)
                 .flatMap(repository::delete);
     }

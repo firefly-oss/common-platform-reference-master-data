@@ -3,6 +3,7 @@ package com.firefly.masters.core.services.notification.v1;
 import com.firefly.masters.interfaces.dtos.notification.v1.NotificationMessageLocalizationDTO;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 /**
  * Service interface for managing notification message localization operations.
@@ -15,7 +16,7 @@ public interface NotificationMessageLocalizationService {
      * @param messageId the ID of the notification message
      * @return a Flux of notification message localization DTOs
      */
-    Flux<NotificationMessageLocalizationDTO> getLocalizationsByMessageId(Long messageId);
+    Flux<NotificationMessageLocalizationDTO> getLocalizationsByMessageId(UUID messageId);
 
     /**
      * Get all localizations for a specific locale.
@@ -23,7 +24,7 @@ public interface NotificationMessageLocalizationService {
      * @param localeId the ID of the language locale
      * @return a Flux of notification message localization DTOs
      */
-    Flux<NotificationMessageLocalizationDTO> getLocalizationsByLocaleId(Long localeId);
+    Flux<NotificationMessageLocalizationDTO> getLocalizationsByLocaleId(UUID localeId);
 
     /**
      * Create a new notification message localization.
@@ -39,7 +40,7 @@ public interface NotificationMessageLocalizationService {
      * @param localizationId the ID of the notification message localization
      * @return the notification message localization DTO
      */
-    Mono<NotificationMessageLocalizationDTO> getNotificationMessageLocalization(Long localizationId);
+    Mono<NotificationMessageLocalizationDTO> getNotificationMessageLocalization(UUID localizationId);
 
     /**
      * Get a notification message localization by message ID and locale ID.
@@ -48,7 +49,7 @@ public interface NotificationMessageLocalizationService {
      * @param localeId the ID of the language locale
      * @return the notification message localization DTO
      */
-    Mono<NotificationMessageLocalizationDTO> getNotificationMessageLocalizationByMessageAndLocale(Long messageId, Long localeId);
+    Mono<NotificationMessageLocalizationDTO> getNotificationMessageLocalizationByMessageAndLocale(UUID messageId, UUID localeId);
 
     /**
      * Update a notification message localization.
@@ -57,7 +58,7 @@ public interface NotificationMessageLocalizationService {
      * @param localizationDTO the updated notification message localization data
      * @return the updated notification message localization DTO
      */
-    Mono<NotificationMessageLocalizationDTO> updateNotificationMessageLocalization(Long localizationId, NotificationMessageLocalizationDTO localizationDTO);
+    Mono<NotificationMessageLocalizationDTO> updateNotificationMessageLocalization(UUID localizationId, NotificationMessageLocalizationDTO localizationDTO);
 
     /**
      * Delete a notification message localization.
@@ -65,7 +66,7 @@ public interface NotificationMessageLocalizationService {
      * @param localizationId the ID of the notification message localization to delete
      * @return a Mono of Void
      */
-    Mono<Void> deleteNotificationMessageLocalization(Long localizationId);
+    Mono<Void> deleteNotificationMessageLocalization(UUID localizationId);
 
     /**
      * Delete all localizations for a specific message.
@@ -73,5 +74,5 @@ public interface NotificationMessageLocalizationService {
      * @param messageId the ID of the notification message
      * @return a Mono of Void
      */
-    Mono<Void> deleteLocalizationsByMessageId(Long messageId);
+    Mono<Void> deleteLocalizationsByMessageId(UUID messageId);
 }

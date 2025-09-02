@@ -7,13 +7,14 @@ import org.springframework.data.r2dbc.repository.Query;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 /**
  * Repository for managing NotificationMessageTemplate entities.
  * Extends BaseRepository to inherit common CRUD operations.
  */
 @Repository
-public interface NotificationMessageTemplateRepository extends BaseRepository<NotificationMessageTemplate, Long> {
+public interface NotificationMessageTemplateRepository extends BaseRepository<NotificationMessageTemplate, UUID> {
 
     /**
      * Find all templates for a specific message.
@@ -21,7 +22,7 @@ public interface NotificationMessageTemplateRepository extends BaseRepository<No
      * @param messageId the ID of the notification message
      * @return a Flux of NotificationMessageTemplate entities for the specified message
      */
-    Flux<NotificationMessageTemplate> findByMessageId(Long messageId);
+    Flux<NotificationMessageTemplate> findByMessageId(UUID messageId);
 
     /**
      * Count templates for a specific message.
@@ -30,7 +31,7 @@ public interface NotificationMessageTemplateRepository extends BaseRepository<No
      * @return a Mono of Long representing the count
      */
     @Query("SELECT COUNT(*) FROM notification_message_template WHERE message_id = :messageId")
-    Mono<Long> countByMessageId(Long messageId);
+    Mono<Long> countByMessageId(UUID messageId);
 
     /**
      * Find a specific template by message ID and template name.
@@ -39,7 +40,7 @@ public interface NotificationMessageTemplateRepository extends BaseRepository<No
      * @param templateName the name of the template
      * @return a Mono of NotificationMessageTemplate
      */
-    Mono<NotificationMessageTemplate> findByMessageIdAndTemplateName(Long messageId, String templateName);
+    Mono<NotificationMessageTemplate> findByMessageIdAndTemplateName(UUID messageId, String templateName);
 
     /**
      * Find all templates of a specific type.
@@ -65,5 +66,5 @@ public interface NotificationMessageTemplateRepository extends BaseRepository<No
      * @param messageId the ID of the notification message
      * @return a Mono of Void
      */
-    Mono<Void> deleteByMessageId(Long messageId);
+    Mono<Void> deleteByMessageId(UUID messageId);
 }

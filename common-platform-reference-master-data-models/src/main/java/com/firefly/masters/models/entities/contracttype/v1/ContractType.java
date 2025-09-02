@@ -8,6 +8,7 @@ import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Table("contract_type")
 @Getter
@@ -17,7 +18,7 @@ public class ContractType {
 
     @Id
     @Column("contract_id")
-    private Long contractId;
+    private UUID contractId;
 
     @Column("contract_code")
     private String contractCode;

@@ -4,7 +4,7 @@
 
 -- Create the consent_catalog table
 CREATE TABLE IF NOT EXISTS consent_catalog (
-    consent_id BIGSERIAL PRIMARY KEY,
+    consent_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     consent_type VARCHAR(50) NOT NULL,
     consent_description TEXT,
     expiry_period_days INTEGER,

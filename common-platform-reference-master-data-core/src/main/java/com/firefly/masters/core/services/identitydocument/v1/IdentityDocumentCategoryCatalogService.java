@@ -4,6 +4,7 @@ import com.firefly.common.core.queries.PaginationRequest;
 import com.firefly.common.core.queries.PaginationResponse;
 import com.firefly.masters.interfaces.dtos.identitydocument.v1.IdentityDocumentCategoryCatalogDTO;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 /**
  * Service interface for managing identity document category catalog operations.
@@ -32,7 +33,7 @@ public interface IdentityDocumentCategoryCatalogService {
      * @param categoryId the ID of the identity document category
      * @return the identity document category with the specified ID
      */
-    Mono<IdentityDocumentCategoryCatalogDTO> getIdentityDocumentCategory(Long categoryId);
+    Mono<IdentityDocumentCategoryCatalogDTO> getIdentityDocumentCategory(UUID categoryId);
 
     /**
      * Get an identity document category by its code.
@@ -49,7 +50,7 @@ public interface IdentityDocumentCategoryCatalogService {
      * @param identityDocumentCategoryDTO the updated identity document category data
      * @return the updated identity document category
      */
-    Mono<IdentityDocumentCategoryCatalogDTO> updateIdentityDocumentCategory(Long categoryId, IdentityDocumentCategoryCatalogDTO identityDocumentCategoryDTO);
+    Mono<IdentityDocumentCategoryCatalogDTO> updateIdentityDocumentCategory(UUID categoryId, IdentityDocumentCategoryCatalogDTO identityDocumentCategoryDTO);
 
     /**
      * Delete an identity document category.
@@ -57,5 +58,5 @@ public interface IdentityDocumentCategoryCatalogService {
      * @param categoryId the ID of the identity document category to delete
      * @return a Mono of Void
      */
-    Mono<Void> deleteIdentityDocumentCategory(Long categoryId);
+    Mono<Void> deleteIdentityDocumentCategory(UUID categoryId);
 }

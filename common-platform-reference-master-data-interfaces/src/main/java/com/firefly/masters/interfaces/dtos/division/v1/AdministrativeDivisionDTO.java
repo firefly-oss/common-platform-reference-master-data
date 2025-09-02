@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import java.util.UUID;
 
 @Data
 @Builder
@@ -18,11 +19,11 @@ import jakarta.validation.constraints.Size;
 @NoArgsConstructor
 public class AdministrativeDivisionDTO {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private Long divisionId;
+    private UUID divisionId;
 
     @FilterableId
     @NotNull(message = "Country ID is required")
-    private Long countryId;
+    private UUID countryId;
 
     @NotBlank(message = "Division code is required")
     @Size(max = 20, message = "Division code must not exceed 20 characters")
@@ -36,7 +37,7 @@ public class AdministrativeDivisionDTO {
     @Size(max = 50, message = "Division level must not exceed 50 characters")
     private String level;
 
-    private Long parentDivisionId;
+    private UUID parentDivisionId;
 
     @NotNull(message = "Status is required")
     private StatusEnum status;

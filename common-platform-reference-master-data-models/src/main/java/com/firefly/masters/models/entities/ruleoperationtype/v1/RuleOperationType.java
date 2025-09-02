@@ -8,6 +8,7 @@ import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Table("rule_operation_type")
 @Getter
@@ -17,7 +18,7 @@ public class RuleOperationType {
 
     @Id
     @Column("operation_type_id")
-    private Long operationTypeId;
+    private UUID operationTypeId;
 
     @Column("operation_type_code")
     private String operationTypeCode;

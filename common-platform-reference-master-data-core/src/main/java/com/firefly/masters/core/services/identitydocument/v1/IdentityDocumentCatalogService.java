@@ -4,6 +4,7 @@ import com.firefly.common.core.queries.PaginationRequest;
 import com.firefly.common.core.queries.PaginationResponse;
 import com.firefly.masters.interfaces.dtos.identitydocument.v1.IdentityDocumentCatalogDTO;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 /**
  * Service interface for managing identity document catalog operations.
@@ -25,7 +26,7 @@ public interface IdentityDocumentCatalogService {
      * @param paginationRequest pagination parameters
      * @return a paginated list of identity documents of the specified category
      */
-    Mono<PaginationResponse<IdentityDocumentCatalogDTO>> listIdentityDocumentsByCategory(Long categoryId, PaginationRequest paginationRequest);
+    Mono<PaginationResponse<IdentityDocumentCatalogDTO>> listIdentityDocumentsByCategory(UUID categoryId, PaginationRequest paginationRequest);
 
     /**
      * List identity documents by country with pagination.
@@ -34,7 +35,7 @@ public interface IdentityDocumentCatalogService {
      * @param paginationRequest pagination parameters
      * @return a paginated list of identity documents for the specified country
      */
-    Mono<PaginationResponse<IdentityDocumentCatalogDTO>> listIdentityDocumentsByCountry(Long countryId, PaginationRequest paginationRequest);
+    Mono<PaginationResponse<IdentityDocumentCatalogDTO>> listIdentityDocumentsByCountry(UUID countryId, PaginationRequest paginationRequest);
 
     /**
      * Create a new identity document.
@@ -50,7 +51,7 @@ public interface IdentityDocumentCatalogService {
      * @param documentId the ID of the identity document
      * @return the identity document with the specified ID
      */
-    Mono<IdentityDocumentCatalogDTO> getIdentityDocument(Long documentId);
+    Mono<IdentityDocumentCatalogDTO> getIdentityDocument(UUID documentId);
 
     /**
      * Get an identity document by its code.
@@ -67,7 +68,7 @@ public interface IdentityDocumentCatalogService {
      * @param identityDocumentDTO the updated identity document data
      * @return the updated identity document
      */
-    Mono<IdentityDocumentCatalogDTO> updateIdentityDocument(Long documentId, IdentityDocumentCatalogDTO identityDocumentDTO);
+    Mono<IdentityDocumentCatalogDTO> updateIdentityDocument(UUID documentId, IdentityDocumentCatalogDTO identityDocumentDTO);
 
     /**
      * Delete an identity document.
@@ -75,5 +76,5 @@ public interface IdentityDocumentCatalogService {
      * @param documentId the ID of the identity document to delete
      * @return a Mono of Void
      */
-    Mono<Void> deleteIdentityDocument(Long documentId);
+    Mono<Void> deleteIdentityDocument(UUID documentId);
 }

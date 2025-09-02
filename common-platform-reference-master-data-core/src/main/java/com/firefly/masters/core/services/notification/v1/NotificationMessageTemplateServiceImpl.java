@@ -14,6 +14,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 /**
  * Implementation of the NotificationMessageTemplateService interface.
@@ -49,7 +50,7 @@ public class NotificationMessageTemplateServiceImpl implements NotificationMessa
     }
 
     @Override
-    public Flux<NotificationMessageTemplateDTO> getTemplatesByMessageId(Long messageId) {
+    public Flux<NotificationMessageTemplateDTO> getTemplatesByMessageId(UUID messageId) {
         return repository.findByMessageId(messageId)
                 .map(mapper::toDTO)
                 .switchIfEmpty(Flux.error(new RuntimeException("No templates found for message ID: " + messageId)));
@@ -70,21 +71,21 @@ public class NotificationMessageTemplateServiceImpl implements NotificationMessa
     }
 
     @Override
-    public Mono<NotificationMessageTemplateDTO> getNotificationMessageTemplate(Long templateId) {
+    public Mono<NotificationMessageTemplateDTO> getNotificationMessageTemplate(UUID templateId) {
         return repository.findById(templateId)
                 .map(mapper::toDTO)
                 .switchIfEmpty(Mono.error(new RuntimeException("Notification message template not found with ID: " + templateId)));
     }
 
     @Override
-    public Mono<NotificationMessageTemplateDTO> getNotificationMessageTemplateByNameAndMessageId(Long messageId, String templateName) {
+    public Mono<NotificationMessageTemplateDTO> getNotificationMessageTemplateByNameAndMessageId(UUID messageId, String templateName) {
         return repository.findByMessageIdAndTemplateName(messageId, templateName)
                 .map(mapper::toDTO)
                 .switchIfEmpty(Mono.error(new RuntimeException("Notification message template not found with message ID: " + messageId + " and template name: " + templateName)));
     }
 
     @Override
-    public Mono<NotificationMessageTemplateDTO> updateNotificationMessageTemplate(Long templateId, NotificationMessageTemplateDTO templateDTO) {
+    public Mono<NotificationMessageTemplateDTO> updateNotificationMessageTemplate(UUID templateId, NotificationMessageTemplateDTO templateDTO) {
         return repository.findById(templateId)
                 .switchIfEmpty(Mono.error(new RuntimeException("Notification message template not found with ID: " + templateId)))
                 .flatMap(existingEntity -> {
@@ -99,7 +100,7 @@ public class NotificationMessageTemplateServiceImpl implements NotificationMessa
     }
 
     @Override
-    public Mono<Void> deleteNotificationMessageTemplate(Long templateId) {
+    public Mono<Void> deleteNotificationMessageTemplate(UUID templateId) {
         return repository.findById(templateId)
                 .switchIfEmpty(Mono.error(new RuntimeException("Notification message template not found with ID: " + templateId)))
                 .flatMap(repository::delete)
@@ -107,7 +108,7 @@ public class NotificationMessageTemplateServiceImpl implements NotificationMessa
     }
 
     @Override
-    public Mono<Void> deleteTemplatesByMessageId(Long messageId) {
+    public Mono<Void> deleteTemplatesByMessageId(UUID messageId) {
         return repository.deleteByMessageId(messageId)
                 .onErrorResume(e -> Mono.error(new RuntimeException("Error deleting templates for message ID: " + messageId, e)));
     }

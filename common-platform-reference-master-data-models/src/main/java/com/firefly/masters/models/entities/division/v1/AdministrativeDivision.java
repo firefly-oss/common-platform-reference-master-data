@@ -11,6 +11,7 @@ import lombok.Builder;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 @Builder
@@ -22,10 +23,10 @@ public class AdministrativeDivision {
 
     @Id
     @Column("division_id")
-    private Long divisionId;
+    private UUID divisionId;
 
     @Column("country_id")
-    private Long countryId;  // References countries(country_id)
+    private UUID countryId;  // References countries(country_id)
 
     @Column("code")
     private String code;
@@ -37,7 +38,7 @@ public class AdministrativeDivision {
     private String level;
 
     @Column("parent_division_id")
-    private Long parentDivisionId;  // Self-referencing to administrative_division(division_id)
+    private UUID parentDivisionId;  // Self-referencing to administrative_division(division_id)
 
     @Column("status")
     private StatusEnum status;

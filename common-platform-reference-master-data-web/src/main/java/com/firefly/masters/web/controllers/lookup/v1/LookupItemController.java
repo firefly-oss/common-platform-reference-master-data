@@ -19,6 +19,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 @Tag(name = "Lookup Items", description = "APIs for managing lookup items")
 @RestController
@@ -62,7 +63,7 @@ public class LookupItemController {
     @GetMapping(value = "/domain/{domainId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<Flux<LookupItemDTO>>> getItemsByDomain(
             @Parameter(in = ParameterIn.PATH, description = "ID of the domain", required = true)
-            @PathVariable Long domainId
+            @PathVariable UUID domainId
     ) {
         return Mono.just(ResponseEntity.ok(service.getItemsByDomain(domainId)));
     }
@@ -110,7 +111,7 @@ public class LookupItemController {
     @GetMapping(value = "/{itemId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<LookupItemDTO>> getItem(
             @Parameter(in = ParameterIn.PATH, description = "ID of the lookup item", required = true)
-            @PathVariable Long itemId
+            @PathVariable UUID itemId
     ) {
         return service.getItem(itemId)
                 .map(ResponseEntity::ok)
@@ -136,7 +137,7 @@ public class LookupItemController {
     @PutMapping(value = "/{itemId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<LookupItemDTO>> updateItem(
             @Parameter(in = ParameterIn.PATH, description = "ID of the lookup item", required = true)
-            @PathVariable Long itemId,
+            @PathVariable UUID itemId,
             @RequestBody LookupItemDTO itemDto
     ) {
         return service.updateItem(itemId, itemDto)
@@ -152,7 +153,7 @@ public class LookupItemController {
     @DeleteMapping(value = "/{itemId}")
     public Mono<ResponseEntity<Void>> deleteItem(
             @Parameter(in = ParameterIn.PATH, description = "ID of the lookup item", required = true)
-            @PathVariable Long itemId
+            @PathVariable UUID itemId
     ) {
         return service.deleteItem(itemId)
                 .then(Mono.just(ResponseEntity.noContent().build()));

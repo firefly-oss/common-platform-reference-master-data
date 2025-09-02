@@ -11,6 +11,7 @@ import lombok.Builder;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 /**
  * Entity representing a notification message template.
@@ -26,10 +27,10 @@ public class NotificationMessageTemplate {
 
     @Id
     @Column("template_id")
-    private Long templateId;
+    private UUID templateId;
 
     @Column("message_id")
-    private Long messageId;  // References notification_message_catalog(message_id)
+    private UUID messageId;  // References notification_message_catalog(message_id)
 
     @Column("template_name")
     private String templateName;

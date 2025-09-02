@@ -12,6 +12,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 @SuperBuilder
@@ -20,7 +21,7 @@ import java.time.LocalDateTime;
 public class TitleMasterDTO {
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private Long titleId;
+    private UUID titleId;
 
     @NotBlank(message = "Prefix is required")
     @Size(max = 10, message = "Prefix must not exceed 10 characters")

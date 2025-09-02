@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -40,13 +41,13 @@ public class AdministrativeDivisionServiceImpl implements AdministrativeDivision
     }
 
     @Override
-    public Mono<AdministrativeDivisionDTO> getDivision(Long divisionId) {
+    public Mono<AdministrativeDivisionDTO> getDivision(UUID divisionId) {
         return repository.findById(divisionId)
                 .map(mapper::toDTO);
     }
 
     @Override
-    public Mono<AdministrativeDivisionDTO> updateDivision(Long divisionId, AdministrativeDivisionDTO divisionDto) {
+    public Mono<AdministrativeDivisionDTO> updateDivision(UUID divisionId, AdministrativeDivisionDTO divisionDto) {
         return repository.findById(divisionId)
                 .flatMap(foundDivision -> {
                     AdministrativeDivision updatedDivision = mapper.toEntity(divisionDto);
@@ -57,7 +58,7 @@ public class AdministrativeDivisionServiceImpl implements AdministrativeDivision
     }
 
     @Override
-    public Mono<Void> deleteDivision(Long divisionId) {
+    public Mono<Void> deleteDivision(UUID divisionId) {
         return repository.findById(divisionId)
                 .flatMap(repository::delete);
     }

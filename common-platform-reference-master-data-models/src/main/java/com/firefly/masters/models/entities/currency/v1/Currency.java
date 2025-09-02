@@ -11,6 +11,7 @@ import lombok.Builder;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 @Builder
@@ -22,7 +23,7 @@ public class Currency {
 
     @Id
     @Column("currency_id")
-    private Long currencyId;
+    private UUID currencyId;
 
     @Column("iso_code")
     private String isoCode;

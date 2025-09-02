@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -40,13 +41,13 @@ public class CurrencyServiceImpl implements CurrencyService {
     }
 
     @Override
-    public Mono<CurrencyDTO> getCurrency(Long currencyId) {
+    public Mono<CurrencyDTO> getCurrency(UUID currencyId) {
         return repository.findById(currencyId)
                 .map(mapper::toDTO);
     }
 
     @Override
-    public Mono<CurrencyDTO> updateCurrency(Long currencyId, CurrencyDTO currencyDto) {
+    public Mono<CurrencyDTO> updateCurrency(UUID currencyId, CurrencyDTO currencyDto) {
         return repository.findById(currencyId)
                 .flatMap(existingCurrency -> {
                     Currency updatedCurrency = mapper.toEntity(currencyDto);
@@ -57,7 +58,7 @@ public class CurrencyServiceImpl implements CurrencyService {
     }
 
     @Override
-    public Mono<Void> deleteCurrency(Long currencyId) {
+    public Mono<Void> deleteCurrency(UUID currencyId) {
         return repository.deleteById(currencyId);
     }
 }

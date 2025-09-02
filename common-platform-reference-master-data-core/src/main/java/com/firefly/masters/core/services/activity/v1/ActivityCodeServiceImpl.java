@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -34,13 +35,13 @@ public class ActivityCodeServiceImpl implements ActivityCodeService {
     }
 
     @Override
-    public Flux<ActivityCodeDTO> getActivityCodesByCountry(Long countryId) {
+    public Flux<ActivityCodeDTO> getActivityCodesByCountry(UUID countryId) {
         return repository.findByCountryId(countryId)
                 .map(mapper::toDTO);
     }
 
     @Override
-    public Flux<ActivityCodeDTO> getChildActivityCodes(Long parentCodeId) {
+    public Flux<ActivityCodeDTO> getChildActivityCodes(UUID parentCodeId) {
         return repository.findByParentCodeId(parentCodeId)
                 .map(mapper::toDTO);
     }
@@ -53,13 +54,13 @@ public class ActivityCodeServiceImpl implements ActivityCodeService {
     }
 
     @Override
-    public Mono<ActivityCodeDTO> getActivityCode(Long activityCodeId) {
+    public Mono<ActivityCodeDTO> getActivityCode(UUID activityCodeId) {
         return repository.findById(activityCodeId)
                 .map(mapper::toDTO);
     }
 
     @Override
-    public Mono<ActivityCodeDTO> updateActivityCode(Long activityCodeId, ActivityCodeDTO activityCodeDto) {
+    public Mono<ActivityCodeDTO> updateActivityCode(UUID activityCodeId, ActivityCodeDTO activityCodeDto) {
         return repository.findById(activityCodeId)
                 .flatMap(foundActivityCode -> {
                     ActivityCode updatedActivityCode = mapper.toEntity(activityCodeDto);
@@ -70,7 +71,7 @@ public class ActivityCodeServiceImpl implements ActivityCodeService {
     }
 
     @Override
-    public Mono<Void> deleteActivityCode(Long activityCodeId) {
+    public Mono<Void> deleteActivityCode(UUID activityCodeId) {
         return repository.deleteById(activityCodeId);
     }
 }

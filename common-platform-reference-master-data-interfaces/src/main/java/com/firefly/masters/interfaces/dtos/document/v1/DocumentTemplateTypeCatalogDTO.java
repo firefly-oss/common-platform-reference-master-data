@@ -11,6 +11,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 /**
  * Data Transfer Object for document template type catalog information.
@@ -23,7 +24,7 @@ import java.time.LocalDateTime;
 public class DocumentTemplateTypeCatalogDTO {
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private Long typeId;
+    private UUID typeId;
 
     @NotBlank(message = "Type code is required")
     @Size(max = 20, message = "Type code must not exceed 20 characters")

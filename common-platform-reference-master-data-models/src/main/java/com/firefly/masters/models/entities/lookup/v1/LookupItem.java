@@ -12,6 +12,7 @@ import lombok.ToString;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 @Builder
@@ -23,10 +24,10 @@ public class LookupItem {
 
     @Id
     @Column("item_id")
-    private Long itemId;
+    private UUID itemId;
 
     @Column("domain_id")
-    private Long domainId;  // References lookup_domain(domain_id)
+    private UUID domainId;  // References lookup_domain(domain_id)
 
     @Column("item_code")
     private String itemCode;
@@ -38,7 +39,7 @@ public class LookupItem {
     private String itemDesc;
 
     @Column("parent_item_id")
-    private Long parentItemId;  // Self-referencing to lookup_item(item_id)
+    private UUID parentItemId;  // Self-referencing to lookup_item(item_id)
 
     @Column("sort_order")
     private Integer sortOrder;
@@ -56,7 +57,7 @@ public class LookupItem {
     private String extraJson;  // Stored as JSONB in the database
 
     @Column("tenant_id")
-    private Long tenantId;
+    private UUID tenantId;
 
     @Column("status")
     private StatusEnum status;

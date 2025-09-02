@@ -5,6 +5,7 @@ import com.firefly.common.core.queries.PaginationResponse;
 import com.firefly.masters.interfaces.dtos.relationships.v1.RelationshipTypeMasterDTO;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 /**
  * Service interface for managing Relationship Type master data.
@@ -34,7 +35,7 @@ public interface RelationshipTypeMasterService {
      * @param relationshipTypeId the unique identifier of the relationship type to retrieve
      * @return a Mono emitting the RelationshipTypeMasterDTO containing details about the specified item, or an empty Mono if not found
      */
-    Mono<RelationshipTypeMasterDTO> getRelationshipType(Long relationshipTypeId);
+    Mono<RelationshipTypeMasterDTO> getRelationshipType(UUID relationshipTypeId);
 
     /**
      * Updates the details of an existing relationship type by its unique identifier.
@@ -43,7 +44,7 @@ public interface RelationshipTypeMasterService {
      * @param relationshipTypeDto the data transfer object containing the updated details
      * @return a Mono emitting the updated RelationshipTypeMasterDTO object if the update is successful
      */
-    Mono<RelationshipTypeMasterDTO> updateRelationshipType(Long relationshipTypeId, RelationshipTypeMasterDTO relationshipTypeDto);
+    Mono<RelationshipTypeMasterDTO> updateRelationshipType(UUID relationshipTypeId, RelationshipTypeMasterDTO relationshipTypeDto);
 
     /**
      * Deletes a relationship type identified by its unique identifier.
@@ -51,5 +52,5 @@ public interface RelationshipTypeMasterService {
      * @param relationshipTypeId the unique identifier of the relationship type to delete
      * @return a Mono signaling completion of the delete operation
      */
-    Mono<Void> deleteRelationshipType(Long relationshipTypeId);
+    Mono<Void> deleteRelationshipType(UUID relationshipTypeId);
 }

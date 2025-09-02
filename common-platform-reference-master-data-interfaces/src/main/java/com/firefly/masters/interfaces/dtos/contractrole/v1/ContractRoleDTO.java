@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 @SuperBuilder
@@ -15,7 +16,7 @@ import java.time.LocalDateTime;
 public class ContractRoleDTO {
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private Long roleId;
+    private UUID roleId;
 
     private String roleCode;
     private String description;

@@ -4,13 +4,14 @@ import com.firefly.masters.models.entities.identitydocument.v1.IdentityDocumentC
 import com.firefly.masters.models.repositories.BaseRepository;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 /**
  * Repository for managing IdentityDocumentCategoryCatalog entities.
  * Extends BaseRepository to inherit common CRUD operations.
  */
 @Repository
-public interface IdentityDocumentCategoryCatalogRepository extends BaseRepository<IdentityDocumentCategoryCatalog, Long> {
+public interface IdentityDocumentCategoryCatalogRepository extends BaseRepository<IdentityDocumentCategoryCatalog, UUID> {
     
     /**
      * Find an identity document category by its code.

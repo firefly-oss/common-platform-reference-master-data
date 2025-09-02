@@ -4,7 +4,7 @@
 
 -- Create the document_template_type_catalog table
 CREATE TABLE IF NOT EXISTS document_template_type_catalog (
-    type_id BIGSERIAL PRIMARY KEY,
+    type_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     type_code VARCHAR(50) NOT NULL,
     type_name VARCHAR(100) NOT NULL,
     description TEXT,
@@ -29,9 +29,9 @@ VALUES
 
 -- Create the document_template_catalog table
 CREATE TABLE IF NOT EXISTS document_template_catalog (
-    template_id BIGSERIAL PRIMARY KEY,
+    template_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     template_code VARCHAR(100) NOT NULL,
-    type_id BIGINT REFERENCES document_template_type_catalog(type_id),
+    type_id UUID REFERENCES document_template_type_catalog(type_id),
     category VARCHAR(100) NOT NULL,
     description TEXT,
     template_name VARCHAR(255) NOT NULL,
@@ -53,9 +53,9 @@ ALTER TABLE document_template_catalog ADD CONSTRAINT uk_document_template_catalo
 
 -- Create the document_template_localization table for localized templates
 CREATE TABLE IF NOT EXISTS document_template_localization (
-    localization_id BIGSERIAL PRIMARY KEY,
-    template_id BIGINT NOT NULL REFERENCES document_template_catalog(template_id) ON DELETE CASCADE,
-    locale_id BIGINT NOT NULL REFERENCES language_locale(locale_id) ON DELETE RESTRICT,
+    localization_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    template_id UUID NOT NULL REFERENCES document_template_catalog(template_id) ON DELETE CASCADE,
+    locale_id UUID NOT NULL REFERENCES language_locale(locale_id) ON DELETE RESTRICT,
     template_name VARCHAR(255),
     template_content TEXT,
     status status_enum NOT NULL,

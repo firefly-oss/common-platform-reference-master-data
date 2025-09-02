@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -43,13 +44,13 @@ public class CountryServiceImpl implements CountryService {
     }
 
     @Override
-    public Mono<CountryDTO> getCountry(Long countryId) {
+    public Mono<CountryDTO> getCountry(UUID countryId) {
         return repository.findById(countryId)
                 .map(mapper::toDTO);
     }
 
     @Override
-    public Mono<CountryDTO> updateCountry(Long countryId, CountryDTO countryDto) {
+    public Mono<CountryDTO> updateCountry(UUID countryId, CountryDTO countryDto) {
         return repository.findById(countryId)
                 .flatMap(foundCountry -> {
                     Country updatedCountry = mapper.toEntity(countryDto);
@@ -60,7 +61,7 @@ public class CountryServiceImpl implements CountryService {
     }
 
     @Override
-    public Mono<Void> deleteCountry(Long countryId) {
+    public Mono<Void> deleteCountry(UUID countryId) {
         return repository.findById(countryId)
                 .flatMap(repository::delete);
     }

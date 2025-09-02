@@ -4,6 +4,7 @@ import com.firefly.common.core.queries.PaginationRequest;
 import com.firefly.common.core.queries.PaginationResponse;
 import com.firefly.masters.interfaces.dtos.contracttype.v1.ContractTypeDTO;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 /**
  * Service interface for managing Contract Type data.
@@ -32,7 +33,7 @@ public interface ContractTypeService {
      * @param contractId the unique identifier of the contract type to retrieve
      * @return a Mono emitting the ContractTypeDTO containing details about the specified contract type, or an empty Mono if not found
      */
-    Mono<ContractTypeDTO> getContractType(Long contractId);
+    Mono<ContractTypeDTO> getContractType(UUID contractId);
 
     /**
      * Updates the details of an existing contract type by its unique identifier.
@@ -41,7 +42,7 @@ public interface ContractTypeService {
      * @param contractTypeDto the DTO containing the updated contract type details
      * @return a Mono emitting the updated ContractTypeDTO object if the update is successful
      */
-    Mono<ContractTypeDTO> updateContractType(Long contractId, ContractTypeDTO contractTypeDto);
+    Mono<ContractTypeDTO> updateContractType(UUID contractId, ContractTypeDTO contractTypeDto);
 
     /**
      * Deletes a contract type identified by its unique identifier.
@@ -49,5 +50,5 @@ public interface ContractTypeService {
      * @param contractId the unique identifier of the contract type to delete
      * @return a Mono signaling completion of the delete operation
      */
-    Mono<Void> deleteContractType(Long contractId);
+    Mono<Void> deleteContractType(UUID contractId);
 }

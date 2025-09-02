@@ -12,6 +12,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 @SuperBuilder
@@ -20,7 +21,7 @@ import java.time.LocalDateTime;
 public class RelationshipTypeMasterDTO {
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private Long relationshipTypeId;
+    private UUID relationshipTypeId;
 
     @NotBlank(message = "Relationship type code is required")
     @Size(max = 100, message = "Relationship type code must not exceed 100 characters")

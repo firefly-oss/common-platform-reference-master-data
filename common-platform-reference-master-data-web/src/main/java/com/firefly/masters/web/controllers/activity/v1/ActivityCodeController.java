@@ -19,6 +19,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 @Tag(name = "Activity Codes", description = "APIs for managing activity codes")
 @RestController
@@ -62,7 +63,7 @@ public class ActivityCodeController {
     @GetMapping(value = "/country/{countryId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<Flux<ActivityCodeDTO>>> getActivityCodesByCountry(
             @Parameter(in = ParameterIn.PATH, description = "ID of the country", required = true)
-            @PathVariable Long countryId
+            @PathVariable UUID countryId
     ) {
         return Mono.just(ResponseEntity.ok(service.getActivityCodesByCountry(countryId)));
     }
@@ -81,7 +82,7 @@ public class ActivityCodeController {
     @GetMapping(value = "/parent/{parentCodeId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<Flux<ActivityCodeDTO>>> getChildActivityCodes(
             @Parameter(in = ParameterIn.PATH, description = "ID of the parent activity code", required = true)
-            @PathVariable Long parentCodeId
+            @PathVariable UUID parentCodeId
     ) {
         return Mono.just(ResponseEntity.ok(service.getChildActivityCodes(parentCodeId)));
     }
@@ -129,7 +130,7 @@ public class ActivityCodeController {
     @GetMapping(value = "/{activityCodeId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<ActivityCodeDTO>> getActivityCode(
             @Parameter(in = ParameterIn.PATH, description = "ID of the activity code", required = true)
-            @PathVariable Long activityCodeId
+            @PathVariable UUID activityCodeId
     ) {
         return service.getActivityCode(activityCodeId)
                 .map(ResponseEntity::ok)
@@ -155,7 +156,7 @@ public class ActivityCodeController {
     @PutMapping(value = "/{activityCodeId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<ActivityCodeDTO>> updateActivityCode(
             @Parameter(in = ParameterIn.PATH, description = "ID of the activity code", required = true)
-            @PathVariable Long activityCodeId,
+            @PathVariable UUID activityCodeId,
             @RequestBody ActivityCodeDTO activityCodeDto
     ) {
         return service.updateActivityCode(activityCodeId, activityCodeDto)
@@ -171,7 +172,7 @@ public class ActivityCodeController {
     @DeleteMapping(value = "/{activityCodeId}")
     public Mono<ResponseEntity<Void>> deleteActivityCode(
             @Parameter(in = ParameterIn.PATH, description = "ID of the activity code", required = true)
-            @PathVariable Long activityCodeId
+            @PathVariable UUID activityCodeId
     ) {
         return service.deleteActivityCode(activityCodeId)
                 .then(Mono.just(ResponseEntity.noContent().build()));

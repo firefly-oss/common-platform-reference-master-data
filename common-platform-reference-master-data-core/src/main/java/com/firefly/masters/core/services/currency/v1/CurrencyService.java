@@ -4,6 +4,7 @@ import com.firefly.common.core.queries.PaginationRequest;
 import com.firefly.common.core.queries.PaginationResponse;
 import com.firefly.masters.interfaces.dtos.currency.v1.CurrencyDTO;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 public interface CurrencyService {
     /**
@@ -28,7 +29,7 @@ public interface CurrencyService {
      * @param currencyId the unique identifier of the currency to retrieve
      * @return a Mono containing the retrieved CurrencyDTO object
      */
-    Mono<CurrencyDTO> getCurrency(Long currencyId);
+    Mono<CurrencyDTO> getCurrency(UUID currencyId);
 
     /**
      * Updates the details of an existing currency identified by the given currency ID.
@@ -37,7 +38,7 @@ public interface CurrencyService {
      * @param currencyDto the updated information for the currency
      * @return a Mono emitting the updated CurrencyDTO after the operation is completed
      */
-    Mono<CurrencyDTO> updateCurrency(Long currencyId, CurrencyDTO currencyDto);
+    Mono<CurrencyDTO> updateCurrency(UUID currencyId, CurrencyDTO currencyDto);
 
     /**
      * Deletes a currency based on the provided currency ID.
@@ -45,5 +46,5 @@ public interface CurrencyService {
      * @param currencyId the unique identifier of the currency to be deleted
      * @return a Mono indicating the completion of the operation
      */
-    Mono<Void> deleteCurrency(Long currencyId);
+    Mono<Void> deleteCurrency(UUID currencyId);
 }

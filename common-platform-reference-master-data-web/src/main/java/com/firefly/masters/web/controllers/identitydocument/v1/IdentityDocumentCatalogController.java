@@ -18,6 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 /**
  * REST controller for managing identity document catalog operations.
@@ -64,7 +65,7 @@ public class IdentityDocumentCatalogController {
     @GetMapping(value = "/category/{categoryId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<PaginationResponse<IdentityDocumentCatalogDTO>>> listIdentityDocumentsByCategory(
             @Parameter(in = ParameterIn.PATH, description = "ID of the identity document category", required = true)
-            @PathVariable Long categoryId,
+            @PathVariable UUID categoryId,
             @ParameterObject
             @ModelAttribute PaginationRequest paginationRequest
     ) {
@@ -86,7 +87,7 @@ public class IdentityDocumentCatalogController {
     @GetMapping(value = "/country/{countryId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<PaginationResponse<IdentityDocumentCatalogDTO>>> listIdentityDocumentsByCountry(
             @Parameter(in = ParameterIn.PATH, description = "ID of the country", required = true)
-            @PathVariable Long countryId,
+            @PathVariable UUID countryId,
             @ParameterObject
             @ModelAttribute PaginationRequest paginationRequest
     ) {
@@ -137,7 +138,7 @@ public class IdentityDocumentCatalogController {
     @GetMapping(value = "/{documentId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<IdentityDocumentCatalogDTO>> getIdentityDocument(
             @Parameter(in = ParameterIn.PATH, description = "ID of the identity document", required = true)
-            @PathVariable Long documentId
+            @PathVariable UUID documentId
     ) {
         return service.getIdentityDocument(documentId)
                 .map(ResponseEntity::ok);
@@ -192,7 +193,7 @@ public class IdentityDocumentCatalogController {
     @PutMapping(value = "/{documentId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<IdentityDocumentCatalogDTO>> updateIdentityDocument(
             @Parameter(in = ParameterIn.PATH, description = "ID of the identity document", required = true)
-            @PathVariable Long documentId,
+            @PathVariable UUID documentId,
             @RequestBody IdentityDocumentCatalogDTO dto
     ) {
         return service.updateIdentityDocument(documentId, dto)
@@ -207,7 +208,7 @@ public class IdentityDocumentCatalogController {
     @DeleteMapping(value = "/{documentId}")
     public Mono<ResponseEntity<Void>> deleteIdentityDocument(
             @Parameter(in = ParameterIn.PATH, description = "ID of the identity document", required = true)
-            @PathVariable Long documentId
+            @PathVariable UUID documentId
     ) {
         return service.deleteIdentityDocument(documentId)
                 .then(Mono.just(ResponseEntity.noContent().build()));

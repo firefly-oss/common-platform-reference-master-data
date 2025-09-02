@@ -18,6 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 @Tag(name = "Contract Type", description = "APIs for managing Contract Type data")
 @RestController
@@ -90,7 +91,7 @@ public class ContractTypeController {
     @GetMapping(value = "/{contractId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<ContractTypeDTO>> getContractType(
             @Parameter(in = ParameterIn.PATH, description = "ID of the contract type", required = true)
-            @PathVariable Long contractId
+            @PathVariable UUID contractId
     ) {
         return contractTypeService.getContractType(contractId)
                 .map(ResponseEntity::ok)
@@ -116,7 +117,7 @@ public class ContractTypeController {
     @PutMapping(value = "/{contractId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<ContractTypeDTO>> updateContractType(
             @Parameter(in = ParameterIn.PATH, description = "ID of the contract type", required = true)
-            @PathVariable Long contractId,
+            @PathVariable UUID contractId,
             @RequestBody ContractTypeDTO contractTypeDto
     ) {
         return contractTypeService.updateContractType(contractId, contractTypeDto)
@@ -132,7 +133,7 @@ public class ContractTypeController {
     @DeleteMapping(value = "/{contractId}")
     public Mono<ResponseEntity<Void>> deleteContractType(
             @Parameter(in = ParameterIn.PATH, description = "ID of the contract type", required = true)
-            @PathVariable Long contractId
+            @PathVariable UUID contractId
     ) {
         return contractTypeService.deleteContractType(contractId)
                 .then(Mono.just(ResponseEntity.noContent().build()));

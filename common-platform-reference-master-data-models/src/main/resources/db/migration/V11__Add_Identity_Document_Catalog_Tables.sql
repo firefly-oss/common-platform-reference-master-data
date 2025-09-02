@@ -4,7 +4,7 @@
 
 -- Create the identity_document_category_catalog table
 CREATE TABLE IF NOT EXISTS identity_document_category_catalog (
-    category_id BIGSERIAL PRIMARY KEY,
+    category_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     category_code VARCHAR(50) NOT NULL,
     category_name VARCHAR(100) NOT NULL,
     description TEXT,
@@ -31,14 +31,14 @@ VALUES
 
 -- Create the identity_document_catalog table
 CREATE TABLE IF NOT EXISTS identity_document_catalog (
-    document_id BIGSERIAL PRIMARY KEY,
+    document_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     document_code VARCHAR(50) NOT NULL,
     document_name VARCHAR(100) NOT NULL,
-    category_id BIGINT REFERENCES identity_document_category_catalog(category_id) ON DELETE RESTRICT,
+    category_id UUID REFERENCES identity_document_category_catalog(category_id) ON DELETE RESTRICT,
     description TEXT,
     validation_regex VARCHAR(255),
     format_description VARCHAR(255),
-    country_id BIGINT REFERENCES countries(country_id) ON DELETE RESTRICT,
+    country_id UUID REFERENCES countries(country_id) ON DELETE RESTRICT,
     status status_enum NOT NULL,
     date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     date_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -74,9 +74,9 @@ VALUES
 
 -- Create the identity_document_localization table for localized document information
 CREATE TABLE IF NOT EXISTS identity_document_localization (
-    localization_id BIGSERIAL PRIMARY KEY,
-    document_id BIGINT NOT NULL REFERENCES identity_document_catalog(document_id) ON DELETE CASCADE,
-    locale_id BIGINT NOT NULL REFERENCES language_locale(locale_id) ON DELETE RESTRICT,
+    localization_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    document_id UUID NOT NULL REFERENCES identity_document_catalog(document_id) ON DELETE CASCADE,
+    locale_id UUID NOT NULL REFERENCES language_locale(locale_id) ON DELETE RESTRICT,
     document_name VARCHAR(255),
     description TEXT,
     format_description TEXT,

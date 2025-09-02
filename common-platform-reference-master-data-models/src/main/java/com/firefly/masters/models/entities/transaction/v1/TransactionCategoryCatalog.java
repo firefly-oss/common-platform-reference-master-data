@@ -11,6 +11,7 @@ import lombok.Builder;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 /**
  * Entity representing a transaction category catalog record.
@@ -27,7 +28,7 @@ public class TransactionCategoryCatalog {
 
     @Id
     @Column("category_id")
-    private Long categoryId;
+    private UUID categoryId;
 
     @Column("category_code")
     private String categoryCode;
@@ -39,7 +40,7 @@ public class TransactionCategoryCatalog {
     private String description;
 
     @Column("parent_category_id")
-    private Long parentCategoryId;  // Self-referencing to transaction_category_catalog(category_id)
+    private UUID parentCategoryId;  // Self-referencing to transaction_category_catalog(category_id)
 
     @Column("status")
     private StatusEnum status;

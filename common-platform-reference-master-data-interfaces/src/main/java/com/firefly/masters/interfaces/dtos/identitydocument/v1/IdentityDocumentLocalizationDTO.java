@@ -11,6 +11,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 /**
  * Data Transfer Object for identity document localization information.
@@ -23,13 +24,13 @@ import java.time.LocalDateTime;
 public class IdentityDocumentLocalizationDTO {
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private Long localizationId;
+    private UUID localizationId;
 
     @NotNull(message = "Document ID is required")
-    private Long documentId;
+    private UUID documentId;
 
     @NotNull(message = "Locale ID is required")
-    private Long localeId;
+    private UUID localeId;
 
     @NotBlank(message = "Document name is required")
     @Size(max = 100, message = "Document name must not exceed 100 characters")

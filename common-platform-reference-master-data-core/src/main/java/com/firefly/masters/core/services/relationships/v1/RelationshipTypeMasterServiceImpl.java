@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -42,13 +43,13 @@ public class RelationshipTypeMasterServiceImpl implements RelationshipTypeMaster
     }
 
     @Override
-    public Mono<RelationshipTypeMasterDTO> getRelationshipType(Long relationshipTypeId) {
+    public Mono<RelationshipTypeMasterDTO> getRelationshipType(UUID relationshipTypeId) {
         return repository.findById(relationshipTypeId)
                 .map(mapper::toDTO);
     }
 
     @Override
-    public Mono<RelationshipTypeMasterDTO> updateRelationshipType(Long relationshipTypeId, RelationshipTypeMasterDTO relationshipTypeDto) {
+    public Mono<RelationshipTypeMasterDTO> updateRelationshipType(UUID relationshipTypeId, RelationshipTypeMasterDTO relationshipTypeDto) {
         return repository.findById(relationshipTypeId)
                 .flatMap(foundRelationshipTypeMaster -> {
                     RelationshipTypeMaster updatedRelationshipType = mapper.toEntity(relationshipTypeDto);
@@ -60,7 +61,7 @@ public class RelationshipTypeMasterServiceImpl implements RelationshipTypeMaster
     }
 
     @Override
-    public Mono<Void> deleteRelationshipType(Long relationshipTypeId) {
+    public Mono<Void> deleteRelationshipType(UUID relationshipTypeId) {
         return repository.findById(relationshipTypeId)
                 .flatMap(repository::delete);
     }

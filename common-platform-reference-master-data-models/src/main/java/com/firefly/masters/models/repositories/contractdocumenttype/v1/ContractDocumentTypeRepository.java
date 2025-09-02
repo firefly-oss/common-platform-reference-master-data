@@ -5,13 +5,14 @@ import com.firefly.masters.models.repositories.BaseRepository;
 import org.springframework.data.r2dbc.repository.Query;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 /**
  * Repository for managing ContractDocumentType entities.
  * Extends BaseRepository to inherit common CRUD operations.
  */
 @Repository
-public interface ContractDocumentTypeRepository extends BaseRepository<ContractDocumentType, Long> {
+public interface ContractDocumentTypeRepository extends BaseRepository<ContractDocumentType, UUID> {
 
     /**
      * Find a contract document type by its code.

@@ -12,6 +12,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * Data Transfer Object for notification message template information.
@@ -25,10 +26,10 @@ import java.util.Map;
 public class NotificationMessageTemplateDTO {
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private Long templateId;
+    private UUID templateId;
 
     @NotNull(message = "Message ID is required")
-    private Long messageId;
+    private UUID messageId;
 
     @NotBlank(message = "Template name is required")
     @Size(max = 100, message = "Template name must not exceed 100 characters")

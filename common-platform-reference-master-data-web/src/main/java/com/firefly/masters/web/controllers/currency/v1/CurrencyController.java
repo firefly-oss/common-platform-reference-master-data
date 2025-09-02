@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 @Tag(name = "Currencies", description = "APIs for managing currencies")
 @RestController
@@ -90,7 +91,7 @@ public class CurrencyController {
     @GetMapping(value = "/{currencyId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<CurrencyDTO>> getCurrency(
             @Parameter(in = ParameterIn.PATH, description = "ID of the currency", required = true)
-            @PathVariable Long currencyId
+            @PathVariable UUID currencyId
     ) {
         return service.getCurrency(currencyId)
                 .map(ResponseEntity::ok)
@@ -116,7 +117,7 @@ public class CurrencyController {
     @PutMapping(value = "/{currencyId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<CurrencyDTO>> updateCurrency(
             @Parameter(in = ParameterIn.PATH, description = "ID of the currency", required = true)
-            @PathVariable Long currencyId,
+            @PathVariable UUID currencyId,
             @RequestBody CurrencyDTO currencyDto
     ) {
         return service.updateCurrency(currencyId, currencyDto)
@@ -132,7 +133,7 @@ public class CurrencyController {
     @DeleteMapping(value = "/{currencyId}")
     public Mono<ResponseEntity<Void>> deleteCurrency(
             @Parameter(in = ParameterIn.PATH, description = "ID of the currency", required = true)
-            @PathVariable Long currencyId
+            @PathVariable UUID currencyId
     ) {
         return service.deleteCurrency(currencyId)
                 .then(Mono.just(ResponseEntity.noContent().build()));

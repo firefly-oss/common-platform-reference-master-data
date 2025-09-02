@@ -9,6 +9,7 @@ import lombok.experimental.SuperBuilder;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 @SuperBuilder
@@ -17,7 +18,7 @@ import java.time.LocalDateTime;
 public class ContractTypeDTO {
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private Long contractId;
+    private UUID contractId;
 
     @NotBlank(message = "Contract code is required")
     @Size(max = 20, message = "Contract code must not exceed 20 characters")

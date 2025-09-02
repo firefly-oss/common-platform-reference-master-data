@@ -4,6 +4,7 @@ import com.firefly.common.core.queries.PaginationRequest;
 import com.firefly.common.core.queries.PaginationResponse;
 import com.firefly.masters.interfaces.dtos.contractdocumenttype.v1.ContractDocumentTypeDTO;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 /**
  * Service interface for managing Contract Document Type data.
@@ -32,7 +33,7 @@ public interface ContractDocumentTypeService {
      * @param documentTypeId the unique identifier of the contract document type to retrieve
      * @return a Mono emitting the ContractDocumentTypeDTO containing details about the specified contract document type, or an empty Mono if not found
      */
-    Mono<ContractDocumentTypeDTO> getContractDocumentType(Long documentTypeId);
+    Mono<ContractDocumentTypeDTO> getContractDocumentType(UUID documentTypeId);
 
     /**
      * Retrieves the details of a contract document type by its document code.
@@ -49,7 +50,7 @@ public interface ContractDocumentTypeService {
      * @param contractDocumentTypeDto the DTO containing updated details of the contract document type
      * @return a Mono emitting the updated ContractDocumentTypeDTO object
      */
-    Mono<ContractDocumentTypeDTO> updateContractDocumentType(Long documentTypeId, ContractDocumentTypeDTO contractDocumentTypeDto);
+    Mono<ContractDocumentTypeDTO> updateContractDocumentType(UUID documentTypeId, ContractDocumentTypeDTO contractDocumentTypeDto);
 
     /**
      * Deletes a contract document type record by its unique identifier.
@@ -57,5 +58,5 @@ public interface ContractDocumentTypeService {
      * @param documentTypeId the unique identifier of the contract document type to delete
      * @return a Mono signaling completion of the delete operation
      */
-    Mono<Void> deleteContractDocumentType(Long documentTypeId);
+    Mono<Void> deleteContractDocumentType(UUID documentTypeId);
 }

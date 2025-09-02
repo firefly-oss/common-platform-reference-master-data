@@ -11,6 +11,7 @@ import lombok.Builder;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 @Builder
@@ -22,7 +23,7 @@ public class BankInstitutionCode {
 
     @Id
     @Column("institution_id")
-    private Long institutionId;
+    private UUID institutionId;
 
     @Column("bank_name")
     private String bankName;
@@ -37,10 +38,10 @@ public class BankInstitutionCode {
     private String ibanPrefix;
 
     @Column("country_id")
-    private Long countryId;  // References countries(country_id)
+    private UUID countryId;  // References countries(country_id)
 
     @Column("institution_type_lkp_id")
-    private Long institutionTypeLkpId;
+    private UUID institutionTypeLkpId;
 
     @Column("status")
     private StatusEnum status;

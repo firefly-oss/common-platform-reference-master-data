@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 /**
  * Implementation of the IdentityDocumentCatalogService interface.
@@ -42,7 +43,7 @@ public class IdentityDocumentCatalogServiceImpl implements IdentityDocumentCatal
     }
 
     @Override
-    public Mono<PaginationResponse<IdentityDocumentCatalogDTO>> listIdentityDocumentsByCategory(Long categoryId, PaginationRequest paginationRequest) {
+    public Mono<PaginationResponse<IdentityDocumentCatalogDTO>> listIdentityDocumentsByCategory(UUID categoryId, PaginationRequest paginationRequest) {
         return PaginationUtils.paginateQuery(
                 paginationRequest,
                 mapper::toDTO,
@@ -52,7 +53,7 @@ public class IdentityDocumentCatalogServiceImpl implements IdentityDocumentCatal
     }
 
     @Override
-    public Mono<PaginationResponse<IdentityDocumentCatalogDTO>> listIdentityDocumentsByCountry(Long countryId, PaginationRequest paginationRequest) {
+    public Mono<PaginationResponse<IdentityDocumentCatalogDTO>> listIdentityDocumentsByCountry(UUID countryId, PaginationRequest paginationRequest) {
         return PaginationUtils.paginateQuery(
                 paginationRequest,
                 mapper::toDTO,
@@ -76,7 +77,7 @@ public class IdentityDocumentCatalogServiceImpl implements IdentityDocumentCatal
     }
 
     @Override
-    public Mono<IdentityDocumentCatalogDTO> getIdentityDocument(Long documentId) {
+    public Mono<IdentityDocumentCatalogDTO> getIdentityDocument(UUID documentId) {
         return repository.findById(documentId)
                 .map(mapper::toDTO)
                 .switchIfEmpty(Mono.error(new RuntimeException("Identity document not found with ID: " + documentId)));
@@ -90,7 +91,7 @@ public class IdentityDocumentCatalogServiceImpl implements IdentityDocumentCatal
     }
 
     @Override
-    public Mono<IdentityDocumentCatalogDTO> updateIdentityDocument(Long documentId, IdentityDocumentCatalogDTO identityDocumentDTO) {
+    public Mono<IdentityDocumentCatalogDTO> updateIdentityDocument(UUID documentId, IdentityDocumentCatalogDTO identityDocumentDTO) {
         return repository.findById(documentId)
                 .switchIfEmpty(Mono.error(new RuntimeException("Identity document not found with ID: " + documentId)))
                 .flatMap(existingEntity -> {
@@ -105,7 +106,7 @@ public class IdentityDocumentCatalogServiceImpl implements IdentityDocumentCatal
     }
 
     @Override
-    public Mono<Void> deleteIdentityDocument(Long documentId) {
+    public Mono<Void> deleteIdentityDocument(UUID documentId) {
         return repository.findById(documentId)
                 .switchIfEmpty(Mono.error(new RuntimeException("Identity document not found with ID: " + documentId)))
                 .flatMap(entity -> localizationRepository.deleteByDocumentId(documentId)

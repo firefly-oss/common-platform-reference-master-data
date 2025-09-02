@@ -12,6 +12,7 @@ import lombok.Builder;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 @Builder
@@ -23,7 +24,7 @@ public class Country {
 
     @Id
     @Column("country_id")
-    private Long countryId;
+    private UUID countryId;
 
     @Column("iso_code")
     private String isoCode;

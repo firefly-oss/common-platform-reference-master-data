@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -40,13 +41,13 @@ public class LookupDomainServiceImpl implements LookupDomainService {
     }
 
     @Override
-    public Mono<LookupDomainDTO> getDomain(Long domainId) {
+    public Mono<LookupDomainDTO> getDomain(UUID domainId) {
         return repository.findById(domainId)
                 .map(mapper::toDTO);
     }
 
     @Override
-    public Mono<LookupDomainDTO> updateDomain(Long domainId, LookupDomainDTO domainDto) {
+    public Mono<LookupDomainDTO> updateDomain(UUID domainId, LookupDomainDTO domainDto) {
         return repository.findById(domainId)
                 .flatMap(foundDomain -> {
                     LookupDomain updatedDomain = mapper.toEntity(domainDto);
@@ -57,7 +58,7 @@ public class LookupDomainServiceImpl implements LookupDomainService {
     }
 
     @Override
-    public Mono<Void> deleteDomain(Long domainId) {
+    public Mono<Void> deleteDomain(UUID domainId) {
         return repository.findById(domainId)
                 .flatMap(repository::delete);
     }

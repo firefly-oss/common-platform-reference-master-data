@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 /**
  * Implementation of the ConsentCatalogService interface.
@@ -60,13 +61,13 @@ public class ConsentCatalogServiceImpl implements ConsentCatalogService {
     }
 
     @Override
-    public Mono<ConsentCatalogDTO> getConsentCatalog(Long id) {
+    public Mono<ConsentCatalogDTO> getConsentCatalog(UUID id) {
         return repository.findById(id)
                 .map(mapper::toDTO);
     }
 
     @Override
-    public Mono<ConsentCatalogDTO> updateConsentCatalog(Long id, ConsentCatalogDTO dto) {
+    public Mono<ConsentCatalogDTO> updateConsentCatalog(UUID id, ConsentCatalogDTO dto) {
         return repository.findById(id)
                 .flatMap(existingEntity -> {
                     // Update audit fields
@@ -81,7 +82,7 @@ public class ConsentCatalogServiceImpl implements ConsentCatalogService {
     }
 
     @Override
-    public Mono<Void> deleteConsentCatalog(Long id) {
+    public Mono<Void> deleteConsentCatalog(UUID id) {
         return repository.deleteById(id);
     }
 }

@@ -5,13 +5,14 @@ import com.firefly.masters.models.repositories.BaseRepository;
 import org.springframework.data.r2dbc.repository.Query;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 /**
  * Repository for managing MessageTypeCatalog entities.
  * Extends BaseRepository to inherit common CRUD operations.
  */
 @Repository
-public interface MessageTypeCatalogRepository extends BaseRepository<MessageTypeCatalog, Long> {
+public interface MessageTypeCatalogRepository extends BaseRepository<MessageTypeCatalog, UUID> {
     
     /**
      * Find a message type by its code.

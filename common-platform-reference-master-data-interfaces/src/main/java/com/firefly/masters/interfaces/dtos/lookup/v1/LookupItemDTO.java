@@ -14,6 +14,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Data
 @Builder
@@ -21,11 +22,11 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class LookupItemDTO {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private Long itemId;
+    private UUID itemId;
 
     @FilterableId
     @NotNull(message = "Domain ID is required")
-    private Long domainId;
+    private UUID domainId;
 
     @NotBlank(message = "Item code is required")
     @Size(max = 50, message = "Item code must not exceed 50 characters")
@@ -38,7 +39,7 @@ public class LookupItemDTO {
     @Size(max = 500, message = "Item description must not exceed 500 characters")
     private String itemDesc;
 
-    private Long parentItemId;
+    private UUID parentItemId;
 
     @Min(value = 0, message = "Sort order must be non-negative")
     private Integer sortOrder;
@@ -54,7 +55,7 @@ public class LookupItemDTO {
     @Size(max = 2000, message = "Extra JSON must not exceed 2000 characters")
     private String extraJson;
 
-    private Long tenantId;
+    private UUID tenantId;
 
     @NotNull(message = "Status is required")
     private StatusEnum status;

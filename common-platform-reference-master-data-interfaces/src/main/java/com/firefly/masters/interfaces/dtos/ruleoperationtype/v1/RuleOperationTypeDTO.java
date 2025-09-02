@@ -9,6 +9,7 @@ import lombok.experimental.SuperBuilder;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 @SuperBuilder
@@ -17,7 +18,7 @@ import java.time.LocalDateTime;
 public class RuleOperationTypeDTO {
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private Long operationTypeId;
+    private UUID operationTypeId;
 
     @NotBlank(message = "Operation type code is required")
     @Size(max = 50, message = "Operation type code must not exceed 50 characters")

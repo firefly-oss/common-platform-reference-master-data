@@ -18,6 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 @Tag(name = "Asset Type", description = "APIs for managing Asset Type data")
 @RestController
@@ -90,7 +91,7 @@ public class AssetTypeController {
     @GetMapping(value = "/{assetId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<AssetTypeDTO>> getAssetType(
             @Parameter(in = ParameterIn.PATH, description = "ID of the asset type", required = true)
-            @PathVariable Long assetId
+            @PathVariable UUID assetId
     ) {
         return assetTypeService.getAssetType(assetId)
                 .map(ResponseEntity::ok)
@@ -116,7 +117,7 @@ public class AssetTypeController {
     @PutMapping(value = "/{assetId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<AssetTypeDTO>> updateAssetType(
             @Parameter(in = ParameterIn.PATH, description = "ID of the asset type", required = true)
-            @PathVariable Long assetId,
+            @PathVariable UUID assetId,
             @RequestBody AssetTypeDTO assetTypeDto
     ) {
         return assetTypeService.updateAssetType(assetId, assetTypeDto)
@@ -132,7 +133,7 @@ public class AssetTypeController {
     @DeleteMapping(value = "/{assetId}")
     public Mono<ResponseEntity<Void>> deleteAssetType(
             @Parameter(in = ParameterIn.PATH, description = "ID of the asset type", required = true)
-            @PathVariable Long assetId
+            @PathVariable UUID assetId
     ) {
         return assetTypeService.deleteAssetType(assetId)
                 .then(Mono.just(ResponseEntity.noContent().build()));

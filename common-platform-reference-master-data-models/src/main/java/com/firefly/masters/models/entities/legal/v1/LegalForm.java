@@ -11,6 +11,7 @@ import lombok.Builder;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 @Builder
@@ -22,10 +23,10 @@ public class LegalForm {
 
     @Id
     @Column("legal_form_id")
-    private Long legalFormId;
+    private UUID legalFormId;
 
     @Column("country_id")
-    private Long countryId;  // References countries(country_id)
+    private UUID countryId;  // References countries(country_id)
 
     @Column("code")
     private String code;

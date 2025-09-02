@@ -4,6 +4,7 @@ import com.firefly.common.core.queries.PaginationRequest;
 import com.firefly.common.core.queries.PaginationResponse;
 import com.firefly.masters.interfaces.dtos.locale.v1.LanguageLocaleDTO;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 public interface LanguageLocaleService {
 
@@ -29,7 +30,7 @@ public interface LanguageLocaleService {
      * @param id the unique identifier of the language locale to retrieve
      * @return a Mono emitting the LanguageLocaleDTO corresponding to the given identifier, or an empty Mono if not found
      */
-    Mono<LanguageLocaleDTO> getLanguageLocale(Long id);
+    Mono<LanguageLocaleDTO> getLanguageLocale(UUID id);
 
     /**
      * Updates an existing language locale with the provided details.
@@ -38,7 +39,7 @@ public interface LanguageLocaleService {
      * @param dto  the data transfer object containing updated language locale details
      * @return a Mono emitting the updated LanguageLocaleDTO or an error if the update fails
      */
-    Mono<LanguageLocaleDTO> updateLanguageLocale(Long id, LanguageLocaleDTO dto);
+    Mono<LanguageLocaleDTO> updateLanguageLocale(UUID id, LanguageLocaleDTO dto);
 
     /**
      * Deletes a language locale identified by the specified ID.
@@ -46,5 +47,5 @@ public interface LanguageLocaleService {
      * @param id the unique identifier of the language locale to be deleted
      * @return a Mono that completes when the operation is finished
      */
-    Mono<Void> deleteLanguageLocale(Long id);
+    Mono<Void> deleteLanguageLocale(UUID id);
 }

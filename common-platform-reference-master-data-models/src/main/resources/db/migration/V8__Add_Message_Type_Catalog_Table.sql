@@ -4,7 +4,7 @@
 
 -- Create the message_type_catalog table
 CREATE TABLE IF NOT EXISTS message_type_catalog (
-    type_id BIGSERIAL PRIMARY KEY,
+    type_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     type_code VARCHAR(50) NOT NULL,
     type_name VARCHAR(100) NOT NULL,
     description TEXT,
@@ -32,4 +32,4 @@ ALTER TABLE notification_message_catalog
 DROP COLUMN IF EXISTS message_type;
 
 ALTER TABLE notification_message_catalog 
-ADD COLUMN type_id BIGINT REFERENCES message_type_catalog(type_id);
+ADD COLUMN type_id UUID REFERENCES message_type_catalog(type_id);

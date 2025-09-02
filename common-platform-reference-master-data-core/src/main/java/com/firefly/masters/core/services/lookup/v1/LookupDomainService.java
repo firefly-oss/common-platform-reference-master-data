@@ -4,6 +4,7 @@ import com.firefly.common.core.queries.PaginationRequest;
 import com.firefly.common.core.queries.PaginationResponse;
 import com.firefly.masters.interfaces.dtos.lookup.v1.LookupDomainDTO;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 public interface LookupDomainService {
     /**
@@ -28,7 +29,7 @@ public interface LookupDomainService {
      * @param domainId the unique identifier of the lookup domain to retrieve
      * @return a Mono emitting the LookupDomainDTO containing details about the specified domain, or an empty Mono if not found
      */
-    Mono<LookupDomainDTO> getDomain(Long domainId);
+    Mono<LookupDomainDTO> getDomain(UUID domainId);
     
     /**
      * Updates the details of an existing lookup domain by its unique identifier.
@@ -37,7 +38,7 @@ public interface LookupDomainService {
      * @param domainDto the data transfer object containing the updated lookup domain details
      * @return a Mono emitting the updated LookupDomainDTO object if the update is successful
      */
-    Mono<LookupDomainDTO> updateDomain(Long domainId, LookupDomainDTO domainDto);
+    Mono<LookupDomainDTO> updateDomain(UUID domainId, LookupDomainDTO domainDto);
     
     /**
      * Deletes a lookup domain identified by its unique identifier.
@@ -45,5 +46,5 @@ public interface LookupDomainService {
      * @param domainId the unique identifier of the lookup domain to delete
      * @return a Mono signaling completion of the delete operation
      */
-    Mono<Void> deleteDomain(Long domainId);
+    Mono<Void> deleteDomain(UUID domainId);
 }

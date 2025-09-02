@@ -11,6 +11,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 /**
  * Data Transfer Object for notification message localization information.
@@ -23,13 +24,13 @@ import java.time.LocalDateTime;
 public class NotificationMessageLocalizationDTO {
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private Long localizationId;
+    private UUID localizationId;
 
     @NotNull(message = "Message ID is required")
-    private Long messageId;
+    private UUID messageId;
 
     @NotNull(message = "Locale ID is required")
-    private Long localeId;
+    private UUID localeId;
 
     @NotBlank(message = "Subject is required")
     @Size(max = 200, message = "Subject must not exceed 200 characters")

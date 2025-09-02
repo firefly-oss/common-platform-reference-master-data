@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 @Tag(name = "Countries", description = "APIs for managing countries")
 @RestController
@@ -87,7 +88,7 @@ public class CountryController {
     @GetMapping(value = "/{countryId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<CountryDTO>> getCountry(
             @Parameter(in = ParameterIn.PATH, description = "ID of the country", required = true)
-            @PathVariable Long countryId
+            @PathVariable UUID countryId
     ) {
         return service.getCountry(countryId)
                 .map(ResponseEntity::ok)
@@ -113,7 +114,7 @@ public class CountryController {
     @PutMapping(value = "/{countryId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<CountryDTO>> updateCountry(
             @Parameter(in = ParameterIn.PATH, description = "ID of the country", required = true)
-            @PathVariable Long countryId,
+            @PathVariable UUID countryId,
             @RequestBody CountryDTO countryDto
     ) {
         return service.updateCountry(countryId, countryDto)
@@ -129,7 +130,7 @@ public class CountryController {
     @DeleteMapping(value = "/{countryId}")
     public Mono<ResponseEntity<Void>> deleteCountry(
             @Parameter(in = ParameterIn.PATH, description = "ID of the country", required = true)
-            @PathVariable Long countryId
+            @PathVariable UUID countryId
     ) {
         return service.deleteCountry(countryId)
                 .then(Mono.just(ResponseEntity.noContent().build()));

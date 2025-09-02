@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 @Tag(name = "BankInstitutionCodes", description = "APIs for managing bank or institution codes")
 @RestController
@@ -90,7 +91,7 @@ public class BankInstitutionCodeController {
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<BankInstitutionCodeDTO>> getBankInstitutionCode(
             @Parameter(in = ParameterIn.PATH, description = "ID of the bank institution code", required = true)
-            @PathVariable Long id
+            @PathVariable UUID id
     ) {
         return service.getBankInstitutionCode(id)
                 .map(ResponseEntity::ok)
@@ -116,7 +117,7 @@ public class BankInstitutionCodeController {
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<BankInstitutionCodeDTO>> updateBankInstitutionCode(
             @Parameter(in = ParameterIn.PATH, description = "ID of the bank institution code", required = true)
-            @PathVariable Long id,
+            @PathVariable UUID id,
             @RequestBody BankInstitutionCodeDTO dto
     ) {
         return service.updateBankInstitutionCode(id, dto)
@@ -132,7 +133,7 @@ public class BankInstitutionCodeController {
     @DeleteMapping(value = "/{id}")
     public Mono<ResponseEntity<Void>> deleteBankInstitutionCode(
             @Parameter(in = ParameterIn.PATH, description = "ID of the bank institution code", required = true)
-            @PathVariable Long id
+            @PathVariable UUID id
     ) {
         return service.deleteBankInstitutionCode(id)
                 .then(Mono.just(ResponseEntity.noContent().build()));

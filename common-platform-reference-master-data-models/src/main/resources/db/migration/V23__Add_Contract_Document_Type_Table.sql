@@ -6,7 +6,7 @@
 -- Create TABLE contract_document_type
 ------------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS contract_document_type (
-    document_type_id    BIGSERIAL       PRIMARY KEY,
+    document_type_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     document_code       VARCHAR(50)     NOT NULL UNIQUE,
     name                VARCHAR(100)    NOT NULL,
     description         VARCHAR(500),

@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 @Tag(name = "ConsentCatalog", description = "APIs for managing consent catalog")
 @RestController
@@ -112,7 +113,7 @@ public class ConsentCatalogController {
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<ConsentCatalogDTO>> getConsentCatalog(
             @Parameter(in = ParameterIn.PATH, description = "ID of the consent catalog entry", required = true)
-            @PathVariable Long id
+            @PathVariable UUID id
     ) {
         return service.getConsentCatalog(id)
                 .map(ResponseEntity::ok)
@@ -138,7 +139,7 @@ public class ConsentCatalogController {
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<ConsentCatalogDTO>> updateConsentCatalog(
             @Parameter(in = ParameterIn.PATH, description = "ID of the consent catalog entry", required = true)
-            @PathVariable Long id,
+            @PathVariable UUID id,
             @RequestBody ConsentCatalogDTO dto
     ) {
         return service.updateConsentCatalog(id, dto)
@@ -154,7 +155,7 @@ public class ConsentCatalogController {
     @DeleteMapping(value = "/{id}")
     public Mono<ResponseEntity<Void>> deleteConsentCatalog(
             @Parameter(in = ParameterIn.PATH, description = "ID of the consent catalog entry", required = true)
-            @PathVariable Long id
+            @PathVariable UUID id
     ) {
         return service.deleteConsentCatalog(id)
                 .then(Mono.just(ResponseEntity.noContent().build()));

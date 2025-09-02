@@ -4,6 +4,7 @@ import com.firefly.common.core.queries.PaginationRequest;
 import com.firefly.common.core.queries.PaginationResponse;
 import com.firefly.masters.interfaces.dtos.document.v1.DocumentTemplateCatalogDTO;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 /**
  * Service interface for managing document template catalog operations.
@@ -34,7 +35,7 @@ public interface DocumentTemplateCatalogService {
      * @param paginationRequest pagination parameters
      * @return a paginated response of document template DTOs
      */
-    Mono<PaginationResponse<DocumentTemplateCatalogDTO>> listDocumentTemplatesByTypeId(Long typeId, PaginationRequest paginationRequest);
+    Mono<PaginationResponse<DocumentTemplateCatalogDTO>> listDocumentTemplatesByTypeId(UUID typeId, PaginationRequest paginationRequest);
 
     /**
      * Create a new document template.
@@ -50,7 +51,7 @@ public interface DocumentTemplateCatalogService {
      * @param templateId the ID of the document template
      * @return the document template DTO
      */
-    Mono<DocumentTemplateCatalogDTO> getDocumentTemplate(Long templateId);
+    Mono<DocumentTemplateCatalogDTO> getDocumentTemplate(UUID templateId);
 
     /**
      * Get a document template by code.
@@ -67,7 +68,7 @@ public interface DocumentTemplateCatalogService {
      * @param documentTemplateDTO the updated document template data
      * @return the updated document template DTO
      */
-    Mono<DocumentTemplateCatalogDTO> updateDocumentTemplate(Long templateId, DocumentTemplateCatalogDTO documentTemplateDTO);
+    Mono<DocumentTemplateCatalogDTO> updateDocumentTemplate(UUID templateId, DocumentTemplateCatalogDTO documentTemplateDTO);
 
     /**
      * Delete a document template.
@@ -75,5 +76,5 @@ public interface DocumentTemplateCatalogService {
      * @param templateId the ID of the document template to delete
      * @return a Mono of Void
      */
-    Mono<Void> deleteDocumentTemplate(Long templateId);
+    Mono<Void> deleteDocumentTemplate(UUID templateId);
 }

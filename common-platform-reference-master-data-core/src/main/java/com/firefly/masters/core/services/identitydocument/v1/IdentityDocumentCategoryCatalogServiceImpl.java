@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 /**
  * Implementation of the IdentityDocumentCategoryCatalogService interface.
@@ -52,7 +53,7 @@ public class IdentityDocumentCategoryCatalogServiceImpl implements IdentityDocum
     }
 
     @Override
-    public Mono<IdentityDocumentCategoryCatalogDTO> getIdentityDocumentCategory(Long categoryId) {
+    public Mono<IdentityDocumentCategoryCatalogDTO> getIdentityDocumentCategory(UUID categoryId) {
         return repository.findById(categoryId)
                 .map(mapper::toDTO)
                 .switchIfEmpty(Mono.error(new RuntimeException("Identity document category not found with ID: " + categoryId)));
@@ -66,7 +67,7 @@ public class IdentityDocumentCategoryCatalogServiceImpl implements IdentityDocum
     }
 
     @Override
-    public Mono<IdentityDocumentCategoryCatalogDTO> updateIdentityDocumentCategory(Long categoryId, IdentityDocumentCategoryCatalogDTO identityDocumentCategoryDTO) {
+    public Mono<IdentityDocumentCategoryCatalogDTO> updateIdentityDocumentCategory(UUID categoryId, IdentityDocumentCategoryCatalogDTO identityDocumentCategoryDTO) {
         return repository.findById(categoryId)
                 .switchIfEmpty(Mono.error(new RuntimeException("Identity document category not found with ID: " + categoryId)))
                 .flatMap(existingEntity -> {
@@ -81,7 +82,7 @@ public class IdentityDocumentCategoryCatalogServiceImpl implements IdentityDocum
     }
 
     @Override
-    public Mono<Void> deleteIdentityDocumentCategory(Long categoryId) {
+    public Mono<Void> deleteIdentityDocumentCategory(UUID categoryId) {
         return repository.findById(categoryId)
                 .switchIfEmpty(Mono.error(new RuntimeException("Identity document category not found with ID: " + categoryId)))
                 .flatMap(entity -> repository.deleteById(categoryId))

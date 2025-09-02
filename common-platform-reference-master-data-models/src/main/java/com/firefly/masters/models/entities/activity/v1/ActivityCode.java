@@ -11,6 +11,7 @@ import lombok.Builder;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 @Builder
@@ -22,10 +23,10 @@ public class ActivityCode {
 
     @Id
     @Column("activity_code_id")
-    private Long activityCodeId;
+    private UUID activityCodeId;
 
     @Column("country_id")
-    private Long countryId;  // References countries(country_id)
+    private UUID countryId;  // References countries(country_id)
 
     @Column("code")
     private String code;
@@ -37,7 +38,7 @@ public class ActivityCode {
     private String description;
 
     @Column("parent_code_id")
-    private Long parentCodeId;  // Self-referencing to activity_code(activity_code_id)
+    private UUID parentCodeId;  // Self-referencing to activity_code(activity_code_id)
 
     @Column("high_risk")
     private Boolean highRisk;

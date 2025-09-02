@@ -17,6 +17,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 @Tag(name = "Rule Operation Type", description = "APIs for managing Rule Operation Type data")
 @RestController
@@ -85,7 +86,7 @@ public class RuleOperationTypeController {
     @GetMapping(value = "/{operationTypeId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<RuleOperationTypeDTO>> getRuleOperationType(
             @Parameter(in = ParameterIn.PATH, description = "ID of the rule operation type", required = true)
-            @PathVariable Long operationTypeId
+            @PathVariable UUID operationTypeId
     ) {
         return service.getRuleOperationType(operationTypeId)
                 .map(ResponseEntity::ok)
@@ -111,7 +112,7 @@ public class RuleOperationTypeController {
     @PutMapping(value = "/{operationTypeId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<RuleOperationTypeDTO>> updateRuleOperationType(
             @Parameter(in = ParameterIn.PATH, description = "ID of the rule operation type", required = true)
-            @PathVariable Long operationTypeId,
+            @PathVariable UUID operationTypeId,
             @RequestBody RuleOperationTypeDTO dto
     ) {
         return service.updateRuleOperationType(operationTypeId, dto)
@@ -127,7 +128,7 @@ public class RuleOperationTypeController {
     @DeleteMapping(value = "/{operationTypeId}")
     public Mono<ResponseEntity<Void>> deleteRuleOperationType(
             @Parameter(in = ParameterIn.PATH, description = "ID of the rule operation type", required = true)
-            @PathVariable Long operationTypeId
+            @PathVariable UUID operationTypeId
     ) {
         return service.deleteRuleOperationType(operationTypeId)
                 .then(Mono.just(ResponseEntity.noContent().build()));

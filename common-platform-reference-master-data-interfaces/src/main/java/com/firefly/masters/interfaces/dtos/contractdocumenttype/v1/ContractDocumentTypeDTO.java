@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 @SuperBuilder
@@ -17,7 +18,7 @@ import java.time.LocalDateTime;
 public class ContractDocumentTypeDTO {
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private Long documentTypeId;
+    private UUID documentTypeId;
 
     @NotBlank(message = "Document code is required")
     @Size(max = 50, message = "Document code must not exceed 50 characters")

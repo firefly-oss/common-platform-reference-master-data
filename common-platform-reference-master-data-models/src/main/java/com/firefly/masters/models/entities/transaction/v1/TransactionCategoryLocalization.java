@@ -11,6 +11,7 @@ import lombok.Builder;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 /**
  * Entity representing a localized version of a transaction category.
@@ -26,13 +27,13 @@ public class TransactionCategoryLocalization {
 
     @Id
     @Column("localization_id")
-    private Long localizationId;
+    private UUID localizationId;
 
     @Column("category_id")
-    private Long categoryId;  // References transaction_category_catalog(category_id)
+    private UUID categoryId;  // References transaction_category_catalog(category_id)
 
     @Column("locale_id")
-    private Long localeId;  // References language_locale(locale_id)
+    private UUID localeId;  // References language_locale(locale_id)
 
     @Column("category_name")
     private String categoryName;

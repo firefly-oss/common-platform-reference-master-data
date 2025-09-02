@@ -6,7 +6,7 @@
 -- Create TABLE title_master
 ------------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS title_master (
-                                            title_id           BIGSERIAL           PRIMARY KEY,
+                                            title_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                                             title_prefix       VARCHAR(50),       -- e.g., 'MR', 'MRS', 'DR'
     title_description  VARCHAR(200),      -- e.g., 'Mr.', 'Mrs.', 'Doctor'
     status             status_enum,
@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS title_master (
 -- Create TABLE relationship_type_master
 ------------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS relationship_type_master (
-                                                        relationship_type_id            BIGSERIAL           PRIMARY KEY,
+                                                        relationship_type_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                                                         relationship_type_code          VARCHAR(100),       -- e.g., 'BENEFICIARY', 'CEO'
     relationship_type_description   VARCHAR(200),       -- e.g., 'Beneficiary', 'Chief Executive Officer'
     status                          status_enum,

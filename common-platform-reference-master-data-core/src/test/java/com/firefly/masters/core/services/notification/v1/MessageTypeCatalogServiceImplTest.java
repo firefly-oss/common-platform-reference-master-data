@@ -24,6 +24,7 @@ import java.time.LocalDateTime;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import java.util.UUID;
 
 @ExtendWith(MockitoExtension.class)
 public class MessageTypeCatalogServiceImplTest {

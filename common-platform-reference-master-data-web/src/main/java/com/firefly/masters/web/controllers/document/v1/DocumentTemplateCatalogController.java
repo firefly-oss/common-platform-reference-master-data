@@ -19,6 +19,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 /**
  * REST controller for managing document template catalog operations.
@@ -87,7 +88,7 @@ public class DocumentTemplateCatalogController {
     @GetMapping(value = "/type/{typeId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<PaginationResponse<DocumentTemplateCatalogDTO>>> listDocumentTemplatesByTypeId(
             @Parameter(in = ParameterIn.PATH, description = "Template type ID", required = true)
-            @PathVariable Long typeId,
+            @PathVariable UUID typeId,
             @ParameterObject
             @ModelAttribute PaginationRequest paginationRequest
     ) {
@@ -132,7 +133,7 @@ public class DocumentTemplateCatalogController {
     @GetMapping(value = "/{templateId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<DocumentTemplateCatalogDTO>> getDocumentTemplate(
             @Parameter(in = ParameterIn.PATH, description = "ID of the document template", required = true)
-            @PathVariable Long templateId
+            @PathVariable UUID templateId
     ) {
         return service.getDocumentTemplate(templateId)
                 .map(ResponseEntity::ok)
@@ -182,7 +183,7 @@ public class DocumentTemplateCatalogController {
     @PutMapping(value = "/{templateId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<DocumentTemplateCatalogDTO>> updateDocumentTemplate(
             @Parameter(in = ParameterIn.PATH, description = "ID of the document template", required = true)
-            @PathVariable Long templateId,
+            @PathVariable UUID templateId,
             @RequestBody DocumentTemplateCatalogDTO documentTemplateDTO
     ) {
         return service.updateDocumentTemplate(templateId, documentTemplateDTO)
@@ -204,7 +205,7 @@ public class DocumentTemplateCatalogController {
     @DeleteMapping(value = "/{templateId}")
     public Mono<ResponseEntity<Void>> deleteDocumentTemplate(
             @Parameter(in = ParameterIn.PATH, description = "ID of the document template", required = true)
-            @PathVariable Long templateId
+            @PathVariable UUID templateId
     ) {
         return service.deleteDocumentTemplate(templateId)
                 .then(Mono.just(ResponseEntity.noContent().<Void>build()))

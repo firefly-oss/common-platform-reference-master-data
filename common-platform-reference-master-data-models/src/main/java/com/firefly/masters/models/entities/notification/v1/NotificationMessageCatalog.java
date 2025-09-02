@@ -11,6 +11,7 @@ import lombok.Builder;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 /**
  * Entity representing a notification message catalog record.
@@ -26,13 +27,13 @@ public class NotificationMessageCatalog {
 
     @Id
     @Column("message_id")
-    private Long messageId;
+    private UUID messageId;
 
     @Column("message_code")
     private String messageCode;
 
     @Column("type_id")
-    private Long typeId;
+    private UUID typeId;
 
     @Column("event_type")
     private String eventType;

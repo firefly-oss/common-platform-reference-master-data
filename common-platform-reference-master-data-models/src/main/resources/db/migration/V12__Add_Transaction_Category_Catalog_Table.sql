@@ -5,11 +5,11 @@
 
 -- Create the transaction_category_catalog table
 CREATE TABLE IF NOT EXISTS transaction_category_catalog (
-    category_id BIGSERIAL PRIMARY KEY,
+    category_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     category_code VARCHAR(50) NOT NULL,
     category_name VARCHAR(100) NOT NULL,
     description TEXT,
-    parent_category_id BIGINT REFERENCES transaction_category_catalog(category_id) ON DELETE RESTRICT,
+    parent_category_id UUID REFERENCES transaction_category_catalog(category_id) ON DELETE RESTRICT,
     status status_enum NOT NULL,
     svg_icon TEXT,
     date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

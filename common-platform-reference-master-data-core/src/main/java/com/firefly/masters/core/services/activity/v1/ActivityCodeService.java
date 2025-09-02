@@ -5,6 +5,7 @@ import com.firefly.common.core.queries.PaginationResponse;
 import com.firefly.masters.interfaces.dtos.activity.v1.ActivityCodeDTO;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 public interface ActivityCodeService {
     /**
@@ -21,7 +22,7 @@ public interface ActivityCodeService {
      * @param countryId the unique identifier of the country to retrieve activity codes for
      * @return a Flux emitting ActivityCodeDTO objects for the specified country
      */
-    Flux<ActivityCodeDTO> getActivityCodesByCountry(Long countryId);
+    Flux<ActivityCodeDTO> getActivityCodesByCountry(UUID countryId);
     
     /**
      * Retrieves all child activity codes for a specific parent activity code.
@@ -29,7 +30,7 @@ public interface ActivityCodeService {
      * @param parentCodeId the unique identifier of the parent activity code
      * @return a Flux emitting ActivityCodeDTO objects that are children of the specified parent
      */
-    Flux<ActivityCodeDTO> getChildActivityCodes(Long parentCodeId);
+    Flux<ActivityCodeDTO> getChildActivityCodes(UUID parentCodeId);
     
     /**
      * Creates a new activity code based on the provided ActivityCodeDTO.
@@ -45,7 +46,7 @@ public interface ActivityCodeService {
      * @param activityCodeId the unique identifier of the activity code to retrieve
      * @return a Mono emitting the ActivityCodeDTO containing details about the specified activity code, or an empty Mono if not found
      */
-    Mono<ActivityCodeDTO> getActivityCode(Long activityCodeId);
+    Mono<ActivityCodeDTO> getActivityCode(UUID activityCodeId);
     
     /**
      * Updates the details of an existing activity code by its unique identifier.
@@ -54,7 +55,7 @@ public interface ActivityCodeService {
      * @param activityCodeDto the data transfer object containing the updated activity code details
      * @return a Mono emitting the updated ActivityCodeDTO object if the update is successful
      */
-    Mono<ActivityCodeDTO> updateActivityCode(Long activityCodeId, ActivityCodeDTO activityCodeDto);
+    Mono<ActivityCodeDTO> updateActivityCode(UUID activityCodeId, ActivityCodeDTO activityCodeDto);
     
     /**
      * Deletes an activity code identified by its unique identifier.
@@ -62,5 +63,5 @@ public interface ActivityCodeService {
      * @param activityCodeId the unique identifier of the activity code to delete
      * @return a Mono signaling completion of the delete operation
      */
-    Mono<Void> deleteActivityCode(Long activityCodeId);
+    Mono<Void> deleteActivityCode(UUID activityCodeId);
 }

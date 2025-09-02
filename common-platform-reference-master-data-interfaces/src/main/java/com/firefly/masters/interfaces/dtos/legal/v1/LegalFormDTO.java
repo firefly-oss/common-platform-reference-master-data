@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import java.util.UUID;
 
 @Data
 @Builder
@@ -18,11 +19,11 @@ import jakarta.validation.constraints.Size;
 @NoArgsConstructor
 public class LegalFormDTO {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private Long legalFormId;
+    private UUID legalFormId;
 
     @FilterableId
     @NotNull(message = "Country ID is required")
-    private Long countryId;
+    private UUID countryId;
 
     @NotBlank(message = "Legal form code is required")
     @Size(max = 20, message = "Legal form code must not exceed 20 characters")

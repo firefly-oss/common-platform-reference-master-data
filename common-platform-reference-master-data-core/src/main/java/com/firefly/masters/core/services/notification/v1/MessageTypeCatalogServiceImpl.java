@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 /**
  * Implementation of the MessageTypeCatalogService interface.
@@ -52,7 +53,7 @@ public class MessageTypeCatalogServiceImpl implements MessageTypeCatalogService 
     }
 
     @Override
-    public Mono<MessageTypeCatalogDTO> getMessageType(Long typeId) {
+    public Mono<MessageTypeCatalogDTO> getMessageType(UUID typeId) {
         return repository.findById(typeId)
                 .map(mapper::toDTO)
                 .switchIfEmpty(Mono.error(new RuntimeException("Message type not found with ID: " + typeId)));
@@ -66,7 +67,7 @@ public class MessageTypeCatalogServiceImpl implements MessageTypeCatalogService 
     }
 
     @Override
-    public Mono<MessageTypeCatalogDTO> updateMessageType(Long typeId, MessageTypeCatalogDTO messageTypeDTO) {
+    public Mono<MessageTypeCatalogDTO> updateMessageType(UUID typeId, MessageTypeCatalogDTO messageTypeDTO) {
         return repository.findById(typeId)
                 .switchIfEmpty(Mono.error(new RuntimeException("Message type not found with ID: " + typeId)))
                 .flatMap(existingEntity -> {
@@ -81,7 +82,7 @@ public class MessageTypeCatalogServiceImpl implements MessageTypeCatalogService 
     }
 
     @Override
-    public Mono<Void> deleteMessageType(Long typeId) {
+    public Mono<Void> deleteMessageType(UUID typeId) {
         return repository.findById(typeId)
                 .switchIfEmpty(Mono.error(new RuntimeException("Message type not found with ID: " + typeId)))
                 .flatMap(repository::delete)

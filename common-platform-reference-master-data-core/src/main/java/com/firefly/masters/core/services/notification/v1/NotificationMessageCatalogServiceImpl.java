@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 /**
  * Implementation of the NotificationMessageCatalogService interface.
@@ -49,7 +50,7 @@ public class NotificationMessageCatalogServiceImpl implements NotificationMessag
     }
 
     @Override
-    public Mono<PaginationResponse<NotificationMessageCatalogDTO>> listNotificationMessagesByTypeId(Long typeId, PaginationRequest paginationRequest) {
+    public Mono<PaginationResponse<NotificationMessageCatalogDTO>> listNotificationMessagesByTypeId(UUID typeId, PaginationRequest paginationRequest) {
         return PaginationUtils.paginateQuery(
                 paginationRequest,
                 mapper::toDTO,
@@ -73,7 +74,7 @@ public class NotificationMessageCatalogServiceImpl implements NotificationMessag
     }
 
     @Override
-    public Mono<NotificationMessageCatalogDTO> getNotificationMessage(Long messageId) {
+    public Mono<NotificationMessageCatalogDTO> getNotificationMessage(UUID messageId) {
         return repository.findById(messageId)
                 .map(mapper::toDTO)
                 .switchIfEmpty(Mono.error(new RuntimeException("Notification message not found with ID: " + messageId)));
@@ -87,7 +88,7 @@ public class NotificationMessageCatalogServiceImpl implements NotificationMessag
     }
 
     @Override
-    public Mono<NotificationMessageCatalogDTO> updateNotificationMessage(Long messageId, NotificationMessageCatalogDTO notificationMessageDTO) {
+    public Mono<NotificationMessageCatalogDTO> updateNotificationMessage(UUID messageId, NotificationMessageCatalogDTO notificationMessageDTO) {
         return repository.findById(messageId)
                 .switchIfEmpty(Mono.error(new RuntimeException("Notification message not found with ID: " + messageId)))
                 .flatMap(existingEntity -> {
@@ -102,7 +103,7 @@ public class NotificationMessageCatalogServiceImpl implements NotificationMessag
     }
 
     @Override
-    public Mono<Void> deleteNotificationMessage(Long messageId) {
+    public Mono<Void> deleteNotificationMessage(UUID messageId) {
         return repository.findById(messageId)
                 .switchIfEmpty(Mono.error(new RuntimeException("Notification message not found with ID: " + messageId)))
                 .flatMap(repository::delete)

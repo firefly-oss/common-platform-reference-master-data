@@ -9,6 +9,7 @@ import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Table("title_master")
 @Getter
@@ -18,7 +19,7 @@ public class TitleMaster {
 
     @Id
     @Column("title_id")
-    private Long titleId;
+    private UUID titleId;
 
     @Column("title_prefix")
     private String prefix; // e.g. "MR", "MRS", "DR"

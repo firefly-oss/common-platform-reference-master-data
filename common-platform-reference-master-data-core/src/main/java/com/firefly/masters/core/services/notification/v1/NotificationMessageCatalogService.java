@@ -4,6 +4,7 @@ import com.firefly.common.core.queries.PaginationRequest;
 import com.firefly.common.core.queries.PaginationResponse;
 import com.firefly.masters.interfaces.dtos.notification.v1.NotificationMessageCatalogDTO;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 /**
  * Service interface for managing notification message catalog operations.
@@ -34,7 +35,7 @@ public interface NotificationMessageCatalogService {
      * @param paginationRequest pagination parameters
      * @return a paginated response of notification message DTOs
      */
-    Mono<PaginationResponse<NotificationMessageCatalogDTO>> listNotificationMessagesByTypeId(Long typeId, PaginationRequest paginationRequest);
+    Mono<PaginationResponse<NotificationMessageCatalogDTO>> listNotificationMessagesByTypeId(UUID typeId, PaginationRequest paginationRequest);
 
     /**
      * Create a new notification message.
@@ -50,7 +51,7 @@ public interface NotificationMessageCatalogService {
      * @param messageId the ID of the notification message
      * @return the notification message DTO
      */
-    Mono<NotificationMessageCatalogDTO> getNotificationMessage(Long messageId);
+    Mono<NotificationMessageCatalogDTO> getNotificationMessage(UUID messageId);
 
     /**
      * Get a notification message by code.
@@ -67,7 +68,7 @@ public interface NotificationMessageCatalogService {
      * @param notificationMessageDTO the updated notification message data
      * @return the updated notification message DTO
      */
-    Mono<NotificationMessageCatalogDTO> updateNotificationMessage(Long messageId, NotificationMessageCatalogDTO notificationMessageDTO);
+    Mono<NotificationMessageCatalogDTO> updateNotificationMessage(UUID messageId, NotificationMessageCatalogDTO notificationMessageDTO);
 
     /**
      * Delete a notification message.
@@ -75,5 +76,5 @@ public interface NotificationMessageCatalogService {
      * @param messageId the ID of the notification message to delete
      * @return a Mono of Void
      */
-    Mono<Void> deleteNotificationMessage(Long messageId);
+    Mono<Void> deleteNotificationMessage(UUID messageId);
 }

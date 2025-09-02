@@ -19,6 +19,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 @Tag(name = "Contract Document Type", description = "APIs for managing Contract Document Type data")
 @RestController
@@ -91,7 +92,7 @@ public class ContractDocumentTypeController {
     @GetMapping(value = "/{documentTypeId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<ContractDocumentTypeDTO>> getContractDocumentType(
             @Parameter(in = ParameterIn.PATH, description = "ID of the contract document type", required = true)
-            @PathVariable Long documentTypeId
+            @PathVariable UUID documentTypeId
     ) {
         return contractDocumentTypeService.getContractDocumentType(documentTypeId)
                 .map(ResponseEntity::ok)
@@ -143,7 +144,7 @@ public class ContractDocumentTypeController {
     @PutMapping(value = "/{documentTypeId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<ContractDocumentTypeDTO>> updateContractDocumentType(
             @Parameter(in = ParameterIn.PATH, description = "ID of the contract document type", required = true)
-            @PathVariable Long documentTypeId,
+            @PathVariable UUID documentTypeId,
             @RequestBody ContractDocumentTypeDTO contractDocumentTypeDto
     ) {
         return contractDocumentTypeService.updateContractDocumentType(documentTypeId, contractDocumentTypeDto)
@@ -159,7 +160,7 @@ public class ContractDocumentTypeController {
     @DeleteMapping(value = "/{documentTypeId}")
     public Mono<ResponseEntity<Void>> deleteContractDocumentType(
             @Parameter(in = ParameterIn.PATH, description = "ID of the contract document type", required = true)
-            @PathVariable Long documentTypeId
+            @PathVariable UUID documentTypeId
     ) {
         return contractDocumentTypeService.deleteContractDocumentType(documentTypeId)
                 .then(Mono.just(ResponseEntity.noContent().build()));

@@ -13,6 +13,7 @@ import org.mapstruct.Named;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * Mapper for converting between NotificationMessageCatalog entities and DTOs.
@@ -93,7 +94,7 @@ public abstract class NotificationMessageCatalogMapper {
      * @return the converted MessageTypeCatalogDTO
      */
     @Named("typeIdToMessageType")
-    protected MessageTypeCatalogDTO typeIdToMessageType(Long typeId) {
+    protected MessageTypeCatalogDTO typeIdToMessageType(UUID typeId) {
         if (typeId == null) {
             return null;
         }
@@ -109,7 +110,7 @@ public abstract class NotificationMessageCatalogMapper {
      * @return the converted type ID
      */
     @Named("messageTypeToTypeId")
-    protected Long messageTypeToTypeId(MessageTypeCatalogDTO messageType) {
+    protected UUID messageTypeToTypeId(MessageTypeCatalogDTO messageType) {
         if (messageType == null) {
             return null;
         }

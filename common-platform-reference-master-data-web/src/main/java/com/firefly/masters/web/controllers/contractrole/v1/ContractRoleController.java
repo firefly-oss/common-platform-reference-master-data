@@ -17,6 +17,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 @Tag(name = "Contract Role", description = "APIs for managing Contract Role data")
 @RestController
@@ -85,7 +86,7 @@ public class ContractRoleController {
     @GetMapping(value = "/{roleId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<ContractRoleDTO>> getContractRole(
             @Parameter(in = ParameterIn.PATH, description = "ID of the contract role", required = true)
-            @PathVariable Long roleId
+            @PathVariable UUID roleId
     ) {
         return contractRoleService.getContractRole(roleId)
                 .map(ResponseEntity::ok)
@@ -111,7 +112,7 @@ public class ContractRoleController {
     @PutMapping(value = "/{roleId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<ContractRoleDTO>> updateContractRole(
             @Parameter(in = ParameterIn.PATH, description = "ID of the contract role", required = true)
-            @PathVariable Long roleId,
+            @PathVariable UUID roleId,
             @RequestBody ContractRoleDTO contractRoleDto
     ) {
         return contractRoleService.updateContractRole(roleId, contractRoleDto)
@@ -127,7 +128,7 @@ public class ContractRoleController {
     @DeleteMapping(value = "/{roleId}")
     public Mono<ResponseEntity<Void>> deleteContractRole(
             @Parameter(in = ParameterIn.PATH, description = "ID of the contract role", required = true)
-            @PathVariable Long roleId
+            @PathVariable UUID roleId
     ) {
         return contractRoleService.deleteContractRole(roleId)
                 .then(Mono.just(ResponseEntity.noContent().build()));

@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import java.util.UUID;
 
 @Data
 @Builder
@@ -18,11 +19,11 @@ import jakarta.validation.constraints.Size;
 @NoArgsConstructor
 public class ActivityCodeDTO {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private Long activityCodeId;
+    private UUID activityCodeId;
 
     @FilterableId
     @NotNull(message = "Country ID is required")
-    private Long countryId;
+    private UUID countryId;
 
     @NotBlank(message = "Activity code is required")
     @Size(max = 20, message = "Activity code must not exceed 20 characters")
@@ -36,7 +37,7 @@ public class ActivityCodeDTO {
     @Size(max = 500, message = "Description must not exceed 500 characters")
     private String description;
 
-    private Long parentCodeId;
+    private UUID parentCodeId;
     private Boolean highRisk;
 
     @Size(max = 1000, message = "Risk factors must not exceed 1000 characters")

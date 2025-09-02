@@ -11,6 +11,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 /**
  * Implementation of the DocumentTemplateLocalizationService interface.
@@ -26,14 +27,14 @@ public class DocumentTemplateLocalizationServiceImpl implements DocumentTemplate
     private DocumentTemplateLocalizationMapper mapper;
 
     @Override
-    public Flux<DocumentTemplateLocalizationDTO> getLocalizationsByTemplateId(Long templateId) {
+    public Flux<DocumentTemplateLocalizationDTO> getLocalizationsByTemplateId(UUID templateId) {
         return repository.findByTemplateId(templateId)
                 .map(mapper::toDTO)
                 .switchIfEmpty(Flux.error(new RuntimeException("No localizations found for template ID: " + templateId)));
     }
 
     @Override
-    public Flux<DocumentTemplateLocalizationDTO> getLocalizationsByLocaleId(Long localeId) {
+    public Flux<DocumentTemplateLocalizationDTO> getLocalizationsByLocaleId(UUID localeId) {
         return repository.findByLocaleId(localeId)
                 .map(mapper::toDTO)
                 .switchIfEmpty(Flux.error(new RuntimeException("No localizations found for locale ID: " + localeId)));
@@ -54,21 +55,21 @@ public class DocumentTemplateLocalizationServiceImpl implements DocumentTemplate
     }
 
     @Override
-    public Mono<DocumentTemplateLocalizationDTO> getDocumentTemplateLocalization(Long localizationId) {
+    public Mono<DocumentTemplateLocalizationDTO> getDocumentTemplateLocalization(UUID localizationId) {
         return repository.findById(localizationId)
                 .map(mapper::toDTO)
                 .switchIfEmpty(Mono.error(new RuntimeException("Document template localization not found with ID: " + localizationId)));
     }
 
     @Override
-    public Mono<DocumentTemplateLocalizationDTO> getDocumentTemplateLocalizationByTemplateAndLocale(Long templateId, Long localeId) {
+    public Mono<DocumentTemplateLocalizationDTO> getDocumentTemplateLocalizationByTemplateAndLocale(UUID templateId, UUID localeId) {
         return repository.findByTemplateIdAndLocaleId(templateId, localeId)
                 .map(mapper::toDTO)
                 .switchIfEmpty(Mono.error(new RuntimeException("Document template localization not found with template ID: " + templateId + " and locale ID: " + localeId)));
     }
 
     @Override
-    public Mono<DocumentTemplateLocalizationDTO> updateDocumentTemplateLocalization(Long localizationId, DocumentTemplateLocalizationDTO localizationDTO) {
+    public Mono<DocumentTemplateLocalizationDTO> updateDocumentTemplateLocalization(UUID localizationId, DocumentTemplateLocalizationDTO localizationDTO) {
         return repository.findById(localizationId)
                 .switchIfEmpty(Mono.error(new RuntimeException("Document template localization not found with ID: " + localizationId)))
                 .flatMap(existingEntity -> {
@@ -83,7 +84,7 @@ public class DocumentTemplateLocalizationServiceImpl implements DocumentTemplate
     }
 
     @Override
-    public Mono<Void> deleteDocumentTemplateLocalization(Long localizationId) {
+    public Mono<Void> deleteDocumentTemplateLocalization(UUID localizationId) {
         return repository.findById(localizationId)
                 .switchIfEmpty(Mono.error(new RuntimeException("Document template localization not found with ID: " + localizationId)))
                 .flatMap(repository::delete)
@@ -91,7 +92,7 @@ public class DocumentTemplateLocalizationServiceImpl implements DocumentTemplate
     }
 
     @Override
-    public Mono<Void> deleteLocalizationsByTemplateId(Long templateId) {
+    public Mono<Void> deleteLocalizationsByTemplateId(UUID templateId) {
         return repository.deleteByTemplateId(templateId)
                 .onErrorResume(e -> Mono.error(new RuntimeException("Error deleting localizations for template ID: " + templateId, e)));
     }

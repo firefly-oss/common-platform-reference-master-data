@@ -30,7 +30,7 @@ ALTER TABLE language_locale ADD COLUMN IF NOT EXISTS date_updated TIMESTAMP DEFA
 
 -- Update countries table
 ALTER TABLE countries RENAME COLUMN id TO country_id;
-ALTER TABLE countries ADD COLUMN IF NOT EXISTS region_lkp_id BIGINT;
+ALTER TABLE countries ADD COLUMN IF NOT EXISTS region_lkp_id UUID;
 
 -- Update currencies table
 ALTER TABLE currencies RENAME COLUMN id TO currency_id;
@@ -42,25 +42,25 @@ ALTER TABLE currencies ADD COLUMN IF NOT EXISTS is_major BOOLEAN DEFAULT FALSE;
 ALTER TABLE branches RENAME COLUMN id TO branch_id;
 ALTER TABLE branches ADD COLUMN IF NOT EXISTS postal_code VARCHAR(20);
 ALTER TABLE branches ADD COLUMN IF NOT EXISTS email VARCHAR(100);
-ALTER TABLE branches ADD COLUMN IF NOT EXISTS division_id BIGINT;
-ALTER TABLE branches ADD COLUMN IF NOT EXISTS branch_type_lkp_id BIGINT;
-ALTER TABLE branches ADD COLUMN IF NOT EXISTS branch_manager_id BIGINT;
+ALTER TABLE branches ADD COLUMN IF NOT EXISTS division_id UUID;
+ALTER TABLE branches ADD COLUMN IF NOT EXISTS branch_type_lkp_id UUID;
+ALTER TABLE branches ADD COLUMN IF NOT EXISTS branch_manager_id UUID;
 ALTER TABLE branches ADD COLUMN IF NOT EXISTS opening_hours VARCHAR(255);
 
 -- Update bank_institution_codes table
 ALTER TABLE bank_institution_codes RENAME COLUMN id TO institution_id;
 ALTER TABLE bank_institution_codes ADD COLUMN IF NOT EXISTS iban_prefix VARCHAR(10);
-ALTER TABLE bank_institution_codes ADD COLUMN IF NOT EXISTS institution_type_lkp_id BIGINT;
+ALTER TABLE bank_institution_codes ADD COLUMN IF NOT EXISTS institution_type_lkp_id UUID;
 
 -- Update holidays table
 ALTER TABLE holidays RENAME COLUMN id TO holiday_id;
-ALTER TABLE holidays ADD COLUMN IF NOT EXISTS division_id BIGINT;
+ALTER TABLE holidays ADD COLUMN IF NOT EXISTS division_id UUID;
 ALTER TABLE holidays ADD COLUMN IF NOT EXISTS local_name VARCHAR(100);
 ALTER TABLE holidays DROP COLUMN IF EXISTS holiday_date;
 ALTER TABLE holidays ADD COLUMN IF NOT EXISTS holiday_date DATE;
 ALTER TABLE holidays ADD COLUMN IF NOT EXISTS recurrence_rule VARCHAR(255);
 ALTER TABLE holidays DROP COLUMN IF EXISTS holiday_type;
-ALTER TABLE holidays ADD COLUMN IF NOT EXISTS holiday_type_lkp_id BIGINT;
+ALTER TABLE holidays ADD COLUMN IF NOT EXISTS holiday_type_lkp_id UUID;
 ALTER TABLE holidays ADD COLUMN IF NOT EXISTS business_closed BOOLEAN DEFAULT TRUE;
 ALTER TABLE holidays ADD COLUMN IF NOT EXISTS bank_closed BOOLEAN DEFAULT TRUE;
 
@@ -75,12 +75,12 @@ ALTER TABLE language_locale ADD COLUMN IF NOT EXISTS sort_order INTEGER DEFAULT 
 
 -- 1) Administrative Division
 CREATE TABLE IF NOT EXISTS administrative_division (
-    division_id BIGSERIAL PRIMARY KEY,
-    country_id BIGINT REFERENCES countries(country_id) ON DELETE RESTRICT,
+    division_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    country_id UUID REFERENCES countries(country_id) ON DELETE RESTRICT,
     code VARCHAR(20) NOT NULL,
     name VARCHAR(100) NOT NULL,
     level VARCHAR(50) NOT NULL,
-    parent_division_id BIGINT REFERENCES administrative_division(division_id) ON DELETE RESTRICT,
+    parent_division_id UUID REFERENCES administrative_division(division_id) ON DELETE RESTRICT,
     status status_enum NOT NULL,
     postal_code_pattern VARCHAR(255),
     time_zone VARCHAR(50),
@@ -90,16 +90,16 @@ CREATE TABLE IF NOT EXISTS administrative_division (
 
 -- 2) Lookup Domain
 CREATE TABLE IF NOT EXISTS lookup_domain (
-    domain_id BIGSERIAL PRIMARY KEY,
+    domain_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     domain_code VARCHAR(50) NOT NULL,
     domain_name VARCHAR(100) NOT NULL,
     domain_desc TEXT,
-    parent_domain_id BIGINT REFERENCES lookup_domain(domain_id) ON DELETE RESTRICT,
+    parent_domain_id UUID REFERENCES lookup_domain(domain_id) ON DELETE RESTRICT,
     multiselect_allowed BOOLEAN DEFAULT FALSE,
     hierarchy_allowed BOOLEAN DEFAULT FALSE,
     tenant_overridable BOOLEAN DEFAULT FALSE,
     extra_json JSONB,
-    tenant_id BIGINT,
+    tenant_id UUID,
     status status_enum NOT NULL,
     date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     date_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -107,18 +107,18 @@ CREATE TABLE IF NOT EXISTS lookup_domain (
 
 -- 3) Lookup Item
 CREATE TABLE IF NOT EXISTS lookup_item (
-    item_id BIGSERIAL PRIMARY KEY,
-    domain_id BIGINT REFERENCES lookup_domain(domain_id) ON DELETE RESTRICT,
+    item_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    domain_id UUID REFERENCES lookup_domain(domain_id) ON DELETE RESTRICT,
     item_code VARCHAR(50) NOT NULL,
     item_label_default VARCHAR(100) NOT NULL,
     item_desc TEXT,
-    parent_item_id BIGINT REFERENCES lookup_item(item_id) ON DELETE RESTRICT,
+    parent_item_id UUID REFERENCES lookup_item(item_id) ON DELETE RESTRICT,
     sort_order INTEGER DEFAULT 0,
     effective_from DATE DEFAULT '1900-01-01',
     effective_to DATE,
     is_current BOOLEAN DEFAULT TRUE,
     extra_json JSONB,
-    tenant_id BIGINT,
+    tenant_id UUID,
     status status_enum NOT NULL,
     date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     date_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -126,8 +126,8 @@ CREATE TABLE IF NOT EXISTS lookup_item (
 
 -- 4) Legal Form
 CREATE TABLE IF NOT EXISTS legal_form (
-    legal_form_id BIGSERIAL PRIMARY KEY,
-    country_id BIGINT REFERENCES countries(country_id) ON DELETE RESTRICT,
+    legal_form_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    country_id UUID REFERENCES countries(country_id) ON DELETE RESTRICT,
     code VARCHAR(20) NOT NULL,
     name VARCHAR(100) NOT NULL,
     description TEXT,
@@ -140,12 +140,12 @@ CREATE TABLE IF NOT EXISTS legal_form (
 
 -- 5) Activity Code
 CREATE TABLE IF NOT EXISTS activity_code (
-    activity_code_id BIGSERIAL PRIMARY KEY,
-    country_id BIGINT REFERENCES countries(country_id) ON DELETE RESTRICT,
+    activity_code_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    country_id UUID REFERENCES countries(country_id) ON DELETE RESTRICT,
     code VARCHAR(20) NOT NULL,
     classification_sys VARCHAR(50) NOT NULL,
     description TEXT,
-    parent_code_id BIGINT REFERENCES activity_code(activity_code_id) ON DELETE RESTRICT,
+    parent_code_id UUID REFERENCES activity_code(activity_code_id) ON DELETE RESTRICT,
     high_risk BOOLEAN DEFAULT FALSE,
     risk_factors TEXT,
     status status_enum NOT NULL,

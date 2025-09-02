@@ -18,6 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 @Tag(name = "Relationship Type Master", description = "APIs for managing Relationship Type Master data")
 @RestController
@@ -90,7 +91,7 @@ public class RelationshipTypeMasterController {
     @GetMapping(value = "/{relationshipTypeId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<RelationshipTypeMasterDTO>> getRelationshipType(
             @Parameter(in = ParameterIn.PATH, description = "ID of the relationship type", required = true)
-            @PathVariable Long relationshipTypeId
+            @PathVariable UUID relationshipTypeId
     ) {
         return relationshipTypeMasterService.getRelationshipType(relationshipTypeId)
                 .map(ResponseEntity::ok)
@@ -116,7 +117,7 @@ public class RelationshipTypeMasterController {
     @PutMapping(value = "/{relationshipTypeId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<RelationshipTypeMasterDTO>> updateRelationshipType(
             @Parameter(in = ParameterIn.PATH, description = "ID of the relationship type", required = true)
-            @PathVariable Long relationshipTypeId,
+            @PathVariable UUID relationshipTypeId,
             @RequestBody RelationshipTypeMasterDTO relationshipTypeDto
     ) {
         return relationshipTypeMasterService.updateRelationshipType(relationshipTypeId, relationshipTypeDto)
@@ -132,7 +133,7 @@ public class RelationshipTypeMasterController {
     @DeleteMapping(value = "/{relationshipTypeId}")
     public Mono<ResponseEntity<Void>> deleteRelationshipType(
             @Parameter(in = ParameterIn.PATH, description = "ID of the relationship type", required = true)
-            @PathVariable Long relationshipTypeId
+            @PathVariable UUID relationshipTypeId
     ) {
         return relationshipTypeMasterService.deleteRelationshipType(relationshipTypeId)
                 .then(Mono.just(ResponseEntity.noContent().build()));

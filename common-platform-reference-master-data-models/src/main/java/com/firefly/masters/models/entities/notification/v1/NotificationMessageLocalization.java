@@ -11,6 +11,7 @@ import lombok.Builder;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 /**
  * Entity representing a localized version of a notification message.
@@ -26,13 +27,13 @@ public class NotificationMessageLocalization {
 
     @Id
     @Column("localization_id")
-    private Long localizationId;
+    private UUID localizationId;
 
     @Column("message_id")
-    private Long messageId;  // References notification_message_catalog(message_id)
+    private UUID messageId;  // References notification_message_catalog(message_id)
 
     @Column("locale_id")
-    private Long localeId;  // References language_locale(locale_id)
+    private UUID localeId;  // References language_locale(locale_id)
 
     @Column("subject")
     private String subject;

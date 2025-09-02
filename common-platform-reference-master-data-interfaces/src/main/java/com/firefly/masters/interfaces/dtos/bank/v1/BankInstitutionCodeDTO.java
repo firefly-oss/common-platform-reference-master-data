@@ -14,6 +14,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 @Builder
@@ -22,7 +23,7 @@ import java.time.LocalDateTime;
 public class BankInstitutionCodeDTO {
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private Long institutionId;
+    private UUID institutionId;
 
     @NotBlank(message = "Bank name is required")
     @Size(max = 200, message = "Bank name must not exceed 200 characters")
@@ -40,9 +41,9 @@ public class BankInstitutionCodeDTO {
 
     @FilterableId
     @NotNull(message = "Country ID is required")
-    private Long countryId;
+    private UUID countryId;
 
-    private Long institutionTypeLkpId;
+    private UUID institutionTypeLkpId;
 
     @NotNull(message = "Status is required")
     private StatusEnum status;

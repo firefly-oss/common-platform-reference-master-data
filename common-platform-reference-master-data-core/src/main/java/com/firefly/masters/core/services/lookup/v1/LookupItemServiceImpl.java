@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -34,7 +35,7 @@ public class LookupItemServiceImpl implements LookupItemService {
     }
 
     @Override
-    public Flux<LookupItemDTO> getItemsByDomain(Long domainId) {
+    public Flux<LookupItemDTO> getItemsByDomain(UUID domainId) {
         return repository.findByDomainId(domainId)
                 .map(mapper::toDTO);
     }
@@ -47,13 +48,13 @@ public class LookupItemServiceImpl implements LookupItemService {
     }
 
     @Override
-    public Mono<LookupItemDTO> getItem(Long itemId) {
+    public Mono<LookupItemDTO> getItem(UUID itemId) {
         return repository.findById(itemId)
                 .map(mapper::toDTO);
     }
 
     @Override
-    public Mono<LookupItemDTO> updateItem(Long itemId, LookupItemDTO itemDto) {
+    public Mono<LookupItemDTO> updateItem(UUID itemId, LookupItemDTO itemDto) {
         return repository.findById(itemId)
                 .flatMap(foundItem -> {
                     LookupItem updatedItem = mapper.toEntity(itemDto);
@@ -64,7 +65,7 @@ public class LookupItemServiceImpl implements LookupItemService {
     }
 
     @Override
-    public Mono<Void> deleteItem(Long itemId) {
+    public Mono<Void> deleteItem(UUID itemId) {
         return repository.findById(itemId)
                 .flatMap(repository::delete);
     }

@@ -19,6 +19,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 /**
  * REST controller for managing document template type catalog operations.
@@ -88,7 +89,7 @@ public class DocumentTemplateTypeCatalogController {
     @GetMapping(value = "/{typeId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<DocumentTemplateTypeCatalogDTO>> getDocumentTemplateType(
             @Parameter(in = ParameterIn.PATH, description = "ID of the document template type", required = true)
-            @PathVariable Long typeId
+            @PathVariable UUID typeId
     ) {
         return service.getDocumentTemplateType(typeId)
                 .map(ResponseEntity::ok)
@@ -138,7 +139,7 @@ public class DocumentTemplateTypeCatalogController {
     @PutMapping(value = "/{typeId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<DocumentTemplateTypeCatalogDTO>> updateDocumentTemplateType(
             @Parameter(in = ParameterIn.PATH, description = "ID of the document template type", required = true)
-            @PathVariable Long typeId,
+            @PathVariable UUID typeId,
             @RequestBody DocumentTemplateTypeCatalogDTO documentTemplateTypeDTO
     ) {
         return service.updateDocumentTemplateType(typeId, documentTemplateTypeDTO)
@@ -160,7 +161,7 @@ public class DocumentTemplateTypeCatalogController {
     @DeleteMapping(value = "/{typeId}")
     public Mono<ResponseEntity<Void>> deleteDocumentTemplateType(
             @Parameter(in = ParameterIn.PATH, description = "ID of the document template type", required = true)
-            @PathVariable Long typeId
+            @PathVariable UUID typeId
     ) {
         return service.deleteDocumentTemplateType(typeId)
                 .then(Mono.just(ResponseEntity.noContent().<Void>build()))

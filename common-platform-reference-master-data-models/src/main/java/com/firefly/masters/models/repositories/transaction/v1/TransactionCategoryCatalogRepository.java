@@ -7,13 +7,14 @@ import org.springframework.data.r2dbc.repository.Query;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 /**
  * Repository for managing TransactionCategoryCatalog entities.
  * Extends BaseRepository to inherit common CRUD operations.
  */
 @Repository
-public interface TransactionCategoryCatalogRepository extends BaseRepository<TransactionCategoryCatalog, Long> {
+public interface TransactionCategoryCatalogRepository extends BaseRepository<TransactionCategoryCatalog, UUID> {
 
     /**
      * Find a transaction category by its code.
@@ -30,7 +31,7 @@ public interface TransactionCategoryCatalogRepository extends BaseRepository<Tra
      * @param pageable pagination information
      * @return a Flux of TransactionCategoryCatalog entities with the specified parent
      */
-    Flux<TransactionCategoryCatalog> findByParentCategoryId(Long parentCategoryId, Pageable pageable);
+    Flux<TransactionCategoryCatalog> findByParentCategoryId(UUID parentCategoryId, Pageable pageable);
 
     /**
      * Count all transaction categories with a specific parent category.
@@ -38,7 +39,7 @@ public interface TransactionCategoryCatalogRepository extends BaseRepository<Tra
      * @param parentCategoryId the ID of the parent category
      * @return a Mono with the count of categories with the specified parent
      */
-    Mono<Long> countByParentCategoryId(Long parentCategoryId);
+    Mono<Long> countByParentCategoryId(UUID parentCategoryId);
 
     /**
      * Find all root transaction categories (categories without a parent).

@@ -5,13 +5,14 @@ import com.firefly.masters.models.repositories.BaseRepository;
 import org.springframework.data.r2dbc.repository.Query;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 /**
  * Repository for managing DocumentTemplateTypeCatalog entities.
  * Extends BaseRepository to inherit common CRUD operations.
  */
 @Repository
-public interface DocumentTemplateTypeCatalogRepository extends BaseRepository<DocumentTemplateTypeCatalog, Long> {
+public interface DocumentTemplateTypeCatalogRepository extends BaseRepository<DocumentTemplateTypeCatalog, UUID> {
     
     /**
      * Find a document template type by its code.

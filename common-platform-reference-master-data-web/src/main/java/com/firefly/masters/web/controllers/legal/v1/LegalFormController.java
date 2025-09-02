@@ -19,6 +19,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 @Tag(name = "Legal Forms", description = "APIs for managing legal forms")
 @RestController
@@ -62,7 +63,7 @@ public class LegalFormController {
     @GetMapping(value = "/country/{countryId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<Flux<LegalFormDTO>>> getLegalFormsByCountry(
             @Parameter(in = ParameterIn.PATH, description = "ID of the country", required = true)
-            @PathVariable Long countryId
+            @PathVariable UUID countryId
     ) {
         return Mono.just(ResponseEntity.ok(service.getLegalFormsByCountry(countryId)));
     }
@@ -110,7 +111,7 @@ public class LegalFormController {
     @GetMapping(value = "/{legalFormId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<LegalFormDTO>> getLegalForm(
             @Parameter(in = ParameterIn.PATH, description = "ID of the legal form", required = true)
-            @PathVariable Long legalFormId
+            @PathVariable UUID legalFormId
     ) {
         return service.getLegalForm(legalFormId)
                 .map(ResponseEntity::ok)
@@ -136,7 +137,7 @@ public class LegalFormController {
     @PutMapping(value = "/{legalFormId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<LegalFormDTO>> updateLegalForm(
             @Parameter(in = ParameterIn.PATH, description = "ID of the legal form", required = true)
-            @PathVariable Long legalFormId,
+            @PathVariable UUID legalFormId,
             @RequestBody LegalFormDTO legalFormDto
     ) {
         return service.updateLegalForm(legalFormId, legalFormDto)
@@ -152,7 +153,7 @@ public class LegalFormController {
     @DeleteMapping(value = "/{legalFormId}")
     public Mono<ResponseEntity<Void>> deleteLegalForm(
             @Parameter(in = ParameterIn.PATH, description = "ID of the legal form", required = true)
-            @PathVariable Long legalFormId
+            @PathVariable UUID legalFormId
     ) {
         return service.deleteLegalForm(legalFormId)
                 .then(Mono.just(ResponseEntity.noContent().build()));

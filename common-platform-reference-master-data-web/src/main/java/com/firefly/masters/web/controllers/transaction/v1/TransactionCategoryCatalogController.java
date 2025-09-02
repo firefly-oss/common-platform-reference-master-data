@@ -18,6 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 /**
  * REST controller for managing transaction category catalog operations.
@@ -84,7 +85,7 @@ public class TransactionCategoryCatalogController {
     @GetMapping(value = "/parent/{parentCategoryId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<PaginationResponse<TransactionCategoryCatalogDTO>>> listChildTransactionCategories(
             @Parameter(in = ParameterIn.PATH, description = "ID of the parent category", required = true)
-            @PathVariable Long parentCategoryId,
+            @PathVariable UUID parentCategoryId,
             @ParameterObject
             @ModelAttribute PaginationRequest paginationRequest
     ) {
@@ -111,7 +112,7 @@ public class TransactionCategoryCatalogController {
     @GetMapping(value = "/{categoryId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<TransactionCategoryCatalogDTO>> getTransactionCategory(
             @Parameter(in = ParameterIn.PATH, description = "ID of the transaction category", required = true)
-            @PathVariable Long categoryId
+            @PathVariable UUID categoryId
     ) {
         return service.getTransactionCategory(categoryId)
                 .map(ResponseEntity::ok)
@@ -192,7 +193,7 @@ public class TransactionCategoryCatalogController {
     @PutMapping(value = "/{categoryId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<TransactionCategoryCatalogDTO>> updateTransactionCategory(
             @Parameter(in = ParameterIn.PATH, description = "ID of the transaction category to update", required = true)
-            @PathVariable Long categoryId,
+            @PathVariable UUID categoryId,
             @RequestBody TransactionCategoryCatalogDTO dto
     ) {
         return service.updateTransactionCategory(categoryId, dto)
@@ -215,7 +216,7 @@ public class TransactionCategoryCatalogController {
     @DeleteMapping(value = "/{categoryId}")
     public Mono<ResponseEntity<Void>> deleteTransactionCategory(
             @Parameter(in = ParameterIn.PATH, description = "ID of the transaction category to delete", required = true)
-            @PathVariable Long categoryId
+            @PathVariable UUID categoryId
     ) {
         return service.deleteTransactionCategory(categoryId)
                 .then(Mono.just(ResponseEntity.noContent().<Void>build()))

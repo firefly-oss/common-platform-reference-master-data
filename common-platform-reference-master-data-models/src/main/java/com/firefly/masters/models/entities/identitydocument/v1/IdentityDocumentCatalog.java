@@ -11,6 +11,7 @@ import lombok.Builder;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 /**
  * Entity representing an identity document catalog record.
@@ -26,7 +27,7 @@ public class IdentityDocumentCatalog {
 
     @Id
     @Column("document_id")
-    private Long documentId;
+    private UUID documentId;
 
     @Column("document_code")
     private String documentCode;
@@ -35,10 +36,10 @@ public class IdentityDocumentCatalog {
     private String documentName;
 
     @Column("category_id")
-    private Long categoryId;
+    private UUID categoryId;
 
     @Column("country_id")
-    private Long countryId;
+    private UUID countryId;
 
     @Column("description")
     private String description;

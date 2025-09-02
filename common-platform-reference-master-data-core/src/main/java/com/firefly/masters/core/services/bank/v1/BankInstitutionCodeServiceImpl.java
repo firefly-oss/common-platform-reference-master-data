@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -40,13 +41,13 @@ public class BankInstitutionCodeServiceImpl implements BankInstitutionCodeServic
     }
 
     @Override
-    public Mono<BankInstitutionCodeDTO> getBankInstitutionCode(Long id) {
+    public Mono<BankInstitutionCodeDTO> getBankInstitutionCode(UUID id) {
         return repository.findById(id)
                 .map(mapper::toDTO);
     }
 
     @Override
-    public Mono<BankInstitutionCodeDTO> updateBankInstitutionCode(Long id, BankInstitutionCodeDTO dto) {
+    public Mono<BankInstitutionCodeDTO> updateBankInstitutionCode(UUID id, BankInstitutionCodeDTO dto) {
         return repository.findById(id)
                 .flatMap(existingEntity -> {
                     BankInstitutionCode updatedEntity = mapper.toEntity(dto);
@@ -57,7 +58,7 @@ public class BankInstitutionCodeServiceImpl implements BankInstitutionCodeServic
     }
 
     @Override
-    public Mono<Void> deleteBankInstitutionCode(Long id) {
+    public Mono<Void> deleteBankInstitutionCode(UUID id) {
         return repository.deleteById(id);
     }
 }

@@ -7,13 +7,14 @@ import org.springframework.data.r2dbc.repository.Query;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 /**
  * Repository for managing DocumentTemplateCatalog entities.
  * Extends BaseRepository to inherit common CRUD operations.
  */
 @Repository
-public interface DocumentTemplateCatalogRepository extends BaseRepository<DocumentTemplateCatalog, Long> {
+public interface DocumentTemplateCatalogRepository extends BaseRepository<DocumentTemplateCatalog, UUID> {
 
     /**
      * Find a document template by its code.
@@ -48,7 +49,7 @@ public interface DocumentTemplateCatalogRepository extends BaseRepository<Docume
      * @param pageable pagination information
      * @return a Flux of DocumentTemplateCatalog entities of the specified template type
      */
-    Flux<DocumentTemplateCatalog> findByTypeId(Long typeId, Pageable pageable);
+    Flux<DocumentTemplateCatalog> findByTypeId(UUID typeId, Pageable pageable);
 
     /**
      * Count document templates of a specific template type.
@@ -57,5 +58,5 @@ public interface DocumentTemplateCatalogRepository extends BaseRepository<Docume
      * @return a Mono of Long representing the count
      */
     @Query("SELECT COUNT(*) FROM document_template_catalog WHERE type_id = :typeId")
-    Mono<Long> countByTypeId(Long typeId);
+    Mono<Long> countByTypeId(UUID typeId);
 }

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -41,13 +42,13 @@ public class LanguageLocaleServiceImpl implements LanguageLocaleService {
     }
 
     @Override
-    public Mono<LanguageLocaleDTO> getLanguageLocale(Long id) {
+    public Mono<LanguageLocaleDTO> getLanguageLocale(UUID id) {
         return repository.findById(id)
                 .map(mapper::toDTO);
     }
 
     @Override
-    public Mono<LanguageLocaleDTO> updateLanguageLocale(Long id, LanguageLocaleDTO dto) {
+    public Mono<LanguageLocaleDTO> updateLanguageLocale(UUID id, LanguageLocaleDTO dto) {
         return repository.findById(id)
                 .flatMap(existingEntity -> {
                     LanguageLocale updatedEntity = mapper.toEntity(dto);
@@ -58,7 +59,7 @@ public class LanguageLocaleServiceImpl implements LanguageLocaleService {
     }
 
     @Override
-    public Mono<Void> deleteLanguageLocale(Long id) {
+    public Mono<Void> deleteLanguageLocale(UUID id) {
         return repository.findById(id)
                 .flatMap(repository::delete);
     }

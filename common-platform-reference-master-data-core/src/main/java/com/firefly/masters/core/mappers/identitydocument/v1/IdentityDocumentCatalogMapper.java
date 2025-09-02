@@ -6,6 +6,7 @@ import com.firefly.masters.models.entities.identitydocument.v1.IdentityDocumentC
 import com.firefly.masters.models.repositories.identitydocument.v1.IdentityDocumentCategoryCatalogRepository;
 import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import java.util.UUID;
 
 /**
  * Mapper for converting between IdentityDocumentCatalog entities and DTOs.
@@ -44,7 +45,7 @@ public abstract class IdentityDocumentCatalogMapper {
      * @return the converted IdentityDocumentCategoryCatalogDTO
      */
     @Named("categoryIdToCategory")
-    protected IdentityDocumentCategoryCatalogDTO categoryIdToCategory(Long categoryId) {
+    protected IdentityDocumentCategoryCatalogDTO categoryIdToCategory(UUID categoryId) {
         if (categoryId == null) {
             return null;
         }

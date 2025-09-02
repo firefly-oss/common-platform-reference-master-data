@@ -14,6 +14,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 /**
  * Implementation of the TransactionCategoryLocalizationService interface.
@@ -29,14 +30,14 @@ public class TransactionCategoryLocalizationServiceImpl implements TransactionCa
     private TransactionCategoryLocalizationMapper mapper;
 
     @Override
-    public Flux<TransactionCategoryLocalizationDTO> getLocalizationsByCategoryId(Long categoryId) {
+    public Flux<TransactionCategoryLocalizationDTO> getLocalizationsByCategoryId(UUID categoryId) {
         return repository.findByCategoryId(categoryId)
                 .map(mapper::toDTO)
                 .switchIfEmpty(Flux.error(new RuntimeException("No localizations found for category ID: " + categoryId)));
     }
 
     @Override
-    public Mono<PaginationResponse<TransactionCategoryLocalizationDTO>> listLocalizationsByCategoryId(Long categoryId, PaginationRequest paginationRequest) {
+    public Mono<PaginationResponse<TransactionCategoryLocalizationDTO>> listLocalizationsByCategoryId(UUID categoryId, PaginationRequest paginationRequest) {
         return PaginationUtils.paginateQuery(
                 paginationRequest,
                 mapper::toDTO,
@@ -60,21 +61,21 @@ public class TransactionCategoryLocalizationServiceImpl implements TransactionCa
     }
 
     @Override
-    public Mono<TransactionCategoryLocalizationDTO> getTransactionCategoryLocalization(Long localizationId) {
+    public Mono<TransactionCategoryLocalizationDTO> getTransactionCategoryLocalization(UUID localizationId) {
         return repository.findById(localizationId)
                 .map(mapper::toDTO)
                 .switchIfEmpty(Mono.error(new RuntimeException("Transaction category localization not found with ID: " + localizationId)));
     }
 
     @Override
-    public Mono<TransactionCategoryLocalizationDTO> getTransactionCategoryLocalizationByCategoryAndLocale(Long categoryId, Long localeId) {
+    public Mono<TransactionCategoryLocalizationDTO> getTransactionCategoryLocalizationByCategoryAndLocale(UUID categoryId, UUID localeId) {
         return repository.findByCategoryIdAndLocaleId(categoryId, localeId)
                 .map(mapper::toDTO)
                 .switchIfEmpty(Mono.error(new RuntimeException("Transaction category localization not found with category ID: " + categoryId + " and locale ID: " + localeId)));
     }
 
     @Override
-    public Mono<TransactionCategoryLocalizationDTO> updateTransactionCategoryLocalization(Long localizationId, TransactionCategoryLocalizationDTO localizationDTO) {
+    public Mono<TransactionCategoryLocalizationDTO> updateTransactionCategoryLocalization(UUID localizationId, TransactionCategoryLocalizationDTO localizationDTO) {
         return repository.findById(localizationId)
                 .flatMap(existingLocalization -> {
                     TransactionCategoryLocalization updatedLocalization = mapper.toEntity(localizationDTO);
@@ -88,7 +89,7 @@ public class TransactionCategoryLocalizationServiceImpl implements TransactionCa
     }
 
     @Override
-    public Mono<Void> deleteTransactionCategoryLocalization(Long localizationId) {
+    public Mono<Void> deleteTransactionCategoryLocalization(UUID localizationId) {
         return repository.findById(localizationId)
                 .switchIfEmpty(Mono.error(new RuntimeException("Transaction category localization not found with ID: " + localizationId)))
                 .flatMap(repository::delete);

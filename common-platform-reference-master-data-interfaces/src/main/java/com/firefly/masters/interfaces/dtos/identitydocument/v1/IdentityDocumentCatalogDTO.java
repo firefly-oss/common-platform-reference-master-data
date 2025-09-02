@@ -12,6 +12,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 
 /**
@@ -25,7 +26,7 @@ import java.time.LocalDateTime;
 public class IdentityDocumentCatalogDTO {
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private Long documentId;
+    private UUID documentId;
 
     @NotBlank(message = "Document code is required")
     @Size(max = 20, message = "Document code must not exceed 20 characters")
@@ -36,13 +37,13 @@ public class IdentityDocumentCatalogDTO {
     private String documentName;
 
     @NotNull(message = "Category ID is required")
-    private Long categoryId;
+    private UUID categoryId;
 
     @Valid
     private IdentityDocumentCategoryCatalogDTO category;
 
     @NotNull(message = "Country ID is required")
-    private Long countryId;
+    private UUID countryId;
 
     @Size(max = 500, message = "Description must not exceed 500 characters")
     private String description;
