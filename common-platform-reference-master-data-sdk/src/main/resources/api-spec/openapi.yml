@@ -58,6 +58,8 @@ tags:
     description: APIs for managing Title Master data
   - name: Administrative Divisions
     description: APIs for managing administrative divisions
+  - name: Contract Role Scope
+    description: API for managing contract role scopes and permissions
   - name: Activity Codes
     description: APIs for managing activity codes
   - name: Message Type Catalog
@@ -1962,6 +1964,98 @@ paths:
           description: Contract role deleted successfully
         '404':
           description: Contract role not found
+  /api/v1/contract-role-scopes/{scopeId}:
+    get:
+      tags:
+        - Contract Role Scope
+      summary: Get Contract Role Scope
+      description: Retrieve a specific contract role scope by its ID.
+      operationId: getContractRoleScope
+      parameters:
+        - name: scopeId
+          in: path
+          description: ID of the contract role scope
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Contract role scope retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContractRoleScopeDTO'
+        '404':
+          description: Contract role scope not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContractRoleScopeDTO'
+    put:
+      tags:
+        - Contract Role Scope
+      summary: Update Contract Role Scope
+      description: Update an existing contract role scope by its ID.
+      operationId: updateContractRoleScope
+      parameters:
+        - name: scopeId
+          in: path
+          description: ID of the contract role scope
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: X-Idempotency-Key
+          in: header
+          description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContractRoleScopeDTO'
+        required: true
+      responses:
+        '200':
+          description: Contract role scope updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContractRoleScopeDTO'
+        '400':
+          description: Invalid input data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContractRoleScopeDTO'
+        '404':
+          description: Contract role scope not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContractRoleScopeDTO'
+    delete:
+      tags:
+        - Contract Role Scope
+      summary: Delete Contract Role Scope
+      description: Delete a specific contract role scope by its ID.
+      operationId: deleteContractRoleScope
+      parameters:
+        - name: scopeId
+          in: path
+          description: ID of the contract role scope
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Contract role scope deleted successfully
+        '404':
+          description: Contract role scope not found
   /api/v1/contract-document-types/{documentTypeId}:
     get:
       tags:
@@ -4077,6 +4171,64 @@ paths:
                 $ref: '#/components/schemas/ContractRoleDTO'
         '400':
           description: Invalid input data
+  /api/v1/contract-role-scopes/filter:
+    post:
+      tags:
+        - Contract Role Scope
+      summary: Filter Contract Role Scopes
+      description: Retrieve a paginated list of contract role scopes based on filter criteria.
+      operationId: filterContractRoleScopes
+      parameters:
+        - name: X-Idempotency-Key
+          in: header
+          description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FilterRequestContractRoleScopeDTO'
+        required: true
+      responses:
+        '200':
+          description: Contract role scopes retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginationResponse'
+        '400':
+          description: Invalid filter request
+  /api/v1/contract-role-scopes:
+    post:
+      tags:
+        - Contract Role Scope
+      summary: Create Contract Role Scope
+      description: Create a new contract role scope record.
+      operationId: createContractRoleScope
+      parameters:
+        - name: X-Idempotency-Key
+          in: header
+          description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContractRoleScopeDTO'
+        required: true
+      responses:
+        '200':
+          description: Contract role scope created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContractRoleScopeDTO'
+        '400':
+          description: Invalid input data
   /api/v1/contract-document-types:
     get:
       tags:
@@ -5743,6 +5895,50 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/DocumentTemplateLocalizationDTO'
+  /api/v1/contract-role-scopes/role/{roleId}/active:
+    get:
+      tags:
+        - Contract Role Scope
+      summary: Get Active Scopes by Role ID
+      description: Retrieve all active scopes for a specific contract role.
+      operationId: getActiveScopesByRoleId
+      parameters:
+        - name: roleId
+          in: path
+          description: ID of the contract role
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Active contract role scopes retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContractRoleScopeDTO'
+  /api/v1/contract-role-scopes/role/{roleId}:
+    get:
+      tags:
+        - Contract Role Scope
+      summary: Get Scopes by Role ID
+      description: Retrieve all scopes for a specific contract role.
+      operationId: getScopesByRoleId
+      parameters:
+        - name: roleId
+          in: path
+          description: ID of the contract role
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Contract role scopes retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContractRoleScopeDTO'
   /api/v1/contract-document-types/by-code/{documentCode}:
     get:
       tags:
@@ -6817,6 +7013,49 @@ components:
         dateUpdated:
           type: string
           format: date-time
+    ContractRoleScopeDTO:
+      required:
+        - actionType
+        - roleId
+        - scopeCode
+        - scopeName
+      type: object
+      properties:
+        scopeId:
+          type: string
+          format: uuid
+          readOnly: true
+        roleId:
+          type: string
+          format: uuid
+        scopeCode:
+          maxLength: 100
+          minLength: 0
+          type: string
+        scopeName:
+          maxLength: 200
+          minLength: 0
+          type: string
+        description:
+          maxLength: 500
+          minLength: 0
+          type: string
+        actionType:
+          maxLength: 50
+          minLength: 0
+          type: string
+        resourceType:
+          maxLength: 100
+          minLength: 0
+          type: string
+        isActive:
+          type: boolean
+        dateCreated:
+          type: string
+          format: date-time
+        dateUpdated:
+          type: string
+          format: date-time
     ContractDocumentTypeDTO:
       required:
         - documentCode
@@ -7163,6 +7402,20 @@ components:
           description: The current page number, typically zero-based.
           format: int32
       description: Represents a paginated response containing a list of items and pagination metadata.
+    FilterRequestContractRoleScopeDTO:
+      required:
+        - pagination
+      type: object
+      properties:
+        filters:
+          $ref: '#/components/schemas/ContractRoleScopeDTO'
+        rangeFilters:
+          $ref: '#/components/schemas/RangeFilter'
+        pagination:
+          $ref: '#/components/schemas/PaginationRequest'
+        options:
+          $ref: '#/components/schemas/FilterOptions'
+      description: Generic filter request that includes both filter criteria and pagination
     PaginationResponse:
       type: object
       properties:
